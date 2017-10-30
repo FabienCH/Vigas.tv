@@ -3,16 +3,22 @@ namespace Vigas\Application\Controller;
 
 /**
 * Class Autoloader.
-* Manage autoload
+* Manages autoload
 */
 class Autoloader
 {
-    static function register()
+	/**
+    * Registers autoload
+    */
+    public static function register()
     {
         spl_autoload_register(array(__CLASS__, 'autoload'));
     }
     
-    static function autoload($class)
+	/**
+    * Sets path and requires PHP file
+    */
+    public static function autoload($class)
     {
         if(strpos($class, 'Vigas\\')==0)
         {

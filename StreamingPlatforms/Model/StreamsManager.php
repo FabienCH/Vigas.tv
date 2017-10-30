@@ -10,7 +10,7 @@ use Vigas\StreamingPlatforms\Model\MediasManager;
  */
 class StreamsManager extends MediasManager
 {	
-    use \Vigas\Application\Model\CurlRequest;
+    
     
     /**
     * Get streams from Twitch (top or followed), and pass them to buildStream method

@@ -5,7 +5,7 @@ Use Vigas\StreamingPlatforms\Model\Media;
 
 /**
  * Class Game extends Media.
- * Manage a streamed game
+ * Manages a streamed game
  */
 class Game extends Media
 {
@@ -43,7 +43,7 @@ class Game extends Media
     */
     public function setBox($box)
     {
-        $this->box=$box;
+        $this->box = $box;
     }
     
     /** 
@@ -51,6 +51,6 @@ class Game extends Media
     */
     public function addViewers($viewers)
     {
-        $this->viewers+=$viewers;
+        $this->viewers += $viewers;
     }
 }

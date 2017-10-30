@@ -5,12 +5,11 @@ use Vigas\Application\Controller\AppController;
 use Vigas\Application\Controller\HTTPRequest;
 use Vigas\Application\Model\LinkedAccount;
 use Vigas\Application\Model\UserManager;
-
-use Vigas\StreamingPlatforms\Controller\MediaController;
+use Vigas\StreamingPlatforms\Controller\SPController;
 
 /**
 * Class Application
-* Manage Application
+* Manages Application
 */
 abstract class Application
 {
@@ -40,7 +39,7 @@ abstract class Application
     protected static $user;
 
 	/**
-    * Set base_url attribute - the website base url
+    * Sets base_url and http_request attributes
     */
     public static function initializeApplication()
     {
@@ -52,10 +51,10 @@ abstract class Application
     }
 	
     /**
-    * Get the user and his linked accounts
+    * Gets the user and his linked accounts
     * @param object User $user
     */
-    public static function initializeSession($user)
+    public static function initializeSession(User $user)
     {
         self::$user = $user;
         if(!isset($_SESSION['linked_accounts']))
@@ -67,19 +66,20 @@ abstract class Application
     }
 	
     /**
-    * Log in a file when a user log in
+    * Writes in a file when a user log in
     * @param string $from login source (form or cookie)
+	* @param object User $user
     */
-	public static function logUserLogin($from, $user)
+	public static function logUserLogin($from, User $user)
 	{
         $log_file = fopen('/home/vigas/logs/vigas/user_login.log', "a");
 		$date = date("Y-m-d H:i:s", strtotime('now')); 
-        fwrite($log_file, $user->getUsername().' login at '.$date.' from '.$from.' ('.self::$BASE_URL.")\r\n");
+        fwrite($log_file, $user->getUsername().' login at '.$date.' from '.$from.' ('.self::$base_url.")\r\n");
         fclose($log_file);
 	}
     
 	/**
-    * Call the right controller according to the requested action
+    * Executes controller and gets view according to the requested action
     */ 
     public static function getController()
     {
@@ -87,15 +87,16 @@ abstract class Application
             self::$http_request->getGetData()['action'] == 'following' && self::$user !== null && self::$user->getFirstLinkDone()==1)
             || self::$http_request->getGetData()['action'] == 'search')
         {
-            $media_controller = new MediaController(self::$http_request);
-			$media_controller->executeController();
-			$media_controller->getView(self::$base_url);
+            $sp_controller = new SPController(self::$http_request);
+			$sp_controller->executeController();
+			$sp_controller->getView();
+			
         }
         else
         {
             $app_controller =  new AppController(self::$http_request);
 			$app_controller->executeController();
-			$app_controller->getView(self::$base_url);
+			$app_controller->getView();
         }
     }
 	

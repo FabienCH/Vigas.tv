@@ -32,7 +32,7 @@ abstract class Media
     */
     public function getId()
     {
-            return $this->id;
+		return $this->id;
     }
 
     /** 
@@ -40,7 +40,7 @@ abstract class Media
     */
     public function getGame()
     {
-            return $this->game;
+		return $this->game;
     }
 
     /** 
@@ -48,6 +48,6 @@ abstract class Media
     */
     public function getViewers()
     {
-            return $this->viewers;
+		return $this->viewers;
     }
 }

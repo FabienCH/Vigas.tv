@@ -1,71 +1,108 @@
 <?php
 namespace Vigas\StreamingPlatforms\Model;
 
-class Platform
+/**
+* Abstract Class Platform
+* Gets data from a streaming platform API
+*/
+abstract class Platform
 {
-	protected $name;
+	use \Vigas\Application\Model\CurlRequest;
 	
+	/**
+    * @var string base_url platform's base API url
+    */
 	protected $base_url;
 	
-	protected $http_header;
-	
+	/**
+    * @var array api_keys platform's API keys
+    */
 	protected $api_keys = [];
+	
+	/**
+    * @var array streams contains streams retrieved from the streaming platform
+    */
+	protected $streams = [];
+	
+	/**
+    * @var array followed_streams contains followed streams retrieved from the streaming platform
+    */
+	protected $followed_streams = [];
+	
+	/**
+    * @var array games contains games retrieved from the streaming platform
+    */
+	protected $games = [];
 		
-	public function __construct($name)
+	/**
+    * Sets the streaming platform API keys
+    */
+	public function __construct()
     {
-        $this->name = $name;
+		$classname = explode('\\',get_class($this));
+		$classname = end($classname);
 		$xml_doc = new \DOMDocument;
 		$xml_doc->load(__DIR__.'/../config.xml');
-		$elements = $xml_doc->getElementsByTagName($name);
+		$elements = $xml_doc->getElementsByTagName(lcfirst($classname));
         for($i=0; $i<$elements->length; $i++)
 		{
-			if($elements->item($i)->getAttribute('name') == 'base_url')
-			{
-				$this->base_url = $elements->item($i)->getAttribute('value');
-			}
-			else
-			{
-				$this->api_keys[$elements->item($i)->getAttribute('name')] = $elements->item($i)->getAttribute('value');
-			}
+			$this->api_keys[$elements->item($i)->getAttribute('name')] = $elements->item($i)->getAttribute('value');
 		}
-		var_dump($this);
     }
 	
-	public function cookieData($key)
-	{
-		return isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
-	}
-
-	public function cookieExists($key)
-	{
-		return isset($_COOKIE[$key]);
-	}
-
-	public function setGetData()
-	{
-		foreach ($_GET as $key => $value)
-		{
-			$this->get_data[$key] = htmlspecialchars($value);
-		}
-		var_dump($this->get_data);
+	/**
+    * Gets streams from the streaming platform
+    */
+	public function getStreamsFromPlatform($url, $http_header = null)
+    {
+		
 	}
 	
-	public function setPostData()
-	{
-		foreach ($_POST as $key => $value)
-		{
-			$this->post_data[$key] = htmlspecialchars($value);
-		}
+	/**
+    * Gets followed streams from the streaming platform
+    */
+	public function getFollowedStreamsFromPlatform($url, $http_header = null)
+    {
+		
 	}
 	
-	public function getGetData()
-	{
-		return $this->get_data;
+	/**
+    * Gets games from the streaming platform
+    */
+	public function getGamesFromPlatform($url, $http_header = null)
+    {
+		
 	}
+    
+	/**
+    * @return array api_keys platform's API keys
+    */
+    public function getApiKeys()
+    {
+        return $this->api_keys;
+    }
 	
-	public function getPostData()
-	{
-		return $this->post_data;
-	}
+	/**
+    * @return array streams contains streams retrieved from the streaming platform
+    */
+	public function getStreams()
+    {
+        return $this->streams;
+    }
+	
+	/**
+    * @return array followed_streams contains followed streams retrieved from the streaming platform
+    */
+	public function getFollowedStreams()
+    {
+        return $this->followed_streams;
+    }
+	/**
+    * @return array games contains games retrieved from the streaming platform
+    */
+	public function getGames()
+    {
+        return $this->games;
+    }
 	
 }

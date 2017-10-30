@@ -97,63 +97,81 @@ function hide_overlay()
 
 function load_more()
 {	
-	$(window).off("scroll");
-	$("#load-more-div").css({ height: "120px" });
-	document.getElementById("load-more-div").innerHTML='<img src="/dev2/Web/img/loading.gif" />';
-	var offset=$("#offset").val();
-	var type=($("#type").val());
-        var source_json = JSON.stringify(source_array);
-        
-	if(type=="games")
+	load_more_div = $("#load-more-div").html();
+	if(load_more_div != undefined)
 	{
-            var url = 'https://vigas.tv/dev2/index.php?action=games&offset='+offset+'&source_json='+source_json;
-	}
-	else if(type=="streams-by-game")
-	{
-            type = 'streams';
-            var url = 'https://vigas.tv/dev2/index.php?action=streams-by-game&game='+($("#game").val())+'&offset='+offset+'&source_json='+source_json;
-	}
-	else
-	{
-            var url = 'https://vigas.tv/dev2/index.php?offset='+offset+'&source_json='+source_json;
-	}	
+		var offset=$("#offset").val();
+		var type=($("#type").val());
+			var source_json = JSON.stringify(source_array);
+			
+		if(type=="games")
+		{
+			var add_to_offset = 24;
+			var max_offset = 72;
+			var url = 'https://vigas.tv/dev2/index.php?action=games&offset='+offset+'&requested_by=ajax';
+		}
+		else if(type=="streams-by-game")
+		{
+			var add_to_offset = 36;
+			var max_offset = 144;
+			var url = 'https://vigas.tv/dev2/index.php?action=streams-by-game&game='+($("#game").val())+'&offset='+offset+'&source_json='+source_json+'&requested_by=ajax';
+		}
+		else
+		{
+			var add_to_offset = 36;
+			var max_offset = 144;
+			var url = 'https://vigas.tv/dev2/index.php?offset='+offset+'&source_json='+source_json+'&requested_by=ajax';
+		}	
 
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', url);
-	xhr.addEventListener('readystatechange', function() {
-		if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-			$("#offset").remove();
-			$("#type").remove();
-			$("#game").remove();
-			$("#load-more-div").remove();
-			document.getElementById(type+'-display').innerHTML += xhr.responseText;
-			var load_more_div=$("#load-more-div").html();
-			if(typeof load_more_div != "undefined")
-			{
-				$("#load-more-div").remove();
-				$("#"+type+"-display").after("<div id=\"load-more-div\">"+load_more_div+"</div>");
-			}
-			show_overlay();
-			hide_overlay();
-			$(window).scroll(function() {
-				if(Math.ceil($(window).scrollTop()) + $(window).innerHeight() >= $(document).height()) {
-					load_more();
+		$(window).off("scroll");
+
+		if(parseInt($("#offset").val()) < max_offset)
+		{
+			$('#load-more-div').css({ display: "none" });
+			$('#'+type+'-display').after('<div id="loading-gif" class="col-xs-12"><img style="display: block; margin: auto;" src="/dev2/Web/img/loading.gif" /></div>');
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', url);
+			xhr.addEventListener('readystatechange', function() {
+				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+					document.getElementById(type+'-display').innerHTML += xhr.responseText;
+					$("#offset").val(parseInt($("#offset").val()) + add_to_offset);
+					show_overlay();
+					hide_overlay();
+					$(window).scroll(function() {
+						if(Math.ceil($(window).scrollTop()) + $(window).innerHeight() >= $(document).height()) {
+							load_more();
+						}
+					});
+					$('#load-more').click(function() {
+						load_more();
+					});
+					if(parseInt($("#offset").val()) == max_offset)
+					{
+						document.getElementById("load-more-div").innerHTML='';
+						$("#load-more-div").css({ height: "0px" });
+						
+					}
+					else
+					{
+						document.getElementById("load-more-div").innerHTML='<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams</button>';
+						$("#load-more-div").removeAttr('style');	
+					}
+					$('#loading-gif').remove();
+					if($('#content .preview').length < parseInt($("#offset").val()))
+					{
+						$('#load-more-div').remove();
+					}
 				}
 			});
-			$('#load-more').click(function() {
-				load_more();
-			});
+			xhr.send(null);	
 		}
-	});
-	xhr.send(null);
+	}
 }
 
 //reload the content according to the selected source(s)
 function reload(id)
 {
 	source_array = [];
-	var game = "";
-	var action = "";
 	var i=0;
 	
 	if(id=="All")
@@ -184,38 +202,39 @@ function reload(id)
 
 	var source_json = JSON.stringify(source_array);
 	var type=($("#type").val());
-        
-        if(type=="following")
+    if(type=="following")
 	{
-            var url = 'https://vigas.tv/dev2/index.php?action=following&offset=0&source_json='+source_json;
+            var url = 'https://vigas.tv/dev2/index.php?action=following&offset=0&source_json='+source_json+'&requested_by=ajax';
 	}
 	else if(type=="streams-by-game")
 	{
-            var url = 'https://vigas.tv/dev2/index.php?action=streams-by-game&game='+($("#game").val())+'&offset=0&source_json='+source_json;
+            var url = 'https://vigas.tv/dev2/index.php?action=streams-by-game&game='+($("#game").val())+'&offset=0&source_json='+source_json+'&requested_by=ajax';
 	}
 	else
 	{
-            var url = 'https://vigas.tv/dev2/index.php?offset=0&source_json='+source_json;
-			console.log(source_json);
+            var url = 'https://vigas.tv/dev2/index.php?offset=0&source_json='+source_json+'&requested_by=ajax';
 	}	
 
-	document.getElementById('streams-display').innerHTML='<img class="reload-gif" src="/dev2/Web/img/loading.gif" />';
+	$('#load-more-div').css({ display: "none" });
+	$('#'+type+'-display').css({ display: "none" });
+	$('#'+type+'-display').after('<div id="loading-gif" class="col-xs-12"><img style="display: block; margin: auto;" src="/dev2/Web/img/loading.gif" /></div>');
+	$(window).off("scroll");
 	
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url);
-	$("#load-more-div").remove();
 	xhr.addEventListener('readystatechange', function() {
 		if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-			$("#offset").remove();
-			$("#type").remove();
-			$("#game").remove();
-			document.getElementById('streams-display').innerHTML = xhr.responseText;
-			var load_more_div=$("#load-more-div").html();
-			if(typeof load_more_div != "undefined")
+			$('#'+type+'-display').css({ display: "block" });
+			document.getElementById(type+'-display').innerHTML = xhr.responseText;
+			$("#offset").val(36);
+			if($("#load-more-div").html() == undefined)
 			{
-				$("#load-more-div").remove();
-				$("#"+type+"-display").after("<div id=\"load-more-div\">"+load_more_div+"</div>");
+				$('#'+type+'-display').after('<div id="load-more-div"><button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams</button></div>');
 			}
+			else
+			{
+				document.getElementById("load-more-div").innerHTML='<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams</button>';
+			}	
 			show_overlay();
 			hide_overlay();
 			$(window).scroll(function() {
@@ -227,6 +246,21 @@ function reload(id)
 				load_more();
 			});
 			document.getElementById('source-choice-loading').innerHTML = "";
+			if(source_json == '[]')
+			{
+				document.getElementById("load-more-div").innerHTML='';
+				$("#load-more-div").css({ height: "0px" });
+				
+			}
+			if($('#content .preview').length < parseInt($("#offset").val()))
+			{
+				$('#load-more-div').remove();
+			}
+			else
+			{
+				
+			}
+			$('#loading-gif').remove();
 		}
 		
 	});

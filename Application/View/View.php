@@ -1,16 +1,52 @@
 <?php
 namespace Vigas\Application\View;
 
+/**
+* Class Application
+* Imports view files and sets view
+*/
 class View
 {  
+	/**
+    * @var array params parameters used by the view
+    */
     protected $params;
+	
+	/**
+    * @var array data data retrived from the model
+    */
     protected $data;
+	
+	/**
+    * @var string main_title HTML page title 
+    */
     protected $main_title;
+	
+	/**
+    * @var string content_title view content title
+    */
     protected $content_title;
+	
+	/**
+    * @var string navbar_account top navbar account information
+    */
     protected $navbar_account;
+	
+	/**
+    * @var string navbar left side navbar
+    */
     protected $navbar;
+	
+	/**
+    * @var string content view content
+    */
     protected $content;
 
+	/**
+    * Sets parameters for the view and get navbar account view
+    * @param array parameters $params
+    * @param array data $data
+    */
     public function __construct($params, $data)
     {
         $this->params = $params;
@@ -20,11 +56,17 @@ class View
 		$this->navbar_account = ob_get_clean();
     }
     
-    public function getStreamsContentView()
+	/**
+    * Gets the all live streams or streams by game view
+    * @param string $streams_view the view file to get
+    */
+    public function getStreamsContentView($streams_view)
     {
         $div_streams_display_class = "row";
         $div_stream_class = "col-lg-3 col-md-4 col-xs-6 div-prev";
-        require_once __DIR__.'/../../StreamingPlatforms/View/allStreamsView.php';
+		ob_start();
+        require_once __DIR__.'/../../StreamingPlatforms/View/'.$streams_view.'View.php';
+		$this->content = ob_get_clean();
         
         if($this->params['streams_offset'] == 0)
         {
@@ -36,13 +78,29 @@ class View
         }    
     }
     
+	/**
+    * Gets the all live streams view
+    */
     public function getStreamsView()
     {         
         $this->main_title = "Vigas - Live streams from Twitch and Smashcast";
         $this->content_title = "Live streams";
-        $this->getStreamsContentView($this->main_title, $this->content_title);
+        $this->getStreamsContentView('allStreams');
+    }
+	
+	/**
+    * Gets the streams content only
+    */
+	public function getStreamsContent()
+    {
+		$div_streams_display_class = "row";
+        $div_stream_class = "col-lg-3 col-md-4 col-xs-6 div-prev";
+        require_once __DIR__.'/../../StreamingPlatforms/View/streamsContent.php';
     }
    
+	/**
+    * Gets the all games view
+    */
     public function getGamesView()
     {
         $this->main_title = "Vigas - All games from Twitch and Smashcast";
@@ -62,16 +120,32 @@ class View
             $this->navbar = ob_get_clean();
         }
     }
+	
+	/**
+    * Gets the games content only
+    */
+	public function getGamesContent()
+    {
+		$div_games_display_class = "row";
+        $div_game_class = "col-lg-2 col-md-3 col-xs-4 div-prev";
+        require_once __DIR__.'/../../StreamingPlatforms/View/gamesContent.php';
+    }
     
-     public function getStreamsByGameView()
+	/**
+    * Gets the live streams by game view
+    */
+    public function getStreamsByGameView()
     {         
         $this->main_title = "Vigas - ".urldecode($this->params['games'])." live streams from Twitch and Smashcast";
         $this->content_title = urldecode($this->params['games'])." live streams";
-        $this->getStreamsContentView($this->main_title, $this->content_title);
+        $this->getStreamsContentView('streamsByGame');
     }
     
+	/**
+    * Gets the following live streams view
+    */
     public function getFollowingView()
-    {         
+	{         
         $this->main_title = "Vigas - Following live streams from Twitch and Smashcast";
         $this->content_title = "Live streams";
         $div_streams_display_class="row";
@@ -90,6 +164,9 @@ class View
         }
     }
     
+	/**
+    * Gets the search view
+    */
     public function getSearchView()
     {
         if($this->params['query'] != '')
@@ -113,6 +190,9 @@ class View
         $this->navbar = ob_get_clean();
     }
     
+	/**
+    * Gets the linked accounts view
+    */
     public function getLinkedAccountView()
     {
         $this->main_title = "Vigas - Login or Create Account";
@@ -123,6 +203,9 @@ class View
         $this->getDefaultNavbarView();
     }
     
+	/**
+    * Gets the save token view
+    */
     public function getSaveTokenView()
     {
         $this->main_title = "Vigas - Login or Create Account";
@@ -130,6 +213,9 @@ class View
         $this->getDefaultNavbarView();
     }
     
+	/**
+    * Gets the user profile view
+    */
     public function getProfileView()
     {
         $this->main_title = "Vigas - Settings";
@@ -140,6 +226,9 @@ class View
         $this->getDefaultNavbarView();
     }
     
+	/**
+    * Gets the forgot password view
+    */
     public function getForgotPasswordView()
     {
         $this->main_title = "Vigas - Forgot Password";
@@ -150,6 +239,9 @@ class View
         $this->getDefaultNavbarView();
     }
     
+	/**
+    * Gets the reset password view
+    */
     public function getResetPasswordView()
     {
         $this->main_title = "Vigas - Reset Password";
@@ -160,6 +252,9 @@ class View
         $this->getDefaultNavbarView();
     }
     
+	/**
+    * Gets the about view
+    */
     public function getAboutView()
     {
         $this->main_title = "Vigas - About";
@@ -170,6 +265,9 @@ class View
         $this->getDefaultNavbarView();
     }
     
+	/**
+    * Gets the 404 view
+    */
     public function get404View()
     {
         $this->main_title="Vigas - Page not found";
@@ -180,6 +278,9 @@ class View
         $this->getDefaultNavbarView();
     }
     
+	/**
+    * Gets the default navbar view
+    */
     public function getDefaultNavbarView()
     {
 		ob_start();
@@ -187,6 +288,9 @@ class View
         $this->navbar = ob_get_clean();
     }
     
+	/**
+    * Gets the template
+    */
     public function getTemplate()
     {
         require_once __DIR__.'/template.php';   

@@ -7,26 +7,31 @@ use Vigas\StreamingPlatforms\Model\Media;
 use Vigas\Applciation\Model\CurlRequest;
 
 /**
-* Abstract Class MediasManager.
+* Class MediasManager.
 */
-abstract class MediasManager
+Class MediasManager
 { 
      /**
-    * @var array $medias_to_display contains medias to pass to the view 
+    * @var array $medias_to_display contains medias to be displayed by the view 
     */
     protected $medias_to_display = [];
+	
     /**
-    * @var array $medias_array contains medias retrieved from streaming platform 
+    * @var array $medias_array contains medias retrieved from the streaming platform 
     */
     protected $medias_array = [];
-    
+
     /**
-    * @var int $media_id media id 
+    * Merges existing medias array with medias retrieved from the streaming platform 
+    * @param array $array
     */
-    protected $media_id = 0;
-        
+	public function setMediasArray(Array $array)
+    {
+        $this->medias_array = array_merge($this->medias_array, $array);
+    }
+	
     /**
-    * Order medias by number of viewers from higher to lower
+    * Orders medias by number of viewers from higher to lower
     * @param object Media $media1
     * @param object Media $media2
     */
@@ -38,17 +43,40 @@ abstract class MediasManager
         return ($media1->getViewers() > $media2->getViewers()) ? -1 : 1;
     }
     
-    /**
-    * Add a Media object into media_array
-    * @param object Media $media media to add to array
+	/**
+    * Merges array if medias array is empty
+	* Adds numbers of viewers is the game is already in array or add the game is not
+    * @param array $games_array
     */
-    protected function addMedia(Media $media)
+    public function addGames(Array $games_array)
     {
-        $id = $media->getId();
-        if(!isset($this->medias_array[$id]))
-        { 
-            $this->medias_array[$id] = $media;
-            $this->media_id++;
+        $game_exists = 0;
+        if(count($this->medias_array) == 0)
+        {
+            $this->medias_array = array_merge($this->medias_array, $games_array);
+        }
+        else
+        {
+            //checking if a game is already in game array (loaded from an other source). If it is, the number of viewers is adedd, if not, the game is added in game array
+            foreach($games_array as $new_game)
+            {
+				foreach($this->medias_array as $recorded_game)
+				{
+					if(strcasecmp($new_game->getGame(),$recorded_game->getGame()) == 0)
+					{
+						$recorded_game->addViewers($new_game->getViewers());
+						$game_exists = 1;
+						if($recorded_game->getBox()=="")
+						{
+							$recorded_game->setBox($box);
+						}
+					}
+				}
+				if($game_exists == 0)
+				{
+					array_push($this->medias_array, $new_game);
+				}				
+			}
         }
     }
     
@@ -71,18 +99,52 @@ abstract class MediasManager
     public function setMediasArrayFromJSON($path_file)
     {
         $json_source = file_get_contents($path_file);
-        $serialized_medias= json_decode($json_source, true);
-        $this->medias_array=unserialize($serialized_medias);
+        $serialized_medias = json_decode($json_source, true);
+        $this->medias_array = unserialize($serialized_medias);
+		
     }
     
-    /** 
-    * @return int returns the media id
+	/**
+    * Build medias_to_display array to be displayed by the view 
+    * @param int $limit number of streams to display
+    * @param int $offset offset to start creating medias_to_display
+    * @param array $source_array contains list of the streaming platforms (for streams only)
     */
-    public function getMediaId()
+    public function getMediasToDisplay($limit, $offset, Array $source_array = null)
     {
-        return $this->media_id;
-    }
-    
+		if(!is_null($source_array))
+		{
+			$i=0;
+			foreach($this->medias_array as $stream)
+			{
+				if(!in_array($stream->getSource(), $source_array))
+				{
+					unset($this->medias_array[$i]);
+				}
+				$i++;
+			}		
+		}
+        
+        if(count($this->medias_array)<$offset + $limit)
+        {
+            $nb_medias_to_display = count($this->medias_array);
+        }
+        else
+        {
+            $nb_medias_to_display = $offset + $limit;
+        }
+        usort($this->medias_array,  array($this, 'oderByViewers'));
+        for($i=$offset;$i<$nb_medias_to_display; $i++) 
+        {
+            array_push($this->medias_to_display, $this->medias_array[$i]);
+        }
+		
+        return $this->medias_to_display;
+    }	
+
+    /** 
+    * @return array returns the media array
+    */
     public function getMediasArray()
     {
         return $this->medias_array;

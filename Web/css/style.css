@@ -150,9 +150,9 @@
 	padding : 0px;
 }
 
-.social-network
+#social-network
 {
-	margin : 5px 5px 5px 0px;
+	margin-left : 8px;
 }
 
 .fb-like
@@ -545,6 +545,12 @@ p.viewers
 /**	END USER RELATED CONTENT	****/
 
 /*****	BEGIN OTHER CONTENT		****/
+
+#loading-gif
+{
+	display: block;
+	margin : auto;
+}
 
 .reduced-container
 {
