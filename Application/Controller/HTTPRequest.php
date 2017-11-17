@@ -43,8 +43,15 @@ class HTTPRequest
 	{
 		foreach ($_GET as $key => $value)
 		{
-			$this->get_data[$key] = htmlspecialchars($value);
-		}
+			if($key != "source_json")
+			{
+				$this->get_data[$key] = htmlspecialchars($value);
+			}
+			elseif(isset($_GET["source_json"]) && is_array(json_decode($_GET["source_json"])))
+			{
+				$this->get_data['source_json'] = json_decode($_GET["source_json"]);
+			}		
+		}	
 	}
 	
 	/**

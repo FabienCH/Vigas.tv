@@ -1,5 +1,4 @@
 <?php
-
 namespace Vigas\StreamingPlatforms\Model;
 
 use Vigas\Application\Controller\Autoloader;
@@ -11,7 +10,7 @@ use Vigas\StreamingPlatforms\Model\Smashcast;
 use Vigas\StreamingPlatforms\Controller\SPController;
 use Vigas\StreamingPlatforms\Model\MediasManager;
 
-$sp_controller = new SPController();
+//$sp_controller = new SPController;
 $streams_manager = new MediasManager;
 $games_manager = new MediasManager;
 

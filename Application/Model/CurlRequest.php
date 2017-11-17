@@ -13,7 +13,7 @@ trait CurlRequest
     * @param string|null $http_header http header to set
     * @return string returns http(s) response
     */
-    public function curlRequest($url, $post_data=null, $http_header=null)
+    public function curlRequest($url, $post_data = null, $http_header = null)
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);

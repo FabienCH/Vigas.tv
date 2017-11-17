@@ -35,14 +35,17 @@ use Vigas\Application\View\Forms;
     <?php
         if(isset($this->data['message']))
             {echo $this->data['message'];}
-        array_push($this->params, $this->data['selected']);
+		if(isset($this->params))
+			{array_push($this->params, $this->data['selected']);}
+		else
+			{$this->params = null;}
         Forms::getAboutForm(Application::getBaseURL().'about#form', 'post', $this->params);
     ?>
 </div>
 <div class="col-xs-12">
 	<h3>Follow Vigas :</h3>
-    <a target="_blank" href="https://www.facebook.com/Vigas.TV/"><img class="social-network" alt="facebook logo" src="<?= Application::getBaseURL()?>/../../Web/img/facebook.png"/>Facebook</a><br/>
-	<a target="_blank" href="https://plus.google.com/+VigasTv/about"><img class="social-network" alt="google plus logo" src="<?=Application::getBaseURL()?>/../../Web/img/googleplus.png"/>Google +</a>
+    <a target="_blank" href="https://www.facebook.com/Vigas.TV/"><img class="about-social-network" alt="facebook logo" src="<?= Application::getBaseURL()?>Web/img/facebook.png"/>Facebook</a><br/>
+	<a target="_blank" href="https://plus.google.com/+VigasTv/about"><img class="about-social-network" alt="google plus logo" src="<?=Application::getBaseURL()?>Web/img/googleplus.png"/>Google +</a>
 </div>
 <?php
 

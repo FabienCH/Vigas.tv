@@ -1,5 +1,6 @@
 <?php
 namespace Vigas\StreamingPlatforms\Model;
+use \Vigas\Application;
 
 /**
 * Abstract Class Platform
@@ -33,21 +34,20 @@ abstract class Platform
     * @var array games contains games retrieved from the streaming platform
     */
 	protected $games = [];
+	
+	/**
+    * @var array $offline_streamers contains offline streamers name
+    */
+    protected $offline_streamers = [];
 		
 	/**
     * Sets the streaming platform API keys
     */
 	public function __construct()
     {
-		$classname = explode('\\',get_class($this));
-		$classname = end($classname);
-		$xml_doc = new \DOMDocument;
-		$xml_doc->load(__DIR__.'/../config.xml');
-		$elements = $xml_doc->getElementsByTagName(lcfirst($classname));
-        for($i=0; $i<$elements->length; $i++)
-		{
-			$this->api_keys[$elements->item($i)->getAttribute('name')] = $elements->item($i)->getAttribute('value');
-		}
+		$tagname = explode('\\',get_class($this));
+		$tagname = end($tagname);
+		$this->api_keys = Application\Application::getConfigFromXML(__DIR__.'/../config.xml', lcfirst($tagname));
     }
 	
 	/**
@@ -70,6 +70,14 @@ abstract class Platform
     * Gets games from the streaming platform
     */
 	public function getGamesFromPlatform($url, $http_header = null)
+    {
+		
+	}
+	
+	/**
+    * Gets search from the streaming platform
+    */
+	public function getSearchFromPlatform($query)
     {
 		
 	}
@@ -97,12 +105,21 @@ abstract class Platform
     {
         return $this->followed_streams;
     }
+	
 	/**
     * @return array games contains games retrieved from the streaming platform
     */
 	public function getGames()
     {
         return $this->games;
+    }
+	
+	/**
+    * @return array offline_streamers contains offline streamers name retrieved from the streaming platform
+    */
+	public function getOfflineStreamers()
+    {
+        return $this->offline_streamers;
     }
 	
 }

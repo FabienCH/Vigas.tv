@@ -80,7 +80,7 @@ use Vigas\Application\Application;
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <nav class="nav navbar-nav side-nav">
 					<?= $this->navbar ?>
-					<div id="social-network" class="col-xs-12">
+					<div id="navbar-social-network" class="col-xs-12">
 						<div class="fb-like" style="display:block;" data-href="https://www.facebook.com/Vigas.TV" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 						<div class="gplus-like"><div class="g-plusone" data-href="https://plus.google.com/+VigasTv"></div></div>
 					</div>

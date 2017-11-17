@@ -74,7 +74,7 @@ class User
     * @param mixed $value the value used on the WHERE clause
     * @return false if user has not been found
     */
-    public function getUser($db, $conditions)
+    public function getUser(PDO $db, $conditions)
     {
         $request_data = $this->builRequestConditions($conditions);
         $req = $db->prepare('SELECT id, username, email, first_link_done, reset_pwd_token, reset_pwd_token_endat FROM User WHERE '.$request_data['conditions']);
@@ -103,7 +103,7 @@ class User
     * @param string $password the user password
     * @return boolean returns true if account has been created, false otherwise
     */
-    public function insertUser($db, $username, $email, $password)
+    public function insertUser(PDO $db, $username, $email, $password)
     {
         $req = $db->prepare('INSERT INTO User(username, email, password) VALUES(:username, :email, :password)');
         $resultat = $req->execute(array(
@@ -132,7 +132,7 @@ class User
     * @param string $new_password the new user password
     * @return int returns 0 if worng username or password, -1 if setting new password failed, 1 if it succeed
     */
-    public function updatePassword($db, $conditions, $new_password)
+    public function updatePassword(PDO $db, $conditions, $new_password)
     {
         $request_data = $this->builRequestConditions($conditions);
         $request_data['value']['new_password'] = sha1($new_password);
@@ -149,7 +149,7 @@ class User
         }	    
     }
     
-    public function deleteResetPwdToken($db, $id)
+    public function deleteResetPwdToken(PDO $db, $id)
     {
         $req = $db->prepare('UPDATE User SET reset_pwd_token=NULL, reset_pwd_token_endat=NULL WHERE id=:id');
         $resultat = $req->execute(array(
@@ -172,7 +172,7 @@ class User
     * @param string $username the username address to test
     * @return boolean returns true if the username is unique (not found in database), false otherwise
     */
-    public function checkUniqueUsername($db, $username)
+    public function checkUniqueUsername(PDO $db, $username)
     {
         $user_data = $this->getUser($db, ['username' => $username]);
         if($user_data === false)
@@ -191,7 +191,7 @@ class User
     * @param string $email the email address to test
     * @return boolean returns true if the email address is unique (not found in database), false otherwise
     */
-    public function checkUniqueEmail($db, $email)
+    public function checkUniqueEmail(PDO $db, $email)
     {
         $user_data = $this->getUser($db, ['email' => $email]);
         if($user_data === false)
@@ -210,7 +210,7 @@ class User
     * @param int $id user id
     * @return boolean returns true if first link done has been set to true, false otherwise
     */
-    public function firstLinkDone($db, $id)
+    public function firstLinkDone(PDO $db, $id)
     {	
         $user_data = $this->getUser($db, ['id' => $id]);
         if($user_data !== false)
@@ -235,7 +235,7 @@ class User
     * @param int $id user id
     * @return boolean returns true if reset password token and reset password token expiration datetime has been saved, false otherwise
     */
-    public function saveResetPwdToken($db, $token, $id)
+    public function saveResetPwdToken(PDO $db, $token, $id)
     {	
         $token_endat=date("Y-m-d H:i:s", strtotime('now +30 Minutes'));
         $req = $db->prepare('UPDATE User SET reset_pwd_token=:token, reset_pwd_token_endat=:token_endat WHERE id= :id');

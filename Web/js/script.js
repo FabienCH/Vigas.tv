@@ -271,11 +271,11 @@ function select_feedback()
 {
 	if($('#message-type').val()=='Bug Report')
 	{
-            $('#email').parent().append("<p id=\"url-info\" class=\"alert alert-info\">Please provide as much details as you can on the bug (which page you were, what you were doing when the bug appeared, any error message you could have...)</p><div class=\"form-group\"><label for=\"url\">Webpage's URL where the bug appeared</label><input class=\"form-control\" id=\"url\" name=\"url\" value=\"\" type=\"text\"></div>");
+            $('#email').parent().append("<p id=\"url-info\" class=\"alert alert-info\">Please provide as much details as you can on the bug (which page you were, what you were doing when the bug appeared, any error message you could have...)</p><div id=\"url-field\" class=\"form-group\"><label for=\"url\">Webpage's URL where the bug appeared</label><input class=\"form-control\" id=\"url\" name=\"url\" value=\"\" type=\"text\"></div>");
 	}
 	else if($('#message-type').val()=='Feedback')
 	{
-            $('#url').remove();
+            $('#url-field').remove();
             $('#url-info').remove();
 	}
 }

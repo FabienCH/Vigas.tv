@@ -165,7 +165,7 @@ class LinkedAccount
     * @param string $username streaming platform username
     * @param int $user_id the "local" user id
     */
-    public function saveToDB($db, $username, $user_id)
+    public function saveToDB(PDO $db, $username, $user_id)
     {	
         $req = $db->prepare('SELECT count(id) as nb_id FROM LinkedAccount WHERE user_id=:user_id');
         $req->execute(array(
@@ -208,7 +208,7 @@ class LinkedAccount
     * @param object PDO $db database connection object
     * @param int $user_id the "local" user id
     */
-    public function getFromDB($db, $user_id)
+    public function getFromDB(PDO $db, $user_id)
     {
         $req = $db->prepare('SELECT '.$this->source.'_username, '.$this->source.'_token FROM LinkedAccount WHERE user_id=:user_id');
         $req->execute(array(

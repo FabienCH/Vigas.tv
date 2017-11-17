@@ -150,9 +150,14 @@
 	padding : 0px;
 }
 
-#social-network
+#navbar-social-network
 {
 	margin-left : 8px;
+}
+
+.about-social-network
+{
+    margin: 5px 5px 5px 0px;
 }
 
 .fb-like
@@ -171,7 +176,7 @@
 
 @media (max-width: 767px)
 {
-	#social-network
+	#about-social-network
 	{
 		display : none;
 	}

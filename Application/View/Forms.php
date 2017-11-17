@@ -2,7 +2,6 @@
 namespace Vigas\Application\View;
 
 use Vigas\Application\Controller\FormBuilder;
-use Vigas\Application\Application;
 use Vigas\Application\Model\User;
 
 abstract class Forms
@@ -86,7 +85,7 @@ abstract class Forms
         }
         
         $form->getTextareaHTML('message', 'Message', 'textarea', 'message', 10, $message);
-        $form->getCaptcha(Application::CAPTCHA_CONF['siteKey']);
+        $form->getCaptcha();
         $form->getSubmitButton('Submit', 'about-form', 'btn btn-default btn-form-about');
         echo $form;
     }

@@ -43,10 +43,7 @@ abstract class Application
     */
     public static function initializeApplication()
     {
-		$xml_doc = new \DOMDocument;
-		$xml_doc->load(__DIR__.'/config.xml');
-		$element = $xml_doc->getElementsByTagName('config');
-        self::$base_url = $element->item(0)->getAttribute('value');
+		self::$base_url = self::getConfigFromXML(__DIR__.'/config.xml', 'base_url');
 		self::$http_request = new HTTPRequest;
     }
 	
@@ -65,6 +62,31 @@ abstract class Application
         self::$linked_accounts = unserialize($_SESSION['linked_accounts']);
     }
 	
+	/**
+    * Gets configuration from an XML file
+	* @param string $conf_file path to set XML file
+	* @param string $tag XML tag name
+    */
+    public static function getConfigFromXML($conf_file, $tag)
+    {
+		$xml_doc = new \DOMDocument;
+		$xml_doc->load($conf_file);
+		$elements = $xml_doc->getElementsByTagName($tag);
+		if($elements->length == 1)
+		{
+			return $elements->item(0)->getAttribute('value');
+		}
+		elseif($elements->length > 1)
+		{
+			$config = [];
+			for($i=0; $i<$elements->length; $i++)
+			{
+				$config[$elements->item($i)->getAttribute('name')] = $elements->item($i)->getAttribute('value');
+			}
+			return $config;
+		}	
+    }
+	
     /**
     * Writes in a file when a user log in
     * @param string $from login source (form or cookie)
@@ -72,7 +94,7 @@ abstract class Application
     */
 	public static function logUserLogin($from, User $user)
 	{
-        $log_file = fopen('/home/vigas/logs/vigas/user_login.log', "a");
+        $log_file = fopen(__DIR__.'/../../../logs/vigas/user_login.log', "a");
 		$date = date("Y-m-d H:i:s", strtotime('now')); 
         fwrite($log_file, $user->getUsername().' login at '.$date.' from '.$from.' ('.self::$base_url.")\r\n");
         fclose($log_file);
@@ -87,14 +109,14 @@ abstract class Application
             self::$http_request->getGetData()['action'] == 'following' && self::$user !== null && self::$user->getFirstLinkDone()==1)
             || self::$http_request->getGetData()['action'] == 'search')
         {
-            $sp_controller = new SPController(self::$http_request);
+            $sp_controller = new SPController();
 			$sp_controller->executeController();
 			$sp_controller->getView();
 			
         }
         else
         {
-            $app_controller =  new AppController(self::$http_request);
+            $app_controller =  new AppController();
 			$app_controller->executeController();
 			$app_controller->getView();
         }
@@ -134,6 +156,14 @@ abstract class Application
     public static function getPDOconnection()
     {
         return self::$pdo_connection;
+    }
+	
+    /**
+    * @return object HTTPRequest the HTTP request
+    */
+    public static function getHTTPRequest()
+    {
+        return self::$http_request;
     }
     
     /**

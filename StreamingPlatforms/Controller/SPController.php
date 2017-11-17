@@ -5,6 +5,7 @@ use Vigas\StreamingPlatforms\Model\Twitch;
 use Vigas\StreamingPlatforms\Model\Smashcast;
 use Vigas\StreamingPlatforms\Model\MediasManager;
 use Vigas\StreamingPlatforms\Model\SearchManager;
+use Vigas\Application\Application;
 use Vigas\Application\Controller\HTTPRequest;
 use Vigas\Application\View\View;
 
@@ -36,10 +37,10 @@ class SPController
     
 	/**
     * Sets parameters for the model and methods name
-    * @param object HTTPRequest $http_request
     */
-    public function __construct(HTTPRequest $http_request = null)
+    public function __construct()
     {
+		$http_request = Application::getHTTPRequest();
 		if(!is_null($http_request))
 		{
 			if(isset($http_request->getGetData()['action']) && $http_request->getGetData()['action'] == 'games')
@@ -53,16 +54,14 @@ class SPController
 			}
 			elseif(!isset($http_request->getGetData()['action']) || $http_request->getGetData()['action'] == 'following' || $http_request->getGetData()['action'] == 'streams-by-game')
 			{
-				if(isset($_GET["source_json"]) && is_array(json_decode($_GET["source_json"])))
+				if(isset($http_request->getGetData()["source_json"]))
 				{
-					$this->model_params['source_array'] = json_decode($_GET["source_json"]);
-
+					$this->model_params['source_array'] = $http_request->getGetData()["source_json"];
 				}
 				else
 				{
 					$this->model_params['source_array'] = ["All","Twitch","Smashcast"];
 				}
-				
 			   $this->model_params['id-stream'] = (isset($http_request->getGetData()['id-stream'])) ? $http_request->getGetData()['id-stream'] : null;
 			   $this->model_params['streams_limit'] = 36;
 			   $this->model_params['streams_offset'] = (isset($http_request->getGetData()['offset'])) ? $http_request->getGetData()['offset'] : 0;
@@ -78,6 +77,7 @@ class SPController
 			{
 				$this->model_params['games_limit'] = 6;
 				$this->model_params['games_offset'] = 0;
+				$this->model_params['query'] = $http_request->getPostData()['query'];
 				$this->navbar_method_name = 'getGames';
 			}
 			
@@ -236,18 +236,26 @@ class SPController
 	/**
     * Gets all data to display for the search view
     */
-    public function getSearch($query = '')
+    public function getSearch()
     {
-        if($query != '')
+        if($this->model_params['query'] != '')
         {
-            $search_manager = new SearchManager();
-            $search_manager->twitchSearch($query);
-            $search_manager->smashcastSearch($query);
+			$streams_manager = new MediasManager;
+			$games_manager = new MediasManager;
+			
+			$twitch = new Twitch;
+            $twitch->getSearchFromPlatform($this->model_params['query']);
+			$streams_manager->setMediasArray($twitch->getStreams());
+			$games_manager->addGames($twitch->getGames());
+			
+			$smashcast = new Smashcast;
+            $smashcast->getSearchFromPlatform($this->model_params['query']);
+			$streams_manager->setMediasArray($smashcast->getStreams());
+			$games_manager->addGames($smashcast->getGames());
 
-            $this->model_data['streams_array'] = $search_manager->getStreamsMngr()->getMediasArray();
-            $this->model_data['games_array'] = $search_manager->getGamesMngr()->getMediasArray();
-            $this->model_data['streamers'] = $search_manager->getStreamerName();
-            $this->model_params['query'] = $query;
+			$this->model_data['streams_array'] = $streams_manager->getMediasArray();
+			$this->model_data['games_array'] = $games_manager->getMediasArray();
+			$this->model_data['offline_streamers'] = array_merge($twitch->getOfflineStreamers(), $smashcast->getOfflineStreamers());
         }
     }
     

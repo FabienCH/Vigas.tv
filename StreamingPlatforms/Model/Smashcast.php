@@ -53,4 +53,29 @@ class Smashcast extends Platform
 		return $this->games;
     }
 	
+	/**
+    * Get search result from Smashcast and add them to streams array
+    * @param string $url Smashcast API url to send the request to
+    * @param string|null $http_header http header to set
+	* @return array streams streams retrieved from Smashcast
+    */
+	public function getSearchFromPlatform($query)
+    {
+		$search_streams = $this->getStreamsFromPlatform('https://api.smashcast.tv/media/live/list?search='.$query.'&limit=50');
+       		
+		$search_games = $this->curlRequest('https://api.smashcast.tv/games?q='.$query.'&limit=50&liveonly=true');
+        
+		$offline_streamer = $this->curlRequest('https://api.smashcast.tv/media/live/'.$query);
+		$decode_offline_streamer = json_decode($offline_streamer, true);
+        if(isset($decode_offline_streamer["livestream"]))
+        {
+            $stream = $decode_offline_streamer["livestream"][0];
+            if($stream["media_is_live"] == 0)
+            {
+                array_push($this->offline_streamers,array("name"=>$stream["media_user_name"], "profile_link"=>"https://www.smashcast.tv/".$stream["media_name"],"source"=>"Smashcast"));
+            }
+        }  
+
+	}
+	
 }

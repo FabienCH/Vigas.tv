@@ -1,6 +1,8 @@
 <?php
 namespace Vigas\Application\Controller;
 
+use Vigas\Application;
+
 class FormBuilder
 {
 	protected $html_fields = '';
@@ -16,7 +18,6 @@ class FormBuilder
         {
             $this->class = 'class="'.$class.'"';
         }
-        
     }
     
     public function __toString()
@@ -110,9 +111,10 @@ class FormBuilder
 		$this->html_fields .= $this->surroundWithLabel($radio_html, $main_label);
 	}
     
-    public function getCaptcha($site_key)
+    public function getCaptcha()
     {
-        $this->html_fields .= '<div class="g-recaptcha" data-sitekey="'.$site_key.'"></div>';
+		$captcha_config = Application\Application::getConfigFromXML(__DIR__.'/../config.xml', 'captcha');
+        $this->html_fields .= '<div class="g-recaptcha" data-sitekey="'.$captcha_config['siteKey'].'"></div>';
     }
     
     public function getSubmitButton($label, $name, $class)

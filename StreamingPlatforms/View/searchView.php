@@ -1,7 +1,7 @@
 <?php
-use Vigas\Controller\Application;
+use Vigas\Application\Application;
 
-if(isset($this->params['query']))
+if($this->params['query'] != '')
 {
 	if(count($this->data['streams_array'])>0)
 	{
@@ -16,14 +16,14 @@ if(isset($this->params['query']))
 			?>
 			<div id="<?= $this->data['streams_array'][$i]->getChannelName()?>" class="col-lg-3 col-md-4 col-xs-6 div-prev">
 				<div style="background-image:url(<?= $this->data['streams_array'][$i]->getPreviewUrl()?>); background-size : contain;" >
-					<img class="preview" alt="stream overlay" src="<?=Application::getBaseURL()?>/../../Web/img/degrade-<?= $this->data['streams_array'][$i]->getSource()?>.png" />
+					<img class="preview" alt="stream overlay" src="<?=Application::getBaseURL()?>Web/img/degrade-<?= $this->data['streams_array'][$i]->getSource()?>.png" />
 				</div>
 				<p class="stream-infos"><?= $this->data['streams_array'][$i]->getChannelDisplayName()?> playing <a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
 			
 				<div class="overlay stream-ov">
 					<h5 class="stream-status"><?= $this->data['streams_array'][$i]->getStatus()?></h5>
-					<p class="viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>/../../Web/img/viewer-icon.png" /><?= $this->data['streams_array'][$i]->getViewers()?></p>
-					<img class="play-stream" alt="play stream icon" src="<?=Application::getBaseURL()?>/../../Web/img/play-logo.png" />
+					<p class="viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $this->data['streams_array'][$i]->getViewers()?></p>
+					<img class="play-stream" alt="play stream icon" src="<?=Application::getBaseURL()?>Web/img/play-logo.png" />
 				</div>
 			</div>
 			<input type="hidden" id="stream-<?= $this->data['streams_array'][$i]->getChannelName()?>" value="<?= $this->data['streams_array'][$i]->getStreamUrl()?>">
@@ -61,12 +61,12 @@ if(isset($this->params['query']))
 		<?php
 	}
 	
-	if(count($this->data['streamers'])>0)
+	if(count($this->data['offline_streamers'])>0)
 	{?>
 		<div id="Streamers-display" class="row">
 		<h3>Offline streamer</h3>
 		<?php
-		foreach($this->data['streamers'] as $streamer)
+		foreach($this->data['offline_streamers'] as $streamer)
 		{?>
 			<p class="streamer"><a target="_blank" href="<?=$streamer["profile_link"]?>"><?=$streamer["name"]?></a> (<?=$streamer["source"]?>)</p>
 		<?php
@@ -76,15 +76,15 @@ if(isset($this->params['query']))
 		<?php
 	}
 	
-	if(count($this->data['streams_array'])==0 && count($this->data['games_array'])==0 && count($this->data['streamers'])==0)
+	if(count($this->data['streams_array'])==0 && count($this->data['games_array'])==0 && count($this->data['offline_streamers'])==0)
 	{?>
-		<p>Couldn't find anything for <?=$this->params['query']?>. Please try an other research</p>
+		<p class="alert alert-warning">Couldn't find anything for <?=$this->params['query']?>. Please try an other research</p>
 	<?php
 	}
 }
 else
 {
     ?>
-	<p>You did not enter any keyword<p>
+	<p class="alert alert-warning">You did not enter any keyword<p>
     <?php 
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Vigas\Controller;
+namespace Vigas\Application\Controller;
 
 /**
  * Class Captcha.
@@ -40,11 +40,11 @@ class Captcha
     */
     public function __construct($siteKey, $secretKey, $captcha_response, $remote_ip)
     {
-        $this->siteKey=$siteKey;
-        $this->secretKey=$secretKey;
-        $this->captcha_response=$captcha_response;
-        $this->remoteip=$remote_ip;
-        $this->api_url="https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha_response."&remoteip=".$remote_ip;	
+        $this->siteKey = $siteKey;
+        $this->secretKey = $secretKey;
+        $this->captcha_response = $captcha_response;
+        $this->remote_ip = $remote_ip;
+        $this->api_url = "https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha_response."&remoteip=".$remote_ip;	
     }
 
     /** 
