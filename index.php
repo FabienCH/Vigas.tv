@@ -10,5 +10,17 @@ Autoloader::register();
 
 Application::initializeApplication();
 Application::setPDOconnection();
-Application::getController();
 
+if(isset($_COOKIE['user']) && !isset($_SESSION['user']))
+{
+    Application::initializeSession(unserialize($_COOKIE['user']));
+	Application::getUser()->logUserLogin(Application::getPDOconnection(), 'cookie');
+	$_SESSION['user'] = $_COOKIE['user'];
+	
+}
+if(isset($_SESSION['user']))
+{
+    Application::initializeSession(unserialize($_SESSION['user']));
+}
+
+Application::getController();

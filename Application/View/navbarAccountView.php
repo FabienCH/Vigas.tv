@@ -35,7 +35,7 @@ else
 		if(isset($this->data['login_error']))
             {echo $this->data['login_error'];}
         isset($this->params['log-username']) ? $username = $this->params['log-username'] : $username = '';
-            Forms::getLoginForm(Application::getBaseURL()."following", 'post', $username);
+            Forms::getLoginForm(Application::getBaseURL().'login', 'post', $username);
 		?>
 	</ul>
 	</li>
@@ -47,7 +47,7 @@ else
 		if(isset($this->data['create_account_error']))
             {echo $this->data['create_account_error'];}
         isset($this->params) ? $params = $this->params : $params = '';
-            Forms::getCreateAccountForm(Application::getBaseURL()."following", 'post', $params);
+            Forms::getCreateAccountForm(Application::getBaseURL().'login', 'post', $params);
 		?>
 	</ul>
 	</li>

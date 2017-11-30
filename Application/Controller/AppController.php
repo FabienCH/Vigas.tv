@@ -5,7 +5,7 @@ use Vigas\Application\View\View;
 use Vigas\Application\Application;
 use Vigas\Application\Controller\Mailer;
 use Vigas\Application\Controller\Captcha;
-use Vigas\Model\LinkedAccount;
+use Vigas\Application\Model\UserManager;
 
 /**
 * Class AppController
@@ -41,14 +41,14 @@ class AppController
 		$http_request = Application::getHTTPRequest();
 		if(!is_null($http_request))
 		{
-			if(isset($http_request->getGetData()['action']) && $http_request->getGetData()['action'] == 'about')
+			if(isset($http_request->getGetData()['action']) && ($http_request->getGetData()['action'] == 'about' || $http_request->getGetData()['action'] == 'login'))
 			{
 				if(!empty($http_request->getPostData()))
 				{
 					$this->post_params = $http_request->getPostData();
 				}
 			    $this->navbar_method_name = 'getDefaultNavbar';
-				$this->method_name = 'getAbout';
+				$this->method_name = 'get'.$http_request->getGetData()['action'];
 			}
 		}
     }
@@ -79,20 +79,23 @@ class AppController
     /**
     * Get data for the linked accounts view
     */
-    public function getLinkedAccount()
+    public function getLogin()
     {
         if(isset($this->post_params['login']))
         {
             $user_manager = new UserManager;
             $this->response['login_error'] = $user_manager->logUser($this->post_params['log-username'], $this->post_params['log-password'], $this->post_params['log-remember-me']);
         }
-
-        if(isset($this->post_params['create-account']))
+		
+		if(isset($this->post_params['create-account']))
         {
             $user_manager = new UserManager;
             $this->response['create_account_error'] = $user_manager->createAccount($this->post_params['ca-username'], $this->post_params['ca-email'], $this->post_params['ca-password'], $this->post_params['ca-password-2'], $this->post_params['ca-remember-me']);
         }
-        
+	}
+
+	public function getFirstLinkDone()
+    {
         if(isset($this->post_params['first-link-done']))
         {
             $user_manager = new UserManager;
@@ -347,4 +350,3 @@ class AppController
         return $this->response;
     }
 }
-

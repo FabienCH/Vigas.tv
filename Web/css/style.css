@@ -397,7 +397,7 @@ iframe#stream, iframe#chat
 	 text-decoration: none;
 }
 
-.game-ov p
+.game-ov h5
 {
 	margin-top : 5px;
 	margin-left : 5px;
@@ -429,7 +429,6 @@ iframe#stream, iframe#chat
 .viewers img
 {
 	padding-right : 5px;
-	padding-left : 5px;
 }
 
 p.viewers

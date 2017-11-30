@@ -58,9 +58,9 @@ class Twitch extends Platform
     */
 	public function getSearchFromPlatform($query)
     {
-		$search_streams = $this->getStreamsFromPlatform('https://api.twitch.tv/kraken/search/streams?q='.urlencode($query).'&limit=50', array('Client-ID: '.$this->api_keys['client_id']));
+		$search_streams = $this->getStreamsFromPlatform($this->getApiUrl('search_streams', ['query_val' => urlencode($query), 'limit_val' => 50]), array('Client-ID: '.$this->api_keys['client_id']));
        		
-		$search_games = $this->curlRequest('https://api.twitch.tv/kraken/search/games?q='.urlencode($query).'&type=suggest&live=true', null, array('Client-ID: '.$this->api_keys['client_id']));
+		$search_games = $this->curlRequest($this->getApiUrl('search_games', ['query_val' => urlencode($query)]), null, array('Client-ID: '.$this->api_keys['client_id']));
         $decode_flux = json_decode($search_games, true);
 		$API_games = $decode_flux["games"];
         foreach($API_games as $game)
@@ -69,7 +69,7 @@ class Twitch extends Platform
 			array_push($this->games, $game);
         }
 		
-		$offline_streamer = $this->curlRequest('https://api.twitch.tv/kraken/users/'.urlencode($query), null, array('Client-ID: '.$this->api_keys['client_id']));
+		$offline_streamer = $this->curlRequest($this->getApiUrl('search_streamers', ['query_val' => urlencode($query)]), null, array('Client-ID: '.$this->api_keys['client_id']));
 		$decode_offline_streamer = json_decode($offline_streamer, true);
         if(isset($decode_offline_streamer["display_name"]))
         {

@@ -186,14 +186,14 @@ class SPController
                 if($source == "Twitch")
                 {
 					$twitch = new Twitch;
-                    $twitch->getStreamsFromPlatform('https://api.twitch.tv/kraken/streams?limit=100&game='.$twitch_game, array('Client-ID: '. $twitch->getApiKeys()['client_id']));
-                    $twitch->getStreamsFromPlatform('https://api.twitch.tv/kraken/streams?limit=100&offset=100&game='.$twitch_game, array('Client-ID: '. $twitch->getApiKeys()['client_id']));
+                    $twitch->getStreamsFromPlatform($twitch->getApiUrl('get_streams_by_game', ['limit_val' => 100, 'offset_val' => 0, 'game_val' => $twitch_game]), array('Client-ID: '. $twitch->getApiKeys()['client_id']));
+                    $twitch->getStreamsFromPlatform($twitch->getApiUrl('get_streams_by_game', ['limit_val' => 100, 'offset_val' => 100, 'game_val' => $twitch_game]), array('Client-ID: '. $twitch->getApiKeys()['client_id']));
 					$streams_manager->setMediasArray($twitch->getStreams());
                 }
                 elseif($source=="Smashcast")
                 {
 					$smashcast = new Smashcast;
-                    $smashcast->getStreamsFromPlatform('https://api.smashcast.tv/media/live/list?limit=100&game='.$this->model_params['games']);
+                    $smashcast->getStreamsFromPlatform($smashcast->getApiUrl('get_streams_by_game', ['limit_val' => 100, 'offset_val' => 0, 'game_val' => $this->model_params['games']]));
 					$streams_manager->setMediasArray($smashcast->getStreams());
                 }
             }
@@ -229,7 +229,7 @@ class SPController
                 }
             }				
 
-            $this->model_data['streams_to_display'] = $streams_manager->getStreamsToDisplay($this->model_params['source_array'], $this->model_params['streams_limit'], $this->model_params['streams_offset']);
+            $this->model_data['streams_to_display'] = $streams_manager->getMediasToDisplay($this->model_params['streams_limit'], $this->model_params['streams_offset'], $this->model_params['source_array']);
         }
     }
     
@@ -253,7 +253,7 @@ class SPController
 			$streams_manager->setMediasArray($smashcast->getStreams());
 			$games_manager->addGames($smashcast->getGames());
 
-			$this->model_data['streams_array'] = $streams_manager->getMediasArray();
+			$this->model_data['streams_array'] = $streams_manager->getMediasToDisplay(100, 0, ["All","Twitch","Smashcast"]);
 			$this->model_data['games_array'] = $games_manager->getMediasArray();
 			$this->model_data['offline_streamers'] = array_merge($twitch->getOfflineStreamers(), $smashcast->getOfflineStreamers());
         }

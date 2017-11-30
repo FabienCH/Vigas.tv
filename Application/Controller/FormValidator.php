@@ -1,5 +1,5 @@
 <?php
-namespace Vigas\Controller;
+namespace Vigas\Application\Controller;
 
 class FormValidator
 {

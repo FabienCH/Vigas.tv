@@ -42,6 +42,7 @@ if($this->params['query'] != '')
 		<h3>Games</h3>
 		<?php
 		$nb_games_array = count($this->data['games_array']);
+		var_dump($this->data['games_array']);
 		for($i=0;$i<$nb_games_array; $i++) 
 		{ ?>
 			<div id="<?= $this->data['games_array'][$i]->getId() ?>" class="col-lg-2 col-md-3 col-xs-4 div-prev">

@@ -1,10 +1,14 @@
 <?php
-namespace Vigas\Controller;
+namespace Vigas\Application\Model;
 
-use Vigas\Model\User;
-use Vigas\Model\LinkedAccount;
-use Vigas\Controller\FormValidator;
-use Vigas\Controller\Mailer;
+use Vigas\Application\Application;
+use Vigas\Application\Model\User;
+use Vigas\Application\Controller\FormValidator;
+use Vigas\Application\Controller\Mailer;
+use Vigas\StreamingPlatforms\Model\Twitch;
+use Vigas\StreamingPlatforms\Model\Smashcast;
+use Vigas\StreamingPlatforms\Model\TwitchAccount;
+use Vigas\StreamingPlatforms\Model\SmashcastAccount;
 
 class UserManager
 {
@@ -47,7 +51,7 @@ class UserManager
         }
         elseif(!$this->user->checkUniqueEmail($this->db, $email))
         {
-            return '<div class="alert alert-warning">This email is already used. <a href="'.Application::BASE_URL.'forgot-password">Forgot username or password ?</a></div>';
+            return '<div class="alert alert-warning">This email is already used. <a href="'.Application::getBaseURL().'forgot-password">Forgot username or password ?</a></div>';
         }
         else
         {         
@@ -62,7 +66,7 @@ class UserManager
     public function logUser($username, $password, $remember_me = null)
     {
         $this->user = new User;
-        $test_user = $this->user->getUser($this->db, ['username' => $username, 'password' => $password]);
+        $test_user = $this->user->getUser($this->db, ['username' => $username], $password);
 
         if($test_user !== false)
         {
@@ -74,13 +78,13 @@ class UserManager
             {
                 $_SESSION['user'] = serialize($this->user);
             }
-            $_SESSION['linked_accounts'] = serialize($this->getAllLinkedAccounts($this->db, $this->user));
-			Application::logUserLogin('form', $this->user);
-            header('Location: https://vigas.tv'.Application::BASE_URL.'following');
+            $_SESSION['platform_accounts'] = serialize($this->getPlatformAccounts($this->db, $this->user));
+			$this->user->logUserLogin(Application::getPDOconnection(), 'form');
+            header('Location: https://vigas.tv'.Application::getBaseURL().'following');
         }
         else
         {
-            return '<div class="alert alert-warning">Wrong username or password. <a href="'.Application::BASE_URL.'forgot-password">Forgot password ?</a></div>';
+            return '<div class="alert alert-warning">Wrong username or password. <a href="'.Application::getBaseURL().'forgot-password">Forgot password ?</a></div>';
             $GLOBALS["login_form_data"] = $_POST['username'];
         }      
     }
@@ -98,10 +102,10 @@ class UserManager
         }
         else
         {
-            $test_user = $this->user->getUser($this->db, ['username' => $user->getUsername(), 'password' => $current_password]);
+            $test_user = $this->user->getUser($this->db, ['username' => $user->getUsername()], $current_password);
             if($test_user !== false)
             {
-                $password_changed=$user->updatePassword($this->db, ['id' => $id, 'username' => $username], $new_password);
+                $password_changed = $user->updatePassword($this->db, ['id' => $id, 'username' => $user->getUsername()], $new_password);
                 if($password_changed)
                 {
                     return '<div class="alert alert-success">Your password has been changed</div>';
@@ -160,7 +164,7 @@ class UserManager
             $delete_token = $this->user->deleteResetPwdToken($this->db, $id);
             if($password_changed && $delete_token)
             {  
-                return '<div class="alert alert-success">Your password has been changed. Please log in <a href="'.Application::BASE_URL.'following">here</a></div>';
+                return '<div class="alert alert-success">Your password has been changed. Please log in <a href="'.Application::getBaseURL().'following">here</a></div>';
             }
             else
             {
@@ -178,7 +182,7 @@ class UserManager
             $reset_pwd_token = bin2hex(random_bytes(20));
             if($this->user->saveResetPwdToken($this->db, $reset_pwd_token, $this->user->getId()))
             {               
-                $body='<body><a href="https://vigas.tv'.Application::BASE_URL.'"><img style="height:100%;" alt="vigas email banner" src="https://vigas.tv/View/img/email-banner.jpg" /></a><h2>Vigas.tv : reset password</h2><p>'.$this->user->getUsername().',</p><p>In order to reset your passord, please click (or copy/paste) the following link (this link is only available for 30 minutes) :<br/><a href="https://vigas.tv'.Application::BASE_URL.'reset-password/token='.$reset_pwd_token.'&id='.$this->user->getId().'">https://vigas.tv'.Application::BASE_URL.'reset-password/token='.$reset_pwd_token.'&id='.$this->user->getId().'</a></p><p><strong>IMPORTANT : Do not click this link if you did not request a password reset. Note that I\'ll never ask you for your password, do not answer to any email who would.</strong></p><p>Regards,<br/>Admin@Vigas.tv</p></body>';
+                $body='<body><a href="https://vigas.tv'.Application::getBaseURL().'"><img style="height:100%;" alt="vigas email banner" src="https://vigas.tv/View/img/email-banner.jpg" /></a><h2>Vigas.tv : reset password</h2><p>'.$this->user->getUsername().',</p><p>In order to reset your passord, please click (or copy/paste) the following link (this link is only available for 30 minutes) :<br/><a href="https://vigas.tv'.Application::getBaseURL().'reset-password/token='.$reset_pwd_token.'&id='.$this->user->getId().'">https://vigas.tv'.Application::getBaseURL().'reset-password/token='.$reset_pwd_token.'&id='.$this->user->getId().'</a></p><p><strong>IMPORTANT : Do not click this link if you did not request a password reset. Note that I\'ll never ask you for your password, do not answer to any email who would.</strong></p><p>Regards,<br/>Admin@Vigas.tv</p></body>';
 
                 $mail = new Mailer('admin@vigas.tv', 'Vigas Admin', 'auth.smtp.1and1.fr', 'Reset your Vigas password', $body,  $_POST['email'], Application::SMTP_CONF);
                 $mail->IsHTML(true);
@@ -232,14 +236,16 @@ class UserManager
         return $response;
     }
     
-    public function getAllLinkedAccounts()
+    public function getPlatformAccounts()
     {
-        $twitch_account = new LinkedAccount('twitch');
-		$linked_accounts['twitch_data'] = $twitch_account->getFromDB($this->db, $this->user->getId());
-		$smashcast_account = new LinkedAccount('smashcast');
-		$linked_accounts['smashcast_data'] = $smashcast_account->getFromDB($this->db, $this->user->getId());
+		$twitch = new Twitch;
+		$smashcast = new Smashcast;
+        $twitch_account = new TwitchAccount($twitch);
+		$platform_accounts['twitch_data'] = $twitch_account->getFromDB($this->db, $this->user->getId());
+		$smashcast_account = new SmashcastAccount($smashcast);
+		$platform_accounts['smashcast_data'] = $smashcast_account->getFromDB($this->db, $this->user->getId());
         
-        return $linked_accounts;
+        return $platform_accounts;
     }
     
     public function setFirstLinkDone()
@@ -260,7 +266,7 @@ class UserManager
             {
                 $_SESSION['user'] = serialize($this->user);
             }
-            header('Location: https://vigas.tv'.Application::BASE_URL.'following');
+            header('Location: https://vigas.tv'.Application::getBaseURL().'following');
         }
     }
 
@@ -276,7 +282,7 @@ class UserManager
         session_unset();
         session_destroy();
 
-        header('Location: https://vigas.tv'.Application::BASE_URL);      
+        header('Location: https://vigas.tv'.Application::getBaseURL());      
     }
 
 }

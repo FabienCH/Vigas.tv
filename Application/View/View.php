@@ -193,12 +193,12 @@ class View
 	/**
     * Gets the linked accounts view
     */
-    public function getLinkedAccountView()
+    public function getLoginView()
     {
         $this->main_title = "Vigas - Login or Create Account";
         $this->content_title = "Login or create account";
 		ob_start();
-        require_once __DIR__.'/linkedAccountView.php';
+        require_once __DIR__.'/loginView.php';
         $this->content = ob_get_clean();
         $this->getDefaultNavbarView();
     }

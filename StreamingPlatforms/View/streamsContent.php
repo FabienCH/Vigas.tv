@@ -28,7 +28,7 @@ if(count($this->data['streams_to_display']) > 0)
 
 			<div class="overlay stream-ov">
 				<?php
-				if (!isset($_GET['action']))
+				if (!isset($_GET['action']) || $_GET['action'] == 'streams-by-game')
 				{?>
 				<h5 class="stream-status"><?= $stream->getStatus()?></h5>
 				<?php } ?>

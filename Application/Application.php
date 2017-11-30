@@ -3,8 +3,9 @@ namespace Vigas\Application;
 
 use Vigas\Application\Controller\AppController;
 use Vigas\Application\Controller\HTTPRequest;
-use Vigas\Application\Model\LinkedAccount;
+use Vigas\Application\Model\PlatformAccount;
 use Vigas\Application\Model\UserManager;
+use Vigas\Application\Model\User;
 use Vigas\StreamingPlatforms\Controller\SPController;
 
 /**
@@ -39,6 +40,11 @@ abstract class Application
     protected static $user;
 
 	/**
+    * @var array $platform_accounts user's linked accounts
+    */
+    private static $platform_accounts;
+	
+	/**
     * Sets base_url and http_request attributes
     */
     public static function initializeApplication()
@@ -54,12 +60,12 @@ abstract class Application
     public static function initializeSession(User $user)
     {
         self::$user = $user;
-        if(!isset($_SESSION['linked_accounts']))
+        if(!isset($_SESSION['platform_accounts']))
         {
             $user_manager = new UserManager;
-            $_SESSION['linked_accounts'] = serialize($user_manager->getAllLinkedAccounts(self::$getPDOconnection(), $user));
+            $_SESSION['platform_accounts'] = serialize($user_manager->getPlatformAccounts(self::$pdo_connection(), $user));
         }
-        self::$linked_accounts = unserialize($_SESSION['linked_accounts']);
+        self::$platform_accounts = unserialize($_SESSION['platform_accounts']);
     }
 	
 	/**
@@ -86,19 +92,6 @@ abstract class Application
 			return $config;
 		}	
     }
-	
-    /**
-    * Writes in a file when a user log in
-    * @param string $from login source (form or cookie)
-	* @param object User $user
-    */
-	public static function logUserLogin($from, User $user)
-	{
-        $log_file = fopen(__DIR__.'/../../../logs/vigas/user_login.log', "a");
-		$date = date("Y-m-d H:i:s", strtotime('now')); 
-        fwrite($log_file, $user->getUsername().' login at '.$date.' from '.$from.' ('.self::$base_url.")\r\n");
-        fclose($log_file);
-	}
     
 	/**
     * Executes controller and gets view according to the requested action
@@ -183,5 +176,3 @@ abstract class Application
     }
     
 }
-
-
