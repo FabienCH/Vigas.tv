@@ -5,8 +5,11 @@ use Vigas\StreamingPlatforms\Model\Twitch;
 use Vigas\StreamingPlatforms\Model\Smashcast;
 use Vigas\StreamingPlatforms\Model\MediasManager;
 use Vigas\StreamingPlatforms\Model\SearchManager;
+use Vigas\StreamingPlatforms\Model\TwitchAccount;
+use Vigas\StreamingPlatforms\Model\SmashcastAccount;
 use Vigas\Application\Application;
 use Vigas\Application\Controller\HTTPRequest;
+use Vigas\Application\Model\UserManager;
 use Vigas\Application\View\View;
 
 /**
@@ -97,7 +100,8 @@ class SPController
     * @param string $action the action url parameter
     * @return string the method name
     */
-    public function setMethodName($action) {
+    public function setMethodName($action)
+	{
         if(strpos($action, '-'))
         {
             $array = explode('-', $action);
@@ -210,22 +214,22 @@ class SPController
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        if(Application::getLinkedAccounts() !== null && Application::getUser()->getFirstLinkDone()==1)
+        if(Application::getPlatformAccounts() !== null && Application::getUser()->getFirstLinkDone()==1)
         {
-            $linked_accounts = Application::getLinkedAccounts();
+            $platform_accounts = Application::getPlatformAccounts();
             $user = Application::getUser();
 
             $streams_manager = new MediasManager;
             foreach($this->model_params['source_array'] as $source)
             {
-                if($source=="Twitch" && isset($linked_accounts['twitch_data']))
+                if($source=="Twitch" && isset($platform_accounts['twitch_data']))
                 {
-                    $twitch_token = $linked_accounts['twitch_data']->getToken();
-                    $streams_manager->getTwitchStreams('https://api.twitch.tv/kraken/streams/followed', null, array('Client-ID: '.$this->getPlatformsKeys()['twitch']['client_id'], 'Authorization: OAuth '.$linked_accounts['twitch_data']->decryptToken($twitch_token)));
+                    $twitch_token = $platform_accounts['twitch_data']->getToken();
+                    $streams_manager->getTwitchStreams('https://api.twitch.tv/kraken/streams/followed', null, array('Client-ID: '.$this->getPlatformsKeys()['twitch']['client_id'], 'Authorization: OAuth '.$platform_accounts['twitch_data']->decryptToken($twitch_token)));
                 }
-                elseif($source=="Smashcast" && isset($linked_accounts['smashcast_data']))
+                elseif($source=="Smashcast" && isset($platform_accounts['smashcast_data']))
                 {
-                    $streams_manager->getSmashcastFollowedStreams($linked_accounts['smashcast_data']->getUsername());
+                    $streams_manager->getSmashcastFollowedStreams($platform_accounts['smashcast_data']->getUsername());
                 }
             }				
 
@@ -257,6 +261,78 @@ class SPController
 			$this->model_data['games_array'] = $games_manager->getMediasArray();
 			$this->model_data['offline_streamers'] = array_merge($twitch->getOfflineStreamers(), $smashcast->getOfflineStreamers());
         }
+    }
+	
+	public function getFirstLinkDone()
+    {
+        if(isset($this->post_params['first-link-done']))
+        {
+            $user_manager = new UserManager;
+            $this->response['first_link_error'] = $user_manager->setFirstLinkDone();
+        }
+    }
+    
+    /**
+    * Save streaming platforms token once identified
+    */
+    public function getSaveToken()
+    {
+		$get_params = Application::getHTTPRequest()->getGetData();
+        if(Application::getUser() !== null)
+        {
+            if(isset($get_params['code']))
+            {
+				$twitch = new Twitch;
+                $twitch_account = new TwitchAccount($twitch);
+
+                $data = array('client_id' => $twitch->getApiKeys()['client_id'], 'client_secret' => $twitch->getApiKeys()['client_secret'], 'grant_type' => 'authorization_code', 'redirect_uri' => 'https://vigas.tv'.Application::getBaseUrl().'save-token', 'code' => $get_params['code'], 'state' => 'oauth2');
+
+                $twitch_account->getTokenFromSource($data);
+                $twitch_account->getUsernameFromSource();	
+                $twitch_account->saveToDB(Application::getPDOconnection(), $twitch_account->getUsername(), Application::getUser()->getId());
+                $twitch_account->getProfilePictureFromSource();
+				var_dump($twitch_account);
+            }
+
+            if(isset($get_params['request_token']))
+            {
+				$smashcast = new Smashcast;
+                $smashcast_account = new SmashcastAccount($smashcast);
+
+                $data = array('request_token' => $get_params['request_token'], 'app_token' => $smashcast->getApiKeys()['app_token'], 'hash' => base64_encode($smashcast->getApiKeys()['app_token'].$smashcast->getApiKeys()['app_secret']));
+
+                $smashcast_account->getTokenFromSource($data);
+                $smashcast_account->getUsernameFromSource();	
+                $smashcast_account->saveToDB(Application::getPDOconnection(), $smashcast_account->getUsername(), Application::getUser()->getId());
+                $smashcast_account->getProfilePictureFromSource();
+				var_dump($smashcast_account);
+            }
+
+            if(isset($get_params['authToken']))
+            {
+				$smashcast = new Smashcast;
+                $smashcast_account = new SmashcastAccount($smashcast);
+
+                $smashcast_account->setToken($get_params['authToken']);	
+                $smashcast_account->getUsernameFromSource();
+                $smashcast_account->saveToDB(Application::getPDOconnection(), $smashcast_account->getUsername(), Application::getUser()->getId());
+                $smashcast_account->getProfilePictureFromSource();
+				var_dump($smashcast_account);
+            }
+        }
+		
+        $user_manager = new UserManager;
+        $_SESSION['platform_accounts'] = serialize($user_manager->getPlatformAccounts());
+		var_dump($_SESSION['platform_accounts']);
+		/*
+        if(Application::getUser() !== null && Application::getUser()->getFirstLinkDone()==0)
+        {
+            header('Location: https://vigas.tv'.Application::getBaseUrl().'following');
+        }
+        else
+        {
+            header('Location: https://vigas.tv'.Application::getBaseUrl().'linked-account');
+        }*/   
     }
     
 	/**

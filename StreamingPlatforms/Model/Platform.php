@@ -1,6 +1,6 @@
 <?php
 namespace Vigas\StreamingPlatforms\Model;
-use \Vigas\Application;
+use \Vigas\Application\Application;
 
 /**
 * Abstract Class Platform
@@ -42,7 +42,7 @@ abstract class Platform
     {
 		$classname = explode('\\',get_class($this));
 		$classname = end($classname);
-		$this->api_keys = Application\Application::getConfigFromXML(__DIR__.'/../config.xml', lcfirst($classname).'_key');
+		$this->api_keys = Application::getConfigFromXML(__DIR__.'/../config.xml', lcfirst($classname).'_key');
     }
 	
 	/**
@@ -52,7 +52,7 @@ abstract class Platform
     {
 		$classname = explode('\\',get_class($this));
 		$classname = end($classname);
-		$api_urls = Application\Application::getConfigFromXML(__DIR__.'/../config.xml', lcfirst($classname).'_url');
+		$api_urls = Application::getConfigFromXML(__DIR__.'/../config.xml', lcfirst($classname).'_url');
 		$length = count($api_urls);
 		foreach($api_urls as $url_key => $url_value)
 		{

@@ -18,8 +18,8 @@ class SmashcastAccount extends PlatformAccount
     */
     public function getTokenFromSource(Array $data)
     {	
-		$url = $this->platfrom->getApiUrl('get_token');
-		$http_header = array('Client-ID: '.$this->platfrom->getApiKeys()['app_token']);
+		$url = $this->platform->getApiUrl('get_token');
+		$http_header = array('Client-ID: '.$this->platform->getApiKeys()['app_token']);
 
         $response = $this->curlRequest($url, $data, $http_header);
         $json_result = json_decode($response, true);
@@ -31,9 +31,8 @@ class SmashcastAccount extends PlatformAccount
     */
     public function getUsernameFromSource()
     {
-		$url = $this->platfrom->getApiUrl('get_username', ['token_val' => $this->token]);
+		$url = $this->platform->getApiUrl('get_username', ['token_val' => $this->token]);
         $response = $this->curlRequest($url, null ,null);
-
         $decode_response = json_decode($response, true);
         if(isset($decode_response["user_name"]))
         {
@@ -46,7 +45,7 @@ class SmashcastAccount extends PlatformAccount
     */
     public function getProfilePictureFromSource()
     {
-		$response = $this->curlRequest($this->platfrom->getApiUrl('get_profile_pic', ['username_val' => $this->username]), null, array('Authorization: OAuth '.$this->token));
+		$response = $this->curlRequest($this->platform->getApiUrl('get_profile_pic', ['username_val' => $this->username]), null, array('Authorization: OAuth '.$this->token));
 		$decode_response = json_decode($response, true);
 		if(isset($decode_response["user_logo"]))
 		{
@@ -70,12 +69,14 @@ class SmashcastAccount extends PlatformAccount
         if($resultat['nb_id']==0)
         {
             $req = $db->prepare('INSERT INTO SmashcastAccount (user_id, smashcast_username, smashcast_token) VALUES(:user_id, :username, :encrypted_token)');
-            $encrypted_token=$this->cryptToken($this->token);
+            $encrypted_token = $this->cryptToken($this->token);
             $resultat=$req->execute(array(
                 'user_id' => $user_id,
                 'username' => $username,
-                'encrypted_token' => $encrypted_token
+                'encrypted_token' => base64_encode($encrypted_token)
             ));
+			print_r($req->errorInfo());
+			var_dump($encrypted_token);
         }
         else
         {
@@ -83,14 +84,14 @@ class SmashcastAccount extends PlatformAccount
             $encrypted_token = $this->cryptToken($this->token);
             $resultat = $req->execute(array(
                 'username' => $username,
-                'encrypted_token' => $encrypted_token,
+                'encrypted_token' => base64_encode($encrypted_token),
                 'user_id' => $user_id
             ));
         }
 
         if ($resultat)
         {
-            return array('smashcast_username' => $username, 'smashcast_token' => $this->token);
+            return array('smashcast_username' => $username, 'smashcast_token' => $this->decryptToken($this->token));
         }
         else
         {
@@ -109,11 +110,11 @@ class SmashcastAccount extends PlatformAccount
         $req->execute(array(
                 'user_id' => $user_id
         ));
-        $reslutat = $req->fetch();
-        if(isset($reslutat['smashcast_username']) && isset($reslutat['smashcast_token']))
+        $resultat = $req->fetch();
+        if(isset($resultat['smashcast_username']) && isset($resultat['smashcast_token']))
         {
-            $this->username = $reslutat['smashcast_username'];
-            $this->token = $reslutat['smashcast_token'];
+            $this->username = $resultat['smashcast_username'];
+            $this->token = base64_decode($resultat['smashcast_token']);
             $this->getProfilePictureFromSource();
             return $this;
         }

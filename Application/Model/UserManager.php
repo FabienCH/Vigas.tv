@@ -184,7 +184,7 @@ class UserManager
             {               
                 $body='<body><a href="https://vigas.tv'.Application::getBaseURL().'"><img style="height:100%;" alt="vigas email banner" src="https://vigas.tv/View/img/email-banner.jpg" /></a><h2>Vigas.tv : reset password</h2><p>'.$this->user->getUsername().',</p><p>In order to reset your passord, please click (or copy/paste) the following link (this link is only available for 30 minutes) :<br/><a href="https://vigas.tv'.Application::getBaseURL().'reset-password/token='.$reset_pwd_token.'&id='.$this->user->getId().'">https://vigas.tv'.Application::getBaseURL().'reset-password/token='.$reset_pwd_token.'&id='.$this->user->getId().'</a></p><p><strong>IMPORTANT : Do not click this link if you did not request a password reset. Note that I\'ll never ask you for your password, do not answer to any email who would.</strong></p><p>Regards,<br/>Admin@Vigas.tv</p></body>';
 
-                $mail = new Mailer('admin@vigas.tv', 'Vigas Admin', 'auth.smtp.1and1.fr', 'Reset your Vigas password', $body,  $_POST['email'], Application::SMTP_CONF);
+                $mail = new Mailer('admin@vigas.tv', 'Vigas Admin', 'auth.smtp.1and1.fr', 'Reset your Vigas password', $body,  $_POST['email'], Application::getSMTPConf());
                 $mail->IsHTML(true);
                 if(!$mail->Send())
                 {
@@ -241,11 +241,12 @@ class UserManager
 		$twitch = new Twitch;
 		$smashcast = new Smashcast;
         $twitch_account = new TwitchAccount($twitch);
-		$platform_accounts['twitch_data'] = $twitch_account->getFromDB($this->db, $this->user->getId());
+		$this->user->addPlatformAccounts($twitch_account->getFromDB($this->db, $this->user->getId()));
 		$smashcast_account = new SmashcastAccount($smashcast);
-		$platform_accounts['smashcast_data'] = $smashcast_account->getFromDB($this->db, $this->user->getId());
-        
-        return $platform_accounts;
+		$this->user->addPlatformAccounts($smashcast_account->getFromDB($this->db, $this->user->getId()));
+		var_dump($twitch_account->getFromDB($this->db, $this->user->getId()));
+		var_dump($smashcast_account->getFromDB($this->db, $this->user->getId()));
+		var_dump($this->user);
     }
     
     public function setFirstLinkDone()

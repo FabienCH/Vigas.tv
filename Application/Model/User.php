@@ -42,7 +42,7 @@ class User
 	/**
     * @var array $platform_accounts user's linked accounts
     */
-    protected $platform_accounts;
+    protected $platform_accounts = [];
 
     private function builRequestConditions($conditions)
     {
@@ -56,10 +56,7 @@ class User
             {
                  $request_data['conditions'] .= ' AND ';
             }     
-            else
-            {
-                $request_data['value'][$column] = $value;
-            }
+            $request_data['value'][$column] = $value;
             $i++;
         }
         return $request_data;
@@ -72,11 +69,6 @@ class User
     */
 	public function logUserLogin(\PDO $db, $from)
 	{
-        $log_file = fopen(__DIR__.'/../logs/user_login.log', "a");
-		$date = date("Y-m-d H:i:s", strtotime('now')); 
-        fwrite($log_file, $this->getUsername().' login at '.$date.' from '.$from.'\r\n');
-        fclose($log_file);
-		
 		$now = date("Y-m-d H:i:s", strtotime('now'));
         $req = $db->prepare('UPDATE User SET last_logon=:last_logon WHERE id= :id');
         $resultat = $req->execute(array(
@@ -321,5 +313,30 @@ class User
     {
         return $this->reset_pwd_token_endat;
     }
+	
+	/**
+    * @return array $platform_accounts user's linked accounts
+    */
+    public function getPlatformAccounts()
+    {
+        return $this->platform_accounts;
+    }
+	
+	/**
+    * @add a platform account into array $platform_accounts
+    */
+    public function addPlatformAccounts($account)
+    {
+		if($this->platform_accounts == null)
+		{
+			$this->platform_accounts = $account;
+		}
+		else
+		{
+			array_push($this->platform_accounts, $account);
+		} 
+		var_dump($this->platform_accounts);
+    }
+
 
 }

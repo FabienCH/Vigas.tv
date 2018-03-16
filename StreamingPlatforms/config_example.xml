@@ -1,24 +1,56 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<!--                                                                 -->
-<!--    This is an example configuration file                        -->
-<!--    Enter your own values then rename the file in config.xml     -->
-<!--                                                                 -->
+<!--                                                               	  			-->
+<!--	This is an example configuration file                        			-->
+<!--	Enter your own values when needed then rename the file to config.xml	-->
+<!--                                                                 			-->
 
 <streaming_platforms>
 
-	<config name="crypt_token_key" value="passphrase" ></config>
+	<config name="crypt_token_key" value="your passphrase" ></config>
 
+	<twitch>
+		<api_urls>
+			<!--	Twitch api url, you should not change those		-->
+			<twitch_url name="get_streams" value="https://api.twitch.tv/kraken/streams?limit=limit_val&amp;offset=offset_val" ></twitch_url>
+			<twitch_url name="get_games" value="https://api.twitch.tv/kraken/games/top?limit=limit_val" ></twitch_url>
+			<twitch_url name="get_streams_by_game" value="https://api.twitch.tv/kraken/streams?l=limit_val&amp;offset=offset_val&amp;game=game_val" ></twitch_url>
+			<twitch_url name="search_streams" value="https://api.twitch.tv/kraken/search/streams?q=query_val&amp;limit=limit_val" ></twitch_url>
+			<twitch_url name="search_games" value="https://api.twitch.tv/kraken/search/games?q=query_val&amp;type=suggest&amp;live=true" ></twitch_url>
+			<twitch_url name="search_streamers" value="https://api.twitch.tv/kraken/users/query_val" ></twitch_url>
+			<twitch_url name="get_token" value="https://api.twitch.tv/kraken/oauth2/token" ></twitch_url>
+			<twitch_url name="get_username" value="https://api.twitch.tv/kraken/user" ></twitch_url>
+			<twitch_url name="get_profile_pic" value="https://api.twitch.tv/kraken/users/username_val" ></twitch_url>
+		</api_urls>
+		<api_keys>
+			<twitch_key name="client_id" value="your twitch client id" ></twitch_key>
+			<twitch_key name="client_secret" value="your smashcast client secret" ></twitch_key>
+		</api_keys>
+	</twitch>
 
-	<platform_key platform="twitch" name="client_id" value="your twitch client id" ></platform_key>
-	<platform_key platform="twitch" name="client_secret" value="your twitch client secret" ></platform_key>
+	<smashcast>
+		<api_urls>
+			<!--	Smashcast api url, you should not change those		-->
+			<smashcast_url name="get_streams" value="https://api.smashcast.tv/media/live/list?limit=limit_val&amp;start=offset_val" ></smashcast_url>
+			<smashcast_url name="get_games" value="https://api.smashcast.tv/games?limit=lmit_val&amp;liveonly=true" ></smashcast_url>
+			<smashcast_url name="get_streams_by_game" value="https://api.smashcast.tv/media/live/list?limit=limit_val&amp;game=game_val" ></smashcast_url>
+			<smashcast_url name="search_streams" value="https://api.smashcast.tv/media/live/list?search=query_val&amp;limit=limit_val" ></smashcast_url>
+			<smashcast_url name="search_games" value="https://api.smashcast.tv/games?q=query_val&amp;limit=limit_val&amp;liveonly=true" ></smashcast_url>
+			<smashcast_url name="search_streamers" value="https://api.smashcast.tv/media/live/query_val" ></smashcast_url>
+			<smashcast_url name="get_token" value="https://api.smashcast.tv/oauth/exchange" ></smashcast_url>
+			<smashcast_url name="get_username" value="https://api.smashcast.tv/userfromtoken/token_val" ></smashcast_url>
+			<smashcast_url name="get_profile_pic" value="https://api.smashcast.tv/user/username_val" ></smashcast_url>
+		</api_urls>
+		<api_keys>
+			<smashcast_key name="client_id" value="your smashcast client id" ></smashcast_key>
+			<smashcast_key name="client_secret" value="your smashcast client secret" ></smashcast_key>
+		</api_keys>
+	</smashcast>
 
-	<platform_key platform="smashcast" name="app_token" value="your smashcast app token" ></platform_key>
-	<platform_key platform="smashcast" name="app_secret" value="your smashcast app secret" ></platform_key>
-
+	<!---
 	<platform_key platform="ytgaming" name="api_key" value="your youtube gaming api key" ></platform_key>
 	<platform_key platform="ytgaming" name="client_id" value="your youtube gaming client id" ></platform_key>
 	<platform_key platform="ytgaming" name="app_secret" value="your youtube gaming app secret" ></platform_key>
-
+	--->
 
 </streaming_platforms>

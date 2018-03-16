@@ -147,7 +147,7 @@ use Vigas\Application\Application;
 				<?php
 				}
 				
-				if (!isset($_GET['action']) || $_GET['action'] == 'streams-by-game' || $_GET['action'] == 'following' && (Application::getLinkedAccounts()!== null && Application::getUser()->getFirstLinkDone()==1) && !isset($e))
+				if (!isset($_GET['action']) || $_GET['action'] == 'streams-by-game' || $_GET['action'] == 'following' && (Application::getPlatformAccounts()!== null && Application::getUser()->getFirstLinkDone()==1) && !isset($e))
 				{
 					?>	
 					<div class="source-choice">

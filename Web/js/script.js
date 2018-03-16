@@ -18,7 +18,7 @@ function load_stream()
 	$(document).on("click", ".stream-ov", function() {
 		if($(this).parent().attr("class")=="col-sm-12 col-xs-4 div-prev-navbar")
 		{
-			window.location.href="/dev2/stream/"+$(this).parent().attr("id");
+			window.location.href="/dev/stream/"+$(this).parent().attr("id");
 			return;
 		}
 			
@@ -31,7 +31,7 @@ function load_stream()
 		stream_div.removeClass("col-lg-3 col-md-4 col-xs-6 div-prev");
 		$(stream_div).removeAttr('style');
 		stream_div.addClass("col-xs-12 stream-container");
-		stream_div.html("<img alt=\"close stream button\" class=\"close-button\" src=\"/dev2/Web/img/close.png\" /><div id=\"border\"><iframe class=\"col-xs-8\" id=\"stream\" src=\""+$("#stream-"+stream_div.attr('id')).attr('value')+"\" allowfullscreen frameborder=\"0\" scrolling=\"no\" ></iframe><iframe class=\"col-xs-4\" id=\"chat\" src=\""+$("#chat-"+stream_div.attr('id')).attr('value')+"\"frameborder=\"0\" scrolling=\"no\"></iframe></div>");
+		stream_div.html("<img alt=\"close stream button\" class=\"close-button\" src=\"/dev/Web/img/close.png\" /><div id=\"border\"><iframe class=\"col-xs-8\" id=\"stream\" src=\""+$("#stream-"+stream_div.attr('id')).attr('value')+"\" allowfullscreen frameborder=\"0\" scrolling=\"no\" ></iframe><iframe class=\"col-xs-4\" id=\"chat\" src=\""+$("#chat-"+stream_div.attr('id')).attr('value')+"\"frameborder=\"0\" scrolling=\"no\"></iframe></div>");
 		
 		$("#border").height($("#stream").width()/16*9);
 		
@@ -108,19 +108,19 @@ function load_more()
 		{
 			var add_to_offset = 24;
 			var max_offset = 72;
-			var url = 'https://vigas.tv/dev2/index.php?action=games&offset='+offset+'&requested_by=ajax';
+			var url = 'https://vigas.tv/dev/index.php?action=games&offset='+offset+'&requested_by=ajax';
 		}
 		else if(type=="streams-by-game")
 		{
 			var add_to_offset = 36;
 			var max_offset = 144;
-			var url = 'https://vigas.tv/dev2/index.php?action=streams-by-game&game='+($("#game").val())+'&offset='+offset+'&source_json='+source_json+'&requested_by=ajax';
+			var url = 'https://vigas.tv/dev/index.php?action=streams-by-game&game='+($("#game").val())+'&offset='+offset+'&source_json='+source_json+'&requested_by=ajax';
 		}
 		else
 		{
 			var add_to_offset = 36;
 			var max_offset = 144;
-			var url = 'https://vigas.tv/dev2/index.php?offset='+offset+'&source_json='+source_json+'&requested_by=ajax';
+			var url = 'https://vigas.tv/dev/index.php?offset='+offset+'&source_json='+source_json+'&requested_by=ajax';
 		}	
 
 		$(window).off("scroll");
@@ -128,7 +128,7 @@ function load_more()
 		if(parseInt($("#offset").val()) < max_offset)
 		{
 			$('#load-more-div').css({ display: "none" });
-			$('#'+type+'-display').after('<div id="loading-gif" class="col-xs-12"><img style="display: block; margin: auto;" src="/dev2/Web/img/loading.gif" /></div>');
+			$('#'+type+'-display').after('<div id="loading-gif" class="col-xs-12"><img style="display: block; margin: auto;" src="/dev/Web/img/loading.gif" /></div>');
 			var xhr = new XMLHttpRequest();
 			xhr.open('GET', url);
 			xhr.addEventListener('readystatechange', function() {
@@ -204,20 +204,20 @@ function reload(id)
 	var type=($("#type").val());
     if(type=="following")
 	{
-            var url = 'https://vigas.tv/dev2/index.php?action=following&offset=0&source_json='+source_json+'&requested_by=ajax';
+            var url = 'https://vigas.tv/dev/index.php?action=following&offset=0&source_json='+source_json+'&requested_by=ajax';
 	}
 	else if(type=="streams-by-game")
 	{
-            var url = 'https://vigas.tv/dev2/index.php?action=streams-by-game&game='+($("#game").val())+'&offset=0&source_json='+source_json+'&requested_by=ajax';
+            var url = 'https://vigas.tv/dev/index.php?action=streams-by-game&game='+($("#game").val())+'&offset=0&source_json='+source_json+'&requested_by=ajax';
 	}
 	else
 	{
-            var url = 'https://vigas.tv/dev2/index.php?offset=0&source_json='+source_json+'&requested_by=ajax';
+            var url = 'https://vigas.tv/dev/index.php?offset=0&source_json='+source_json+'&requested_by=ajax';
 	}	
 
 	$('#load-more-div').css({ display: "none" });
 	$('#'+type+'-display').css({ display: "none" });
-	$('#'+type+'-display').after('<div id="loading-gif" class="col-xs-12"><img style="display: block; margin: auto;" src="/dev2/Web/img/loading.gif" /></div>');
+	$('#'+type+'-display').after('<div id="loading-gif" class="col-xs-12"><img style="display: block; margin: auto;" src="/dev/Web/img/loading.gif" /></div>');
 	$(window).off("scroll");
 	
 	var xhr = new XMLHttpRequest();
@@ -312,14 +312,14 @@ $(document).ready(function() {
 	
 	$("#close-update").click(function() {
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', '/dev2/manage-update-info/close-update');
+		xhr.open('GET', '/dev/manage-update-info/close-update');
 		xhr.send(null);
 		
 	});
 	
 	$("#dont-show-anymore").click(function() {
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', '/dev2/manage-update-info/dont-show-anymore');
+		xhr.open('GET', '/dev/manage-update-info/dont-show-anymore');
 		xhr.send(null);
 		
 	});

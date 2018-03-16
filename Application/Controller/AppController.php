@@ -39,18 +39,42 @@ class AppController
     public function __construct()
     {
 		$http_request = Application::getHTTPRequest();
+		var_dump(Application::getPath());
 		if(!is_null($http_request))
 		{
-			if(isset($http_request->getGetData()['action']) && ($http_request->getGetData()['action'] == 'about' || $http_request->getGetData()['action'] == 'login'))
+			if(isset($http_request->getGetData()['action']) && in_array($http_request->getGetData()['action'], Application::getPath()))
 			{
 				if(!empty($http_request->getPostData()))
 				{
 					$this->post_params = $http_request->getPostData();
 				}
 			    $this->navbar_method_name = 'getDefaultNavbar';
-				$this->method_name = 'get'.$http_request->getGetData()['action'];
+				$this->method_name = $this->setMethodName($http_request->getGetData()['action']);
 			}
 		}
+    }
+	
+	/**
+    * Sets the method name the controller will use
+    * @param string $action the action url parameter
+    * @return string the method name
+    */
+    public function setMethodName($action)
+	{
+        if(strpos($action, '-'))
+        {
+            $array = explode('-', $action);
+            $action = 'get';
+            foreach ($array as &$word)
+            {
+                $action .= ucfirst($word);
+            }
+            return $action;
+        }
+        else
+        {
+            return 'get'.ucfirst($action);
+        }        
     }
 	
 	/**
@@ -59,9 +83,7 @@ class AppController
     public function executeController()
     {
 		$ctrl_method_name = $this->method_name;
-		//$navbar_method_name = $this->navbar_method_name;
         $this->$ctrl_method_name();
-		//$this->$navbar_method_name();
     }
 	
 	/**
@@ -93,72 +115,6 @@ class AppController
             $this->response['create_account_error'] = $user_manager->createAccount($this->post_params['ca-username'], $this->post_params['ca-email'], $this->post_params['ca-password'], $this->post_params['ca-password-2'], $this->post_params['ca-remember-me']);
         }
 	}
-
-	public function getFirstLinkDone()
-    {
-        if(isset($this->post_params['first-link-done']))
-        {
-            $user_manager = new UserManager;
-            $this->response['first_link_error'] = $user_manager->setFirstLinkDone();
-        }
-    }
-    
-    /**
-    * Save streaming platforms token once identified
-    * @param array $get_params HTTP GET parameters
-    * @param array $this->post_params HTTP POST parameters
-    */
-    public function getSaveToken($get_params)
-    {
-        if(Application::getUser() !== null)
-        {
-            if(isset($get_params['code']))
-            {
-                $linked_account = new LinkedAccount('twitch');
-
-                $data = array('client_id' => Application::TWITCH_APP['client_id'], 'client_secret' => Application::TWITCH_APP['client_secret'], 'grant_type' => 'authorization_code', 'redirect_uri' => 'https://vigas.tv'.Application::BASE_URL.'save-token', 'code' => $get_params['code'], 'state' => 'oauth2');
-
-                $linked_account->getTokenFromSource($data);
-                $linked_account->getUsernameFromSource();	
-                $linked_account->saveToDB(Application::getPDOconnection(), $linked_account->getUsername(), Application::getUser()->getId());
-                $linked_account->getProfilePictureFromSource();
-            }
-
-            if(isset($get_params['request_token']))
-            {
-                $linked_account = new LinkedAccount('smashcast');
-
-                $data = array('request_token' => $get_params['request_token'], 'app_token' => SMASHCAST_APP['app_token'], 'hash' => base64_encode(SMASHCAST_APP['app_token'].SMASHCAST_APP['app_secret']));
-
-                $linked_account->getTokenFromSource($data);
-                $linked_account->getUsernameFromSource();	
-                $linked_account->saveToDB(Application::getPDOconnection(), $linked_account->getUsername(), Application::getUser()->getId());
-                $linked_account->getProfilePictureFromSource();
-            }
-
-            if(isset($get_params['authToken']))
-            {
-                $linked_account = new LinkedAccount('smashcast');
-
-                $linked_account->setToken( $get_params['authToken']);	
-                $linked_account->getUsernameFromSource();
-                $linked_account->saveToDB(Application::getPDOconnection(), $linked_account->getUsername(), Application::getUser()->getId());
-                $linked_account->getProfilePictureFromSource();
-            }
-        }
-		
-        $user_manager = new UserManager;
-        $_SESSION['linked_accounts'] = serialize($user_manager->getAllLinkedAccounts(Application::getPDOconnection(), Application::getUser()));
-        if(Application::getUser() !== null && Application::getUser()->getFirstLinkDone()==0)
-        
-        {
-            header('Location: https://vigas.tv'.Application::BASE_URL.'following');
-        }
-        else
-        {
-            header('Location: https://vigas.tv'.Application::BASE_URL.'linked-account');
-        }         
-    }
     
     /**
     * Logout user
@@ -213,18 +169,18 @@ class AppController
     
     /**
     * Get data for the reset password view
-    * @param array $get_params HTTP GET parameters
     * @param array $this->post_params HTTP POST parameters
     */
-    public function getResetPassword($get_params)
+    public function getResetPassword()
     {
-        if(isset($get_params['token']) && isset($get_params['id']))
+		$http_request = Application::getHTTPRequest();
+        if(isset($http_request->getGetData()['token']) && isset($http_request->getGetData()['id']))
         {
             $user_manager = new UserManager;
-            $this->response['token_validity'] = $user_manager->testTokenValidity($get_params['id'], $get_params['token']);
+            $this->response['token_validity'] = $user_manager->testTokenValidity($http_request->getGetData()['id'], $http_request->getGetData()['token']);
             if(isset($this->post_params['set-password']) && $this->response['token_validity'])
             {
-                $this->response['reset_password_error'] = $user_manager->resetPassword($get_params['id'], $get_params['token'], $this->post_params['password'], $this->post_params['password-2']);
+                $this->response['reset_password_error'] = $user_manager->resetPassword($http_request->getGetData()['id'], $http_request->getGetData()['token'], $this->post_params['password'], $this->post_params['password-2']);
             }   
         }
     }

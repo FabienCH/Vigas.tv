@@ -13,17 +13,18 @@ use Vigas\StreamingPlatforms\Model\PlatformAccount;
 class TwitchAccount extends PlatformAccount
 {  
     /**
-    * Get token from the Twitch
+    * Get token from Twitch
     * @param array $data data to pass to the streaming platform API (app token, secret token...)
     */
     public function getTokenFromSource(Array $data)
     {	            
-		$url = $this->platfrom->getApiUrl('get_token');
-		$http_header = array('Client-ID: '.$this->platfrom->getApiKeys()['client_id']);
+		$url = $this->platform->getApiUrl('get_token');
+		$http_header = array('Client-ID: '.$this->platform->getApiKeys()['client_id']);
 
         $response = $this->curlRequest($url, $data, $http_header);
         $json_result = json_decode($response, true);
         $this->token = $json_result["access_token"];
+		var_dump($json_result);
     }
 
     /**
@@ -31,14 +32,14 @@ class TwitchAccount extends PlatformAccount
     */
     public function getUsernameFromSource()
     {
-		$url = $this->platfrom->getApiUrl('get_username');
-		$http_header = array('Client-ID: '.$this->platfrom->getApiKeys()['client_id'], 'Authorization: OAuth '.$this->token);
+		$url = $this->platform->getApiUrl('get_username');
+		$http_header = array('Client-ID: '.$this->platform->getApiKeys()['client_id'], 'Authorization: OAuth '.$this->token);
 
-        $response=$this->curlRequest($url, null ,$http_header);
-        $decode_response= json_decode($response, true);
+        $response = $this->curlRequest($url, null ,$http_header);
+        $decode_response = json_decode($response, true);
         if(isset($decode_response["name"]))
         {
-            $this->username=$decode_response["name"];
+            $this->username = $decode_response["name"];
         }  
     }
 
@@ -47,7 +48,7 @@ class TwitchAccount extends PlatformAccount
     */
     public function getProfilePictureFromSource()
     {
-		$response = $this->curlRequest($this->platfrom->getApiUrl('get_username'), ['username_val' => $this->username], null, array('Authorization: OAuth '.$this->token));
+		$response = $this->curlRequest($this->platform->getApiUrl('get_username'), ['username_val' => $this->username], null, array('Authorization: OAuth '.$this->token));
 		$decode_response= json_decode($response, true);
 		if(isset($decode_response["logo"]))
 		{
@@ -79,7 +80,7 @@ class TwitchAccount extends PlatformAccount
             $resultat = $req->execute(array(
                 'user_id' => $user_id,
                 'username' => $username,
-                'encrypted_token' => $encrypted_token
+                'encrypted_token' => base64_encode($encrypted_token)
             ));
         }
         else
@@ -88,14 +89,14 @@ class TwitchAccount extends PlatformAccount
             $encrypted_token = $this->cryptToken($this->token);
             $resultat = $req->execute(array(
                 'username' => $username,
-                'encrypted_token' => $encrypted_token,
+                'encrypted_token' => base64_encode($encrypted_token),
                 'user_id' => $user_id
             ));
         }
 
         if ($resultat)
         {
-            return array('twitch_username' => $username, 'twitch_token' => $this->token);
+            return array('twitch_username' => $username, 'twitch_token' => $this->decryptToken($this->token));
         }
         else
         {
@@ -114,11 +115,11 @@ class TwitchAccount extends PlatformAccount
         $req->execute(array(
                 'user_id' => $user_id
         ));
-        $reslutat = $req->fetch();
-        if(isset($reslutat['twitch_username']) && isset($reslutat['twitch_token']))
+        $resultat = $req->fetch();
+        if(isset($resultat['twitch_username']) && isset($resultat['twitch_token']))
         {
-            $this->username = $reslutat['twitch_username'];
-            $this->token = $reslutat['twitch_token'];
+            $this->username = $resultat['twitch_username'];
+            $this->token = $this->decryptToken(base64_decode($resultat['twitch_token']));
             $this->getProfilePictureFromSource();
             return $this;
         }

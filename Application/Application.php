@@ -19,20 +19,25 @@ abstract class Application
     */
     protected static $base_url;
 	
+	/**
+    * @var array path URL path
+    */
+    protected static $path;
+	
     /**
     * @var object PDO $pdo_connection
     */
     protected static $pdo_connection;
 	
+	 /**
+    * @var array $smtp_conf
+    */
+    protected static $smtp_conf;
+	
 	/**
     * @var object HTTPRequest $http_request
     */
     protected static $http_request;
-	
-	/**
-    * @var object HTTPResponse $http_response
-    */
-    protected static $http_response;
     
     /**
     * @var object User $user
@@ -40,16 +45,18 @@ abstract class Application
     protected static $user;
 
 	/**
-    * @var array $platform_accounts user's linked accounts
+    * @var array $platform_accounts user's streaming platform accounts
     */
     private static $platform_accounts;
 	
 	/**
-    * Sets base_url and http_request attributes
+    * Sets base_url, smtp_conf and http_request attributes
     */
     public static function initializeApplication()
     {
 		self::$base_url = self::getConfigFromXML(__DIR__.'/config.xml', 'base_url');
+		self::$path = self::getConfigFromXML(__DIR__.'/config.xml', 'path');
+		self::$smtp_conf = self::getConfigFromXML(__DIR__.'/config.xml', 'smtp');
 		self::$http_request = new HTTPRequest;
     }
 	
@@ -98,9 +105,8 @@ abstract class Application
     */ 
     public static function getController()
     {
-        if(!isset(self::$http_request->getGetData()['action']) || self::$http_request->getGetData()['action'] == 'games' || self::$http_request->getGetData()['action'] == 'streams-by-game' || (
-            self::$http_request->getGetData()['action'] == 'following' && self::$user !== null && self::$user->getFirstLinkDone()==1)
-            || self::$http_request->getGetData()['action'] == 'search')
+		$get_spcontroller = array('games', 'streams-by-game', 'search', 'following', 'save-token', 'first-link-done');
+        if(!isset(self::$http_request->getGetData()['action']) || in_array(self::$http_request->getGetData()['action'], $get_spcontroller))
         {
             $sp_controller = new SPController();
 			$sp_controller->executeController();
@@ -135,12 +141,28 @@ abstract class Application
 		$database['password']);
     }
 	
-	 /**
+	/**
     * @return string the webstie base url
     */
     public static function getBaseURL()
     {
         return self::$base_url;
+    }
+	
+	/**
+    * @return array URL path
+    */
+    public static function getPath()
+    {
+        return self::$path;
+    }
+	
+	/**
+    * @return array the smtp configuration
+    */
+    public static function getSMTPConf()
+    {
+        return self::$smtp_conf;
     }
     
     /**
@@ -168,11 +190,11 @@ abstract class Application
     }
     
     /**
-    * @return array user's linked accounts
+    * @return array user's streaming platform accounts
     */
-    public static function getLinkedAccounts()
+    public static function getPlatformAccounts()
     {
-        return self::$linked_accounts;
+        return self::$platform_accounts;
     }
     
 }

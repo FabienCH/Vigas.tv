@@ -1,0 +1,5 @@
+<?php
+$data = json_decode(file_get_contents('php://input'), true);
+file_put_contents('csp_report_parser.txt'," \n ".date("Y-m-d H:i:s")." \n ".print_r($data,true),FILE_APPEND);
+
+?>

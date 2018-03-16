@@ -4,9 +4,10 @@ use Vigas\Application\Application;
 
 if(Application::getUser() !== null)
 {
+	var_dump(Application::getUser());
     $user = Application::getUser();
 
-     if((Application::getLinkedAccounts()['twitch_data'] != null || Application::getLinkedAccounts()['smashcast_data'] != null) && $user->getFirstLinkDone()==1)
+     if((Application::getPlatformAccounts()['twitch_data'] != null || Application::getPlatformAccounts()['smashcast_data'] != null) && $user->getFirstLinkDone()==1)
     {		
         require_once __DIR__.'/../View/allStreamsView.php';
     }
@@ -17,7 +18,16 @@ if(Application::getUser() !== null)
 <p>You did not link any account, please link at least one account under the <a href="<?= Application::getBaseURL()?>linked-account"/>Linked Accounts</a> section in your profile.</p>
         <?php
         }
+		else
+		{
+			require_once __DIR__.'/../View/platformAccountView.php';
+		}
     }
+}
+
+else
+{
+	require_once __DIR__.'/../../Application/View/loginView.php';
 }
 
 if (isset($_GET['source_json']))

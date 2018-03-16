@@ -2,13 +2,24 @@
 
 <!--                                                                 -->
 <!--    This is an example configuration file                        -->
-<!--    Enter your own values then rename the file in config.xml     -->
+<!--    Enter your own values then rename the file to config.xml     -->
 <!--                                                                 -->
 
 
 <application>
 
 	<config name="base_url" value="website base url" ></config>
+	
+	<!--    Your application's URL path    -->
+	<path name="about" value="about" ></path>
+	<path name="login" value="login" ></path>
+	<path name="logout" value="logout" ></path>
+	<path name="forgot-password" value="forgot-password" ></path>
+	<path name="reset-password" value="reset-password" ></path>
+	
+	<!--    OpenSSL public and private key path file used in the Encryption class    -->
+	<encryption name="public_key_path" value="your path" ></encryption>
+	<encryption name="private_key_path" value="your path" ></encryption>
 
     <!--    SMTP configuration used by PHPMailer     -->
 	<smtp name="secure" value="tls" ></smtp>

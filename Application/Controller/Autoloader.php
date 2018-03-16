@@ -30,7 +30,7 @@ class Autoloader
             }
 			else
 			{
-				require_once '/home/vigas/public_html/dev2/'.$class.'.php'; 
+				require_once '/home/vigas/public_html/dev/'.$class.'.php'; 
 			}
         }
     }
