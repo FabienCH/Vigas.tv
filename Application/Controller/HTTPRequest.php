@@ -2,18 +2,18 @@
 namespace Vigas\Application\Controller;
 
 /**
-* Class HTTPRequest
+* Class HTTPRequest.
 * Manages HTTP request
 */
 class HTTPRequest
 {
 	/**
-    * @var array $post_data HTTP POST parameters
+    * @var array HTTP POST parameters
     */
 	protected $post_data=[];
 	
 	/**
-    * @var array $get_data HTTP GET parameters
+    * @var array HTTP GET parameters
     */
 	protected $get_data=[];
 	
@@ -25,19 +25,9 @@ class HTTPRequest
         $this->setGetData();
         $this->setPostData();
     }
-	
-	public function cookieData($key)
-	{
-		return isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
-	}
-
-	public function cookieExists($key)
-	{
-		return isset($_COOKIE[$key]);
-	}
 
 	/**
-    * Sets HTTP GET parameters
+    * Sets get_data attribute
     */
 	public function setGetData()
 	{
@@ -55,7 +45,7 @@ class HTTPRequest
 	}
 	
 	/**
-    * Sets HTTP POST parameters
+    * Sets post_data attribute
     */
 	public function setPostData()
 	{
@@ -66,7 +56,7 @@ class HTTPRequest
 	}
 	
 	/**
-    * @return array HTTP GET parameters
+    * @return array get_data attribute
     */
 	public function getGetData()
 	{
@@ -74,7 +64,7 @@ class HTTPRequest
 	}
 	
 	/**
-    * @return array HTTP POST parameters
+    * @return array post_data attribute
     */
 	public function getPostData()
 	{

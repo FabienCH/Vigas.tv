@@ -9,45 +9,40 @@ use Vigas\Application\Model\User;
 use Vigas\StreamingPlatforms\Controller\SPController;
 
 /**
-* Class Application
-* Manages Application
+* Class Application.
+* Manages the application
 */
 abstract class Application
 {
 	/**
-    * @var string base_url website base URL
+    * @var string Website's base URL ("/dev" for development environment and "/" for production)
     */
     protected static $base_url;
 	
 	/**
-    * @var array path URL path
+    * @var array URL path from the config.xml file
     */
     protected static $path;
 	
     /**
-    * @var object PDO $pdo_connection
+    * @var \PDO Database connection configuration
     */
     protected static $pdo_connection;
 	
 	 /**
-    * @var array $smtp_conf
+    * @var array SMTP configuration used to send email
     */
     protected static $smtp_conf;
 	
 	/**
-    * @var object HTTPRequest $http_request
+    * @var HTTPRequest The HTTP request
     */
     protected static $http_request;
     
     /**
-    * @var object User $user
+    * @var User Object that contain the authenticated user
     */
     protected static $user;
-
-	/**
-    * @var array $platform_accounts user's streaming platform accounts
-    */
-    private static $platform_accounts;
 	
 	/**
     * Sets base_url, smtp_conf and http_request attributes
@@ -61,24 +56,21 @@ abstract class Application
     }
 	
     /**
-    * Gets the user and his linked accounts
-    * @param object User $user
+    * Sets the user and get the list his streaming platform accounts
+    * @param User $user Object that contain the authenticated user
     */
     public static function initializeSession(User $user)
     {
         self::$user = $user;
-        if(!isset($_SESSION['platform_accounts']))
-        {
-            $user_manager = new UserManager;
-            $_SESSION['platform_accounts'] = serialize($user_manager->getPlatformAccounts(self::$pdo_connection(), $user));
-        }
-        self::$platform_accounts = unserialize($_SESSION['platform_accounts']);
+		$user_manager = new UserManager;
+		$_SESSION['platform_accounts'] = serialize($user_manager->getPlatformAccountsFromDB(self::$pdo_connection, $user));
     }
 	
 	/**
     * Gets configuration from an XML file
-	* @param string $conf_file path to set XML file
+	* @param string $conf_file Path to the XML file
 	* @param string $tag XML tag name
+	* @return mixed The requested configuration informations
     */
     public static function getConfigFromXML($conf_file, $tag)
     {
@@ -101,7 +93,7 @@ abstract class Application
     }
     
 	/**
-    * Executes controller and gets view according to the requested action
+    * Executes controller and gets the view according to the requested action
     */ 
     public static function getController()
     {
@@ -142,7 +134,7 @@ abstract class Application
     }
 	
 	/**
-    * @return string the webstie base url
+    * @return string Website's base URL ("/dev" for development environment and "/" for production)
     */
     public static function getBaseURL()
     {
@@ -150,7 +142,7 @@ abstract class Application
     }
 	
 	/**
-    * @return array URL path
+    * @return array URL path from the config.xml file
     */
     public static function getPath()
     {
@@ -158,23 +150,23 @@ abstract class Application
     }
 	
 	/**
-    * @return array the smtp configuration
-    */
-    public static function getSMTPConf()
-    {
-        return self::$smtp_conf;
-    }
-    
-    /**
-    * @return object PDO the PDO connection
+    * @return PDO the PDO connection
     */
     public static function getPDOconnection()
     {
         return self::$pdo_connection;
     }
 	
+	/**
+    * @return array SMTP configuration used to send email
+    */
+    public static function getSMTPConf()
+    {
+        return self::$smtp_conf;
+    }
+	
     /**
-    * @return object HTTPRequest the HTTP request
+    * @return HTTPRequest the HTTP request
     */
     public static function getHTTPRequest()
     {
@@ -182,19 +174,11 @@ abstract class Application
     }
     
     /**
-    * @return object the user
+    * @return User Object that contain the authenticated user
     */
     public static function getUser()
     {
         return self::$user;
-    }
-    
-    /**
-    * @return array user's streaming platform accounts
-    */
-    public static function getPlatformAccounts()
-    {
-        return self::$platform_accounts;
     }
     
 }

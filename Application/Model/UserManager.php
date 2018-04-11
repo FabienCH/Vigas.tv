@@ -10,20 +10,43 @@ use Vigas\StreamingPlatforms\Model\Smashcast;
 use Vigas\StreamingPlatforms\Model\TwitchAccount;
 use Vigas\StreamingPlatforms\Model\SmashcastAccount;
 
+/**
+* Class UserManager.
+* Manages an authenticated user account
+*/
 class UserManager
 {
+	 /**
+    * @var User An authenticated user
+    */
     private $user;
+	
+	 /**
+    * @var \PDO Database connection object
+    */
     private $db;
     
+	/**
+    * Sets user and db attributes
+    */
     public function __construct()
     {
         if(Application::getUser() !== null)
-        {
+        {		
             $this->user = Application::getUser();
         }
         $this->db = Application::getPDOconnection();
     }
 
+	/**
+    * Validates given data to create a user account and calls insertUser method
+    * @param string $username The user username
+    * @param string $email The user email address
+    * @param string $password The user password
+    * @param string $password2 The user password (confirm your password field)
+    * @param string|null $remember_me The remember me checkbox
+    * @return string The error message if some data were not validated
+    */
     public function createAccount($username, $email, $password, $password2, $remember_me = null)
     {
         $validator = new FormValidator;
@@ -63,8 +86,16 @@ class UserManager
         }
     }
     
+	/**
+    * Logs a user, gets his streaming platform accounts and redirect him to the following page
+    * @param string $username The user username
+    * @param string $password The user password
+    * @param string|null $remember_me The remember me checkbox
+    * @return string The error message if the user or password are wrong
+    */
     public function logUser($username, $password, $remember_me = null)
     {
+		var_dump($remember_me);
         $this->user = new User;
         $test_user = $this->user->getUser($this->db, ['username' => $username], $password);
 
@@ -78,7 +109,7 @@ class UserManager
             {
                 $_SESSION['user'] = serialize($this->user);
             }
-            $_SESSION['platform_accounts'] = serialize($this->getPlatformAccounts($this->db, $this->user));
+            $_SESSION['platform_accounts'] = serialize($this->getPlatformAccountsFromDB($this->db, $this->user));
 			$this->user->logUserLogin(Application::getPDOconnection(), 'form');
             header('Location: https://vigas.tv'.Application::getBaseURL().'following');
         }
@@ -89,6 +120,13 @@ class UserManager
         }      
     }
     
+	/**
+    * Validates given data to change a user paswword and calls updatePassword method
+    * @param string $current_password The user current password
+    * @param string $new_password The new user password
+    * @param string $new_password_2 The new user password (confirm your password field)
+    * @return string The error message if some data were not validated
+    */
     public function changePassword($current_password, $new_password, $new_password_2)
     {
         $validator = new FormValidator;
@@ -102,10 +140,10 @@ class UserManager
         }
         else
         {
-            $test_user = $this->user->getUser($this->db, ['username' => $user->getUsername()], $current_password);
+            $test_user = $this->user->getUser($this->db, ['username' => $this->user->getUsername()], $current_password);
             if($test_user !== false)
             {
-                $password_changed = $user->updatePassword($this->db, ['id' => $id, 'username' => $user->getUsername()], $new_password);
+                $password_changed = $this->user->updatePassword($this->db, ['id' => $this->user->getId(), 'username' => $this->user->getUsername()], $new_password);
                 if($password_changed)
                 {
                     return '<div class="alert alert-success">Your password has been changed</div>';
@@ -124,6 +162,12 @@ class UserManager
         
     }
     
+	/**
+    * Tests if the reset password token is still valid (not expired)
+    * @param int $id The user id
+    * @param string $token The reset password token
+    * @return boolean Returns true if the token is valid, false otherwise
+    */
     public function testTokenValidity($id, $token)
     {
         $this->user = new User;
@@ -146,6 +190,14 @@ class UserManager
         }
     }
     
+	/**
+    * Validates given data to reset a user paswword and calls updatePassword method
+    * @param int $id The user id
+    * @param string $token The reset password token
+	* @param string $new_password The new user password
+    * @param string $new_password_2 The new user password (confirm your password field)
+    * @return string The error message if some data were not validated
+    */
     public function resetPassword($id, $token, $new_password, $new_password_2)
     {
         $validator = new FormValidator;
@@ -173,6 +225,11 @@ class UserManager
         }     
     }
     
+	/**
+    * Sends an email with a reset password link
+    * @param string $email The user email address
+    * @return string Confirmation message that the email has been sent or an error message
+    */
     public function sendResetPwdEmail($email)
     {
         $this->user = new User();
@@ -207,6 +264,11 @@ class UserManager
         }
     }
     
+	/**
+    * Finds a user email address with a given username
+    * @param string $username The user username
+    * @return string The user email address or a message saying that the username has not been found 
+    */
     public function findEmail($username)
     {
         $this->user = new User();
@@ -236,19 +298,34 @@ class UserManager
         return $response;
     }
     
-    public function getPlatformAccounts()
+	/**
+    * Gets the user's streaming platform accounts from the database
+    */
+    public function getPlatformAccountsFromDB()
     {
 		$twitch = new Twitch;
-		$smashcast = new Smashcast;
         $twitch_account = new TwitchAccount($twitch);
-		$this->user->addPlatformAccounts($twitch_account->getFromDB($this->db, $this->user->getId()));
+		$twitch_account->getFromDB($this->db, $this->user->getId());
+		if(!is_null($twitch_account->getUsername()) && !is_null($twitch_account->getToken()))
+		{
+			$this->user->addPlatformAccounts($twitch_account);
+		}	
+		
+		$smashcast = new Smashcast;
 		$smashcast_account = new SmashcastAccount($smashcast);
-		$this->user->addPlatformAccounts($smashcast_account->getFromDB($this->db, $this->user->getId()));
-		var_dump($twitch_account->getFromDB($this->db, $this->user->getId()));
-		var_dump($smashcast_account->getFromDB($this->db, $this->user->getId()));
-		var_dump($this->user);
+		$smashcast_account->getFromDB($this->db, $this->user->getId());
+		if(!is_null($smashcast_account->getUsername()) && !is_null($smashcast_account->getToken()))
+		{
+			$this->user->addPlatformAccounts($smashcast_account);
+		}
+		
     }
     
+	/**
+    * Calls the firstLinkDone method and redirect the user to the following page
+    * @param string $username The user username
+    * @return string An error message if the firstLinkDone method returned false
+    */
     public function setFirstLinkDone()
     {
         $first_link_done_set = $this->user->firstLinkDone($this->db, $this->user->getId());
@@ -271,7 +348,9 @@ class UserManager
         }
     }
 
-
+	/**
+    * Destroys user cookie and session and redirect the user to the main page
+    */
     public function logOut()
     {
         setcookie('user', '', time() - 3600, '/', null, false, true);

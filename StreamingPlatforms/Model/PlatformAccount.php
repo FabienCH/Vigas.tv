@@ -6,8 +6,8 @@ use Vigas\Application\Controller\Encryption;
 use Vigas\Application\Application;
 
 /**
-* Class PlatformAccount
-* Get and manage account from streaming platform, interact with database
+* Class PlatformAccount.
+* Gets and manage account from streaming platform, interact with database
 */
 abstract class PlatformAccount
 {
@@ -15,35 +15,43 @@ abstract class PlatformAccount
     use Encryption;
     
     /**
-    * @var string $platform the streaming platform
+    * @var object The streaming platform
     */
     protected $platform;
     
     /**
-    * @var string $username the streaming platform account username
+    * @var string The streaming platform account username
     */
     protected $username;
     
     /**
-    * @var string $token the token given by the streaming platform once the user is logged
+    * @var string The authentication token given by the streaming platform
     */
     protected $token;
 
     /**
-    * @var string $profil_picture_url the profil picture url
+    * @var string The the streaming platform profil picture URL
     */
     protected $profil_picture_url;
     
     /**
-    * @param string $platform the streaming platform
+    * @param string $platform The streaming platform
     */
     public function __construct($platform)
     {
         $this->platform = $platform;
     }
 
+	/** 
+    * @return object Returns the streaming platform
+    */
+    public function getPlatform()
+    {
+        return $this->platform;
+    }
+	
     /** 
-    * @return string returns the streaming platform account username
+    * @return string Returns the streaming platform account username
     */
     public function getUsername()
     {
@@ -51,7 +59,7 @@ abstract class PlatformAccount
     }
 
     /** 
-    * @return string returns the token given by the streaming platform once the user is logged
+    * @return string Returns the authentication token given by the streaming platform
     */
     public function getToken()
     {
@@ -59,7 +67,7 @@ abstract class PlatformAccount
     }
     
     /** 
-    * @return string returns the streaming platform profil picture
+    * @return string Returns the streaming platform profil picture URL
     */
     public function getProfilPictureUrl()
     {
@@ -67,7 +75,7 @@ abstract class PlatformAccount
     }
 
     /** 
-    * @param string $token the token given by the streaming platform once the user is logged
+    * @param string $token The authentication token given by the streaming platform
     */
     public function setToken($token)
     {

@@ -39,7 +39,7 @@ use Vigas\Application\View\Forms;
 			{array_push($this->params, $this->data['selected']);}
 		else
 			{$this->params = null;}
-        Forms::getAboutForm(Application::getBaseURL().'about#form', 'post', $this->params);
+        Forms::getContactForm(Application::getBaseURL().'about#form', 'post', $this->params);
     ?>
 </div>
 <div class="col-xs-12">

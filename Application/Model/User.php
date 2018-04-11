@@ -5,48 +5,53 @@ use  Vigas\Application\Application;
 
 /**
 * Class User.
-* Manage a user and interact with database
+* Modifies user informations in the database
 */
 class User
 {
     /**
-    * @var int $id user id
+    * @var int The user id
     */
     protected $id;
     
     /**
-    * @var string $username username 
+    * @var string The user username 
     */
     protected $username;
     
     /**
-    * @var string $email user email address
+    * @var string The user email address
     */
     protected $email;
     
     /**
-    * @var boolean $first_link_done true if the user linked his streaming platform account(s) at least once, false otherwise
+    * @var boolean True if the user linked his streaming platform account(s) at least once, false otherwise
     */
     protected $first_link_done;
     
     /**
-    * @var string $reset_pwd_token reset password token
+    * @var string Reset password token
     */
     protected $reset_pwd_token;
     
     /**
-    * @var string $reset_pwd_token_endat reset password token expiration datetime 
+    * @var string Reset password token expiration datetime 
     */
     protected $reset_pwd_token_endat;
 	
 	/**
-    * @var array $platform_accounts user's linked accounts
+    * @var array All the streaming platforms accounts the user linked with his vigas account
     */
     protected $platform_accounts = [];
 
+	/**
+    * Builds an array of SQL query WHERE condition(s)
+	* @param array $conditions The SQL query WHERE condition(s)
+    * @return array An array containing condition(s) as a string and an array of value(s)
+    */
     private function builRequestConditions($conditions)
     {
-        $request_data=['conditions' => '', 'value' => []];
+        $request_data = ['conditions' => '', 'value' => []];
         $i = 0;
         $lenght = count($conditions);
         foreach($conditions as $column => $value)
@@ -63,11 +68,10 @@ class User
     }
 	
 	/**
-    * Writes in a file when a user log in
-    * @param string $from login source (form or cookie)
-	* @param object User $user
+    * Logs the datetime into the database when a user just logged in 
+    * @param PDO $db Database connection object
     */
-	public function logUserLogin(\PDO $db, $from)
+	public function logUserLogin(\PDO $db)
 	{
 		$now = date("Y-m-d H:i:s", strtotime('now'));
         $req = $db->prepare('UPDATE User SET last_logon=:last_logon WHERE id= :id');
@@ -78,11 +82,11 @@ class User
 	}
     
     /**
-    * Get user from the database and set User object properties
-    * @param object PDO $db database connection object
-    * @param string $column the column name used on the WHERE clause
-    * @param mixed $value the value used on the WHERE clause
-    * @return false if user has not been found
+    * Gets user from the database and set User object properties
+    * @param PDO $db database connection object
+    * @param array $conditions The SQL condition(s) to select the user
+    * @param string $password The user password
+    * @return boolean Returns false if user has not been found
     */
     public function getUser(\PDO $db, $conditions, $password = null)
     {
@@ -110,12 +114,12 @@ class User
     }
 
     /**
-    * Create user account
-    * @param object PDO $db database connection object
-    * @param string $username the username
-    * @param string $email the user email address
-    * @param string $password the user password
-    * @return boolean returns true if account has been created, false otherwise
+    * Inserts a new user account into the database
+    * @param PDO $db Database connection object
+    * @param string $username The user username 
+    * @param string $email The user email address
+    * @param string $password The user password
+    * @return boolean Returns true if account has been created, false otherwise
     */
     public function insertUser(\PDO $db, $username, $email, $password)
     {
@@ -137,13 +141,11 @@ class User
     }
 
     /**
-    * Change user password
-    * @param object PDO $db database connection object
-    * @param int $id the user id
-    * @param string $username the username
-    * @param string $current_password the surrent user password
-    * @param string $new_password the new user password
-    * @return int returns 0 if worng username or password, -1 if setting new password failed, 1 if it succeed
+    * Changes a user password
+    * @param PDO $db Database connection object
+	* @param array $conditions The SQL condition(s) to select the user
+    * @param string $new_password The new user password
+    * @return boolean Returns true if the password has been changed, false otherwise
     */
     public function updatePassword(\PDO $db, $conditions, $new_password)
     {
@@ -161,6 +163,12 @@ class User
         }	    
     }
     
+	 /**
+    * Deletes the reset password token after the user set up a new password
+    * @param PDO $db Database connection object
+	* @param int $id The user id
+    * @return boolean Returns true if reset_pwd_token and reset_pwd_token_endat columns has been set to NULL, false otherwise
+    */
     public function deleteResetPwdToken(\PDO $db, $id)
     {
         $req = $db->prepare('UPDATE User SET reset_pwd_token=NULL, reset_pwd_token_endat=NULL WHERE id=:id');
@@ -178,10 +186,10 @@ class User
     }
 
     /**
-    * Check if an account already exist with the provided username
-    * @param object PDO $db database connection object
-    * @param string $username the username address to test
-    * @return boolean returns true if the username is unique (not found in database), false otherwise
+    * Checks if an account already exist with the given username
+    * @param PDO $db Database connection object
+    * @param string $username The username address to check
+    * @return boolean Returns true if the username is unique (not found in database), false otherwise
     */
     public function checkUniqueUsername(\PDO $db, $username)
     {
@@ -197,10 +205,10 @@ class User
     }
 
     /**
-    * Check if an account already exist with the provided email address
-    * @param object PDO $db database connection object
-    * @param string $email the email address to test
-    * @return boolean returns true if the email address is unique (not found in database), false otherwise
+    * Checks if an account already exist with the given email address
+    * @param PDO $db Database connection object
+    * @param string $email The email address to check
+    * @return boolean Returns true if the email address is unique (not found in database), false otherwise
     */
     public function checkUniqueEmail(\PDO $db, $email)
     {
@@ -216,10 +224,10 @@ class User
     }
 
     /**
-    * Set first link done to true
-    * @param object PDO $db database connection object
-    * @param int $id user id
-    * @return boolean returns true if first link done has been set to true, false otherwise
+    * Sets first_link_done column to true
+    * @param PDO $db Database connection object
+    * @param int $id The user id
+    * @return boolean Returns true if first_link_done has been set to true, false otherwise
     */
     public function firstLinkDone(\PDO $db, $id)
     {	
@@ -240,10 +248,10 @@ class User
     }
 
     /**
-    * Save reset password token and reset password token expiration datetime into database
-    * @param object PDO $db database connection object
-    * @param string $token the reset password token
-    * @param int $id user id
+    * Saves reset password token and reset password token expiration datetime into database
+    * @param PDO $db Database connection object
+    * @param string $token The reset password token
+    * @param int $id The user id
     * @return boolean returns true if reset password token and reset password token expiration datetime has been saved, false otherwise
     */
     public function saveResetPwdToken(\PDO $db, $token, $id)
@@ -265,9 +273,20 @@ class User
             return true;
         }	
     }
+	
+	/**
+    * Adds a streaming platform account into array $platform_accounts
+	* @param Platform $account The streaming platform account to add
+    */
+    public function addPlatformAccounts($account)
+    {
+		$key = explode('\\', get_class($account));
+		$key = end($key);
+		$this->platform_accounts[$key] = $account;
+    }
 
     /**
-    * @return int $id user id
+    * @return int The user id
     */
     public function getId()
     {
@@ -275,7 +294,7 @@ class User
     }
 
     /**
-    * @return string $username username 
+    * @return string The user username 
     */
     public function getUsername()
     {
@@ -283,7 +302,7 @@ class User
     }
 
     /**
-    * @return string $email user email address
+    * @return string The user email address
     */
     public function getEmail()
     {
@@ -291,7 +310,7 @@ class User
     }
 
     /**
-    * @return boolean $first_link_done true if the user linked his streaming platform account(s) at least once, false otherwise
+    * @return boolean True if the user linked his streaming platform account(s) at least once, false otherwise
     */
     public function getFirstLinkDone()
     {
@@ -299,7 +318,7 @@ class User
     }
 
     /**
-    * @return string $reset_pwd_token reset password token
+    * @return string Reset password token
     */
     public function getResetPwdToken()
     {
@@ -307,7 +326,7 @@ class User
     }
 
     /**
-    * @return string $reset_pwd_token_endat reset password token expiration datetime 
+    * @return string Reset password token expiration datetime 
     */
     public function getResetPwdTokenEndat()
     {
@@ -315,28 +334,11 @@ class User
     }
 	
 	/**
-    * @return array $platform_accounts user's linked accounts
+    * @return array All the streaming platforms accounts the user linked with his vigas account
     */
     public function getPlatformAccounts()
     {
         return $this->platform_accounts;
     }
-	
-	/**
-    * @add a platform account into array $platform_accounts
-    */
-    public function addPlatformAccounts($account)
-    {
-		if($this->platform_accounts == null)
-		{
-			$this->platform_accounts = $account;
-		}
-		else
-		{
-			array_push($this->platform_accounts, $account);
-		} 
-		var_dump($this->platform_accounts);
-    }
-
 
 }

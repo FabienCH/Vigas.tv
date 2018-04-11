@@ -4,17 +4,17 @@ namespace Vigas\StreamingPlatforms\Model;
 use Vigas\StreamingPlatforms\Model\Platform;
 
 /**
-* Class Smashcast extends Platform
+* Class Smashcast extends Platform.
 * Gets data from the Smashcast API
 */
 class Smashcast extends Platform
 {
 	
 	/**
-    * Get streams from Smashcast and add them to streams array
+    * Gets streams from Smashcast and add them to streams array
     * @param string $url Smashcast API url to send the request to
-    * @param string|null $http_header http header to set
-	* @return array streams streams retrieved from Smashcast
+    * @param string|null $http_header Http header to set for the request
+	* @return array Streams retrieved from Smashcast
     */
     public function getStreamsFromPlatform($url, $http_header = null)
     {
@@ -34,10 +34,35 @@ class Smashcast extends Platform
     }
 	
 	/**
-    * Get games from Smashcast and add them to games array
+     * Gets followed streams from Smashcast and add them to streams array
+     * @param string $username Smashcast username
+     */
+    public function getFollowedStreamsFromSmashcast($username)
+    {
+        $response=$this->curlRequest('https://api.smashcast.tv/following/user?user_name='.$username);
+
+        $decode_flux = json_decode($response, true);
+        if(isset($decode_flux["following"])) {
+            $API_following = $decode_flux["following"];
+            foreach($API_following as $following)
+            {
+                $response=$this->curlRequest('https://api.smashcast.tv/media/live/'.$following['user_name']);
+                $decode_flux = json_decode($response, true);
+                if(isset($decode_flux["livestream"])) 
+				{
+                    $stream = $decode_flux["livestream"]["0"];
+                    $stream = new Stream($stream["media_id"], $stream["category_name"], $stream["media_views"], "", $stream["media_user_name"], "https://www.smashcast.tv/embed/".$stream["media_name"]."?autoplay=true","https://www.smashcast.tv/embedchat/".$stream["media_name"], "https://edge.sf.hitbox.tv/static/img/media/live/".$stream["media_name"]."_large_000.jpg", $stream["media_status"], $stream["media_display_name"], "Smashcast");
+					array_push($this->streams, $stream);
+                }
+            }
+        }    
+    }
+	
+	/**
+    * Gets games from Smashcast and add them to games array
     * @param string $url Smashcast API url to send the request to
-    * @param string|null $http_header http header to set
-	* @return array games games retrieved from Smashcast
+    * @param string|null $http_header Http header to set for the request
+	* @return array Games retrieved from Smashcast
     */
     public function getGamesFromPlatform($url, $http_header = null)
     {	
@@ -54,10 +79,8 @@ class Smashcast extends Platform
     }
 	
 	/**
-    * Get search result from Smashcast and add them to streams array
-    * @param string $url Smashcast API url to send the request to
-    * @param string|null $http_header http header to set
-	* @return array streams streams retrieved from Smashcast
+    * Gets search result from Smashcast
+    * @param string $query Research's keyword(s) entered by the user
     */
 	public function getSearchFromPlatform($query)
     {

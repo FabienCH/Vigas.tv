@@ -8,27 +8,27 @@ namespace Vigas\StreamingPlatforms\Model;
 abstract class Media
 {
     /**
-    * @var int $id media id
+    * @var int The media id
     */
     protected $id;
     
     /**
-    * @var string $game game name
+    * @var string The game name
     */
     protected $game;
     
     /**
-    * @var int $viewers number of viewers
+    * @var int The number of viewers
     */
     protected $viewers;
     
     /**
-    * @var string $source the media's streaming platform
+    * @var string The media's streaming platform
     */
     protected $source;
 
     /** 
-    * @return int returns the media id
+    * @return int Returns the media id
     */
     public function getId()
     {
@@ -36,7 +36,7 @@ abstract class Media
     }
 
     /** 
-    * @return string returns the game name
+    * @return string Returns the game name
     */
     public function getGame()
     {
@@ -44,7 +44,7 @@ abstract class Media
     }
 
     /** 
-    * @return string returns the number of viewers
+    * @return string Returns the number of viewers
     */
     public function getViewers()
     {

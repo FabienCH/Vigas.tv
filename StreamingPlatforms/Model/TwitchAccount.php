@@ -7,14 +7,14 @@ use Vigas\Application\Application;
 use Vigas\StreamingPlatforms\Model\PlatformAccount;
 
 /**
-* Class TwitchAccount
-* Get and manage account from Twitch, interact with database
+* Class TwitchAccount.
+* Gets and manage account from Twitch, interact with database
 */
 class TwitchAccount extends PlatformAccount
 {  
     /**
-    * Get token from Twitch
-    * @param array $data data to pass to the streaming platform API (app token, secret token...)
+    * Gets token from Twitch
+    * @param array $data Data to pass to the streaming platform API (app token, secret token...)
     */
     public function getTokenFromSource(Array $data)
     {	            
@@ -24,11 +24,10 @@ class TwitchAccount extends PlatformAccount
         $response = $this->curlRequest($url, $data, $http_header);
         $json_result = json_decode($response, true);
         $this->token = $json_result["access_token"];
-		var_dump($json_result);
     }
 
     /**
-    * Get username from Twitch
+    * Gets username from Twitch
     */
     public function getUsernameFromSource()
     {
@@ -44,7 +43,7 @@ class TwitchAccount extends PlatformAccount
     }
 
     /**
-    * Get profile picture from Twitch
+    * Gets profile picture from Twitch
     */
     public function getProfilePictureFromSource()
     {
@@ -61,10 +60,11 @@ class TwitchAccount extends PlatformAccount
     }
 
     /**
-    * Save Twitch user informations into database
-    * @param object PDO $db database connection object
-    * @param string $username streaming platform username
-    * @param int $user_id the "local" user id
+    * Saves Twitch user informations into database
+    * @param PDO $db Database connection object
+    * @param string $username Streaming platform username
+    * @param int $user_id The Vigas user id
+	* @return array|false Returns Smashcast username and token if informations have been saved, false otherwise
     */
     public function saveToDB(\PDO $db, $username, $user_id)
     {	
@@ -105,9 +105,10 @@ class TwitchAccount extends PlatformAccount
     }
 
     /**
-    * Get Twitch user informations from the database
-    * @param object PDO $db database connection object
-    * @param int $user_id the "local" user id
+    * Gets Twitch user informations from the database
+    * @param PDO $db Database connection object
+    * @param int $user_id The Vigas user id
+	* @return object The Smashcast account
     */
     public function getFromDB(\PDO $db, $user_id)
     {
@@ -119,7 +120,7 @@ class TwitchAccount extends PlatformAccount
         if(isset($resultat['twitch_username']) && isset($resultat['twitch_token']))
         {
             $this->username = $resultat['twitch_username'];
-            $this->token = $this->decryptToken(base64_decode($resultat['twitch_token']));
+            $this->token = base64_decode($resultat['twitch_token']);
             $this->getProfilePictureFromSource();
             return $this;
         }

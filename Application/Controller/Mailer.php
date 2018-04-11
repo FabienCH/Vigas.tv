@@ -5,17 +5,17 @@ require_once __DIR__.'/../../Vendor/PHPMailer/PHPMailerAutoload.php';
 
 /**
  * Class Mailer extends PHPmailer.
- * Build and send email
+ * Builds and sends email
  */
 class Mailer extends \PHPmailer
 {
     /**
-    * @param string $From sender email address
-    * @param string $FromName sender display name
+    * @param string $From Sender email address
+    * @param string $FromName Sender display name
     * @param string $Host SMTP host
-    * @param string $Subject email subject
-    * @param string $Body email body
-    * @param string $AddAddress recipient email address
+    * @param string $Subject Email subject
+    * @param string $Body Email body
+    * @param string $AddAddress Recipient email address
     * @param array $smtp_conf SMTP server informations
     */
     public function __construct($From, $FromName, $Host, $Subject, $Body, $AddAddress, $smtp_conf)
@@ -35,7 +35,7 @@ class Mailer extends \PHPmailer
     }
 
     /** 
-    * @return mixed returns true if email has been sent, false otherwise
+    * @return mixed Returns true if email has been sent, error informations otherwise
     */
     public function sendMail()
     {

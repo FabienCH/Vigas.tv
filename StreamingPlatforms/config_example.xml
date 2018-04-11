@@ -47,10 +47,10 @@
 		</api_keys>
 	</smashcast>
 
-	<!---
+	<!--
 	<platform_key platform="ytgaming" name="api_key" value="your youtube gaming api key" ></platform_key>
 	<platform_key platform="ytgaming" name="client_id" value="your youtube gaming client id" ></platform_key>
 	<platform_key platform="ytgaming" name="app_secret" value="your youtube gaming app secret" ></platform_key>
-	--->
+	-->
 
 </streaming_platforms>

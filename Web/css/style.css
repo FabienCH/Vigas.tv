@@ -28,7 +28,7 @@
 	position: relative;
 	bottom : 1px;
 	height : 26px;
-	background-image:url("/dev/view/img/submit.png");
+	background-image:url("/view/img/submit.png");
 	background-size : contain;
 	background-repeat: no-repeat;
     background-position: center; 

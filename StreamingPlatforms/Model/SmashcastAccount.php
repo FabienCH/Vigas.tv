@@ -7,14 +7,14 @@ use Vigas\Application\Application;
 use Vigas\StreamingPlatforms\Model\PlatformAccount;
 
 /**
-* Class SmashcastAccount
-* Get and manage account from Smashcast, interact with database
+* Class SmashcastAccount.
+* Gets and manage account from Smashcast, interact with database
 */
 class SmashcastAccount extends PlatformAccount
 {
     /**
-    * Get token from Smashcast
-    * @param array $data data to pass to the streaming platform API (app token, secret token...)
+    * Gets token from Smashcast
+    * @param array $data Data to pass to the streaming platform API (app token, secret token...)
     */
     public function getTokenFromSource(Array $data)
     {	
@@ -27,7 +27,7 @@ class SmashcastAccount extends PlatformAccount
     }
 
     /**
-    * Get username from Smashcast
+    * Gets username from Smashcast
     */
     public function getUsernameFromSource()
     {
@@ -41,7 +41,7 @@ class SmashcastAccount extends PlatformAccount
     }
 
     /**
-    * Get profile picture from Smashcast
+    * Gets profile picture from Smashcast
     */
     public function getProfilePictureFromSource()
     {
@@ -54,10 +54,11 @@ class SmashcastAccount extends PlatformAccount
     }
 
     /**
-    * Save Smashcast user informations into database
-    * @param object PDO $db database connection object
-    * @param string $username streaming platform username
-    * @param int $user_id the "local" user id
+    * Saves Smashcast user informations into database
+    * @param PDO $db Database connection object
+    * @param string $username Streaming platform username
+    * @param int $user_id The Vigas user id
+	* @return array|false Returns Smashcast username and token if informations have been saved, false otherwise
     */
     public function saveToDB(\PDO $db, $username, $user_id)
     {	
@@ -75,8 +76,6 @@ class SmashcastAccount extends PlatformAccount
                 'username' => $username,
                 'encrypted_token' => base64_encode($encrypted_token)
             ));
-			print_r($req->errorInfo());
-			var_dump($encrypted_token);
         }
         else
         {
@@ -100,9 +99,10 @@ class SmashcastAccount extends PlatformAccount
     }
 
     /**
-    * Get Smashcast user informations from the database
-    * @param object PDO $db database connection object
-    * @param int $user_id the "local" user id
+    * Gets Smashcast user informations from the database
+    * @param PDO $db Database connection object
+    * @param int $user_id The Vigas user id
+	* @return object The Smashcast account
     */
     public function getFromDB(\PDO $db, $user_id)
     {

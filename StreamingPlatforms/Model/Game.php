@@ -10,16 +10,16 @@ Use Vigas\StreamingPlatforms\Model\Media;
 class Game extends Media
 {
     /**
-    * @var string $box game boxart's url
+    * @var string The game boxart's url
     */
     private $box;
 
     /**
-    * @param int $id game id
-    * @param string $game game name
-    * @param int $viewers number of viewers watching this game
-    * @param string $box game boxart's url
-    * @param string $source the game's streaming platform
+    * @param int $id The game id
+    * @param string $game The game name
+    * @param int $viewers The number of viewers watching the game
+    * @param string $box The game boxart's url
+    * @param string $source The game's streaming platform
     */
     public function __construct($id, $game, $viewers, $box, $source)
     {
@@ -31,7 +31,7 @@ class Game extends Media
     }
     
     /** 
-    * @return string returns the game boxart's url
+    * @return string The game boxart's url
     */
     public function getBox()
     {
@@ -39,7 +39,7 @@ class Game extends Media
     }
     
     /** 
-    * @param string $box the game boxart's url to set
+    * @param string $box The game boxart's url to set
     */
     public function setBox($box)
     {
@@ -47,7 +47,7 @@ class Game extends Media
     }
     
     /** 
-    * @param int $viewers add a number of viewers to the game
+    * @param int $viewers Adds a number of viewers to the game
     */
     public function addViewers($viewers)
     {

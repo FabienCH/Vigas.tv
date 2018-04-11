@@ -1,0 +1,86 @@
+<?php
+echo 'toto';
+/*error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+
+
+function getConfigFromXML($conf_file, $tag)
+{
+	$xml_doc = new \DOMDocument;
+	$xml_doc->load($conf_file);
+	$elements = $xml_doc->getElementsByTagName($tag);
+	if($elements->length == 1)
+	{
+		return $elements->item(0)->getAttribute('value');
+	}
+	elseif($elements->length > 1)
+	{
+		$config = [];
+		for($i=0; $i<$elements->length; $i++)
+		{
+			$config[$elements->item($i)->getAttribute('name')] = $elements->item($i)->getAttribute('value');
+		}
+		return $config;
+	}	
+}
+
+function getApiUrl($tagname, $vars)
+{
+	$classname = 'twitch';
+	$api_urls = getConfigFromXML(__DIR__.'/StreamingPlatforms/config.xml', $classname.'_url');
+	$length = $api_urls->lenght;
+	for($i = 0; $i < $length; $i++)
+	{
+		if($api_urls->item($i)->getAttribute('name') == $tagname)
+		{
+			foreach($vars as $key => $value)
+			{
+				$api_url = str_replace($key, $value, $api_urls->item($i)->getAttribute('value'));
+			}
+		}
+	}
+}
+*/
+
+//getConfigFromXML(__DIR__.'/StreamingPlatforms/config.xml', ['smashcast']);
+//$api_url = getApiUrl('get_streams', ['limit_val' => 100, 'offset_val' => 0]);
+//var_dump($api_url);
+/*	
+$xml_doc = new \DOMDocument;
+$xml_doc->load(__DIR__.'/StreamingPlatforms/config.xml');
+$tags_lenght = count($tags);
+
+$elements = $xml_doc->getElementsByTagName('twitch');
+$url = $elements->item(0)->getElementsByTagName('url');
+for($i=0; $i < $url->length; $i++)
+{
+	$config[$url->item($i)->getAttribute('name')] = $url->item($i)->getAttribute('value');
+}
+var_dump($config);
+*/
+
+
+
+/*
+$elements;
+for($i = 0, $i < $tags_lenght, $i++)
+{
+	$elements = $xml_doc->getElementsByTagName($tag);
+}
+
+if($elements->length == 1)
+{
+	return $elements->item(0)->getAttribute('value');
+}
+elseif($elements->length > 1)
+{
+	$config = [];
+	for($i=0; $i<$elements->length; $i++)
+	{
+		$config[$elements->item($i)->getAttribute('name')] = $elements->item($i)->getAttribute('value');
+	}
+	return $config;
+}	
+*/
+?>
+

@@ -3,15 +3,15 @@ namespace Vigas\Application\Model;
 
 /**
  * Trait CurlRequest.
- * Build and send an HTTP(S) request, used to get json data from streaming platforms
+ * Builds and sends an HTTP(S) request, used to get json data from streaming platforms
  */
 trait CurlRequest
 {
     /**
-    * @param string $url url to send the request to
-    * @param string|null $post_data post data to send
-    * @param string|null $http_header http header to set
-    * @return string returns http(s) response
+    * @param string $url URL to send the request to
+    * @param string|null $post_data POST data to send
+    * @param string|null $http_header HTTP header to set
+    * @return string Returns http(s) response
     */
     public function curlRequest($url, $post_data = null, $http_header = null)
     {

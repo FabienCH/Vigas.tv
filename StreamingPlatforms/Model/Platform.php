@@ -3,7 +3,7 @@ namespace Vigas\StreamingPlatforms\Model;
 use \Vigas\Application\Application;
 
 /**
-* Abstract Class Platform
+* Abstract Class Platform.
 * Gets data from a streaming platform API
 */
 abstract class Platform
@@ -11,27 +11,27 @@ abstract class Platform
 	use \Vigas\Application\Model\CurlRequest;
 	
 	/**
-    * @var array api_keys platform's API keys
+    * @var array A platform's API keys
     */
 	protected $api_keys = [];
 	
 	/**
-    * @var array streams contains streams retrieved from the streaming platform
+    * @var array Contains streams retrieved from the streaming platform
     */
 	protected $streams = [];
 	
 	/**
-    * @var array followed_streams contains followed streams retrieved from the streaming platform
+    * @var array Contains followed streams retrieved from the streaming platform
     */
 	protected $followed_streams = [];
 	
 	/**
-    * @var array games contains games retrieved from the streaming platform
+    * @var array Contains games retrieved from the streaming platform
     */
 	protected $games = [];
 	
 	/**
-    * @var array $offline_streamers contains offline streamers name
+    * @var array Contains offline streamers name retrieved from the streaming platform
     */
     protected $offline_streamers = [];
 		
@@ -46,7 +46,9 @@ abstract class Platform
     }
 	
 	/**
-    * Sets the streaming platform API keys
+    * Sets the streaming platform API URL
+	* @param string $tagname The XML tag name attribute
+	* @param array $vars Variables to replace in the API URL
     */
 	public function getApiUrl($tagname, $vars = null)
     {
@@ -73,6 +75,9 @@ abstract class Platform
 	
 	/**
     * Gets streams from the streaming platform
+	* @param string $url Platform API url to send the request to
+    * @param string|null $http_header Http header to set for the request
+	* @return array Streams retrieved from the platform
     */
 	public function getStreamsFromPlatform($url, $http_header = null)
     {
@@ -80,15 +85,10 @@ abstract class Platform
 	}
 	
 	/**
-    * Gets followed streams from the streaming platform
-    */
-	public function getFollowedStreamsFromPlatform($url, $http_header = null)
-    {
-		
-	}
-	
-	/**
     * Gets games from the streaming platform
+	* @param string $url Platform API url to send the request to
+    * @param string|null $http_header Http header to set for the request
+	* @return array Games retrieved from the platform
     */
 	public function getGamesFromPlatform($url, $http_header = null)
     {
@@ -97,6 +97,7 @@ abstract class Platform
 	
 	/**
     * Gets search from the streaming platform
+	* @param string $query Research's keyword(s) entered by the user
     */
 	public function getSearchFromPlatform($query)
     {
@@ -104,7 +105,7 @@ abstract class Platform
 	}
     
 	/**
-    * @return array api_keys platform's API keys
+    * @return array A platform's API keys
     */
     public function getApiKeys()
     {
@@ -112,7 +113,7 @@ abstract class Platform
     }
 	
 	/**
-    * @return array streams contains streams retrieved from the streaming platform
+    * @return array Contains streams retrieved from the streaming platform
     */
 	public function getStreams()
     {
@@ -120,7 +121,7 @@ abstract class Platform
     }
 	
 	/**
-    * @return array followed_streams contains followed streams retrieved from the streaming platform
+    * @return array Contains followed streams retrieved from the streaming platform
     */
 	public function getFollowedStreams()
     {
@@ -128,7 +129,7 @@ abstract class Platform
     }
 	
 	/**
-    * @return array games contains games retrieved from the streaming platform
+    * @return array Contains games retrieved from the streaming platform
     */
 	public function getGames()
     {
@@ -136,7 +137,7 @@ abstract class Platform
     }
 	
 	/**
-    * @return array offline_streamers contains offline streamers name retrieved from the streaming platform
+    * @return array Contains offline streamers name retrieved from the streaming platform
     */
 	public function getOfflineStreamers()
     {

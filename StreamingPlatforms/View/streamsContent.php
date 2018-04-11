@@ -14,6 +14,7 @@ else
 	
 }
 
+//if there is streams to display
 if(count($this->data['streams_to_display']) > 0)
 {	
 	foreach($this->data['streams_to_display'] as $stream) 
@@ -42,6 +43,7 @@ if(count($this->data['streams_to_display']) > 0)
 	}
 }
 
+//if there is no streams to display
 else
 {?>
     <input type="hidden" id="type" value="<?= isset($_GET['action']) ? htmlspecialchars($_GET['action']) : 'streams' ?>">

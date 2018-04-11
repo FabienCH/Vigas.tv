@@ -4,10 +4,9 @@ use Vigas\Application\Application;
 
 if(Application::getUser() !== null)
 {
-	var_dump(Application::getUser());
     $user = Application::getUser();
 
-     if((Application::getPlatformAccounts()['twitch_data'] != null || Application::getPlatformAccounts()['smashcast_data'] != null) && $user->getFirstLinkDone()==1)
+    if($user->getPlatformAccounts() != null && $user->getFirstLinkDone()==1)
     {		
         require_once __DIR__.'/../View/allStreamsView.php';
     }

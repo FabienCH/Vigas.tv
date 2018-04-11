@@ -17,6 +17,7 @@ class Autoloader
     
 	/**
     * Sets path and requires PHP file
+	* @param array $class The class name to load
     */
     public static function autoload($class)
     {

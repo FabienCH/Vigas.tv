@@ -2,50 +2,50 @@
 namespace Vigas\Application\View;
 
 /**
-* Class Application
+* Class View.
 * Imports view files and sets view
 */
 class View
 {  
 	/**
-    * @var array params parameters used by the view
+    * @var array Parameters used by the view
     */
     protected $params;
 	
 	/**
-    * @var array data data retrived from the model
+    * @var array Data retrived from the model
     */
     protected $data;
 	
 	/**
-    * @var string main_title HTML page title 
+    * @var string HTML page title 
     */
     protected $main_title;
 	
 	/**
-    * @var string content_title view content title
+    * @var string The view's content title
     */
     protected $content_title;
 	
 	/**
-    * @var string navbar_account top navbar account information
+    * @var string Top navbar account information
     */
     protected $navbar_account;
 	
 	/**
-    * @var string navbar left side navbar
+    * @var string Left side navbar
     */
     protected $navbar;
 	
 	/**
-    * @var string content view content
+    * @var string The view's content
     */
     protected $content;
 
 	/**
-    * Sets parameters for the view and get navbar account view
-    * @param array parameters $params
-    * @param array data $data
+    * Sets parameters for the view and gets the navbar account view
+    * @param array $params Parameters used by the view
+    * @param array $data Data retrived from the model
     */
     public function __construct($params, $data)
     {
@@ -58,7 +58,7 @@ class View
     
 	/**
     * Gets the all live streams or streams by game view
-    * @param string $streams_view the view file to get
+    * @param string $streams_view the view file to get (allStreams or streamsByGame)
     */
     public function getStreamsContentView($streams_view)
     {
@@ -191,7 +191,7 @@ class View
     }
     
 	/**
-    * Gets the linked accounts view
+    * Gets the login view
     */
     public function getLoginView()
     {

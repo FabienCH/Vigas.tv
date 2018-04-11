@@ -2,11 +2,11 @@
 use Vigas\Application\Application;
 
 $nb_streams_to_display = count($this->data['streams_to_display']);
-
+$type = empty(Application::getHTTPRequest()->getGetData()) ? 'streams': 'following';
 if($nb_streams_to_display>0)
 {
 	?>
-    <div id="streams-display" class="<?= $div_streams_display_class ?>">
+    <div id="<?=$type?>-display" class="<?= $div_streams_display_class ?>">
 	<?php require_once __DIR__.'/../View/streamsContent.php'; ?>
 	
 	<?php
@@ -15,7 +15,7 @@ if($nb_streams_to_display>0)
         ?>
 		</div>
         <input type="hidden" id="offset" value="<?=$this->params['streams_offset'] + $this->params['streams_limit']?>">
-        <input type="hidden" id="type" value="streams">
+        <input type="hidden" id="type" value="<?=$type?>">
         <?php
     
         if($nb_streams_to_display == $this->params['streams_limit'] && $this->params['streams_offset'] + $this->params['streams_limit'] < 144)

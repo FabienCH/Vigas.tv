@@ -4,17 +4,17 @@ namespace Vigas\StreamingPlatforms\Model;
 use Vigas\StreamingPlatforms\Model\Platform;
 
 /**
-* Class Twitch extends Platform
+* Class Twitch extends Platform.
 * Gets data from the Twitch API
 */ 
 class Twitch extends Platform
 {
 
     /**
-    * Get streams from Twitch and add them to streams array
+    * Gets streams from Twitch and add them to streams array
     * @param string $url Twitch API url to send the request to
-    * @param string|null $http_header http header to set
-	* @return array streams streams retrieved from Twitch
+    * @param string|null $http_header Http header to set for the request
+	* @return array Streams retrieved from Twitch
     */
 	public function getStreamsFromPlatform($url, $http_header = null)
     {
@@ -34,10 +34,10 @@ class Twitch extends Platform
 	
 	
 	/**
-    * Get games from Twitch and add them to games array
+    * Gets games from Twitch and add them to games array
     * @param string $url Twitch API url to send the request to
-    * @param string|null $http_header http header to set
-	* @return array games games retrieved from Twitch
+    * @param string|null $http_header Http header to set for the request
+	* @return array Games retrieved from Twitch
     */
     public function getGamesFromPlatform($url, $http_header = null)
     {
@@ -53,8 +53,8 @@ class Twitch extends Platform
     }
 	
 	/**
-    * Get search result from Twitch and add them to arrays
-    * @param string $query research's keyword(s) entered by the user
+    * Gets search result from Twitch and add them to arrays
+    * @param string $query Research's keyword(s) entered by the user
     */
 	public function getSearchFromPlatform($query)
     {

@@ -8,22 +8,23 @@ use Vigas\Applciation\Model\CurlRequest;
 
 /**
 * Class MediasManager.
+* Manage Medias (streams or games )
 */
 Class MediasManager
 { 
      /**
-    * @var array $medias_to_display contains medias to be displayed by the view 
+    * @var array Contains medias to be displayed by the view 
     */
     protected $medias_to_display = [];
 	
     /**
-    * @var array $medias_array contains medias retrieved from the streaming platform 
+    * @var array Contains medias retrieved from the streaming platform 
     */
     protected $medias_array = [];
 
     /**
     * Merges existing medias array with medias retrieved from the streaming platform 
-    * @param array $array
+    * @param array $array The media array retrieved from a streaming platform
     */
 	public function setMediasArray(Array $array)
     {
@@ -32,8 +33,8 @@ Class MediasManager
 	
     /**
     * Orders medias by number of viewers from higher to lower
-    * @param object Media $media1
-    * @param object Media $media2
+    * @param Media $media1
+    * @param Media $media2
     */
     protected function oderByViewers(Media $media1, Media $media2)
     {
@@ -45,7 +46,7 @@ Class MediasManager
     
 	/**
     * Merges array if medias array is empty
-	* Adds numbers of viewers is the game is already in array or add the game is not
+	* Adds numbers of viewers if the game is already in array or add the game if not
     * @param array $games_array
     */
     public function addGames(Array $games_array)
@@ -81,7 +82,7 @@ Class MediasManager
     }
     
     /**
-    * Create a JSON file with media_array data
+    * Creates a JSON file with media_array data
     * @param string $path_file JSON file path
     */
     public function buildJsonFile($path_file)
@@ -93,7 +94,7 @@ Class MediasManager
     }
 
     /**
-    * Set medias_array from JSON file data
+    * Sets medias_array from JSON file data
     * @param string $path_file JSON file path
     */
     public function setMediasArrayFromJSON($path_file)
@@ -105,10 +106,10 @@ Class MediasManager
     }
     
 	/**
-    * Build medias_to_display array to be displayed by the view 
-    * @param int $limit number of streams to display
-    * @param int $offset offset to start creating medias_to_display
-    * @param array $source_array contains list of the streaming platforms (for streams only)
+    * Builds medias_to_display array to be displayed by the view 
+    * @param int $limit Number of medias to display
+    * @param int $offset Offset to start creating medias_to_display
+    * @param array $source_array Contains a list of streaming platforms (for streams only)
     */
     public function getMediasToDisplay($limit, $offset, Array $source_array = null)
     {
@@ -143,7 +144,7 @@ Class MediasManager
     }	
 
     /** 
-    * @return array returns the media array
+    * @return array Returns the media array
     */
     public function getMediasArray()
     {

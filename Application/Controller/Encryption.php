@@ -4,19 +4,18 @@ use \Vigas\Application\Application;
 
 /**
  * Trait Encryption.
- * Crypt and decrypt a token
+ * Crypt and decrypt the streaming platform token sent after user authentication
  */
 trait Encryption
 {
     /**
     * Crypt a token
-	* @param string $token token to crypt
-    * @return string the crypted token
+	* @param string $token Token to crypt
+    * @return string The crypted token
     */
     public function cryptToken($token)
     {
         $pub_key_path = Application::getConfigFromXML('Application/config.xml', 'encryption');
-		var_dump($pub_key_path);
 		$file_pub_key = fopen($pub_key_path['public_key_path'],"r");
 		$public_key = fread($file_pub_key,2048);
 		fclose($file_pub_key);
@@ -27,13 +26,12 @@ trait Encryption
 
     /**
     * Decrypt a token
-    * @param string $encrypted_token the crypted token
-    * @return string the decrypted token
+    * @param string $encrypted_token The crypted token
+    * @return string The decrypted token
     */
     public function decryptToken($encrypted_token)
     {
         $priv_key_path = Application::getConfigFromXML('Application/config.xml', 'encryption');
-		var_dump($priv_key_path);
 		$file_priv_key = fopen($priv_key_path['private_key_path'],"r");
 		$private_key = fread($file_priv_key,2048);
 		fclose($file_priv_key);

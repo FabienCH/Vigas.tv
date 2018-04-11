@@ -8,28 +8,28 @@ use Vigas\Application\Controller\Captcha;
 use Vigas\Application\Model\UserManager;
 
 /**
-* Class AppController
+* Class AppController.
 * The application controller
 */
 class AppController
 {
 	/**
-    * @var string navbar_method_name contains name of the AppController method used to get the navbar
+    * @var string Contains name of the AppController method used to get the navbar
     */
     protected $navbar_method_name;
 	
 	/**
-    * @var string method_name contains name of the AppController method used to get the content
+    * @var string Contains name of the AppController method used to get the content
     */
 	protected $method_name;
     
 	/**
-    * @var array $response data to be send to the view
+    * @var array Data to be send to the view
     */
     protected $response = [];
 	
 	/**
-    * @var array post_params parameters sent via POST method
+    * @var array Parameters sent via POST method
     */
     protected $post_params;
 	
@@ -39,7 +39,6 @@ class AppController
     public function __construct()
     {
 		$http_request = Application::getHTTPRequest();
-		var_dump(Application::getPath());
 		if(!is_null($http_request))
 		{
 			if(isset($http_request->getGetData()['action']) && in_array($http_request->getGetData()['action'], Application::getPath()))
@@ -55,9 +54,9 @@ class AppController
     }
 	
 	/**
-    * Sets the method name the controller will use
-    * @param string $action the action url parameter
-    * @return string the method name
+    * Sets the method name used by the controller
+    * @param string $action The action url parameter sent via GET method
+    * @return string The method name
     */
     public function setMethodName($action)
 	{
@@ -87,8 +86,7 @@ class AppController
     }
 	
 	/**
-    * Executes AppController methods to get content and navbar
-	* Creates the view and call View method and template
+	* Creates the view by calling the View method and the template
     */
 	public function getView()
     {	
@@ -99,20 +97,36 @@ class AppController
     }
 	
     /**
-    * Get data for the linked accounts view
+    * Gets POST data and log the user or create an account
     */
     public function getLogin()
     {
         if(isset($this->post_params['login']))
         {
+			if(!isset($this->post_params['log-remember-me']))
+			{
+				$this->post_params['log-remember-me'] = false;
+			}
             $user_manager = new UserManager;
-            $this->response['login_error'] = $user_manager->logUser($this->post_params['log-username'], $this->post_params['log-password'], $this->post_params['log-remember-me']);
+            $this->response['login_error'] = $user_manager->logUser(
+			$this->post_params['log-username'],
+			$this->post_params['log-password'],
+			$this->post_params['log-remember-me']);
         }
 		
 		if(isset($this->post_params['create-account']))
         {
+			if(!isset($this->post_params['ca-remember-me']))
+			{
+				$this->post_params['ca-remember-me'] = false;
+			}
             $user_manager = new UserManager;
-            $this->response['create_account_error'] = $user_manager->createAccount($this->post_params['ca-username'], $this->post_params['ca-email'], $this->post_params['ca-password'], $this->post_params['ca-password-2'], $this->post_params['ca-remember-me']);
+            $this->response['create_account_error'] = $user_manager->createAccount(
+			$this->post_params['ca-username'],
+			$this->post_params['ca-email'],
+			$this->post_params['ca-password'],
+			$this->post_params['ca-password-2'],
+			$this->post_params['ca-remember-me']);
         }
 	}
     
@@ -126,33 +140,22 @@ class AppController
     }
     
     /**
-    * Get data for the user profile view
-    * @param array $this->post_params HTTP POST parameters
+    * Gets POST data and changes user's password
     */
     public function getProfile()
     {
         if(isset($this->post_params['change-password']))
         {
             $user_manager = new UserManager;
-            $this->response['change_pwd_error'] = $user_manager->changePassword(Application::getUser(), $this->post_params['current-password'], $this->post_params['new-password'], $this->post_params['new-password-2']);
-        }
-        
-        if(isset($this->post_params['login']))
-        {
-            $user_manager = new UserManager;
-            $this->response['change_pwd_error'] = $user_manager->logUser($this->post_params['log-username'], $this->post_params['log-password'], $this->post_params['log-remember-me']);
-        }
-
-        if(isset($this->post_params['create-account']))
-        {
-            $user_manager = new UserManager;
-            $this->response['create_account_error'] = $user_manager->createAccount($this->post_params['ca-username'], $this->post_params['ca-email'], $this->post_params['ca-password'], $this->post_params['ca-password-2'], $this->post_params['ca-remember-me']);
+            $this->response['change_pwd_error'] = $user_manager->changePassword(
+			$this->post_params['current-password'],
+			$this->post_params['new-password'],
+			$this->post_params['new-password-2']);
         }
     }
     
     /**
-    * Get data for the forgot password view
-    * @param array $this->post_params HTTP POST parameters
+    * Gets POST data to send reset password email or find user's email address
     */
     public function getForgotPassword()
     {
@@ -168,8 +171,7 @@ class AppController
     }
     
     /**
-    * Get data for the reset password view
-    * @param array $this->post_params HTTP POST parameters
+    * Gets POST data, check if reset password token is still valid and reset user's password if so
     */
     public function getResetPassword()
     {
@@ -180,14 +182,17 @@ class AppController
             $this->response['token_validity'] = $user_manager->testTokenValidity($http_request->getGetData()['id'], $http_request->getGetData()['token']);
             if(isset($this->post_params['set-password']) && $this->response['token_validity'])
             {
-                $this->response['reset_password_error'] = $user_manager->resetPassword($http_request->getGetData()['id'], $http_request->getGetData()['token'], $this->post_params['password'], $this->post_params['password-2']);
+                $this->response['reset_password_error'] = $user_manager->resetPassword(
+				$http_request->getGetData()['id'],
+				$http_request->getGetData()['token'],
+				$this->post_params['password'],
+				$this->post_params['password-2']);
             }   
         }
     }
     
     /**
-    * Get data for the about view
-    * @param array $this->post_params HTTP POST parameters
+    * Gets POST data for the about view and manages the contact form
     */
     public function getAbout()
     {
@@ -274,7 +279,7 @@ class AppController
     }
     
     /**
-    * Manage the update info alert
+    * Manages the update info alert
     * @param array $get_params HTTP GET parameters
     */
     public function getManageUpdateInfo($get_params)
@@ -291,7 +296,7 @@ class AppController
     }
     
     /**
-    * Get the gif to display in 404 eror page
+    * Gets the gif to display in 404 error page
     */
     public function get404()
     {
@@ -299,7 +304,7 @@ class AppController
     }
     
     /**
-    * @return array response for the view
+    * @return array Data to be send to the view
     */
     public function getResponse()
     {

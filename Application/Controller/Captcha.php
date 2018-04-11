@@ -3,32 +3,32 @@ namespace Vigas\Application\Controller;
 
 /**
  * Class Captcha.
- * Manage Google reCAPTCHA
+ * Manages Google reCAPTCHA
  */
 class Captcha
 {
     /**
-    * @var string $siteKey reCAPTCHA site key
+    * @var string reCAPTCHA site key
     */
     private $siteKey;
     
     /**
-    * @var string $secretKey reCAPTCHA secret key
+    * @var string reCAPTCHA secret key
     */
     private $secretKey;
     
     /**
-    * @var string $captcha_response reCAPTCHA response
+    * @var string reCAPTCHA response
     */
     private $captcha_response;
     
     /**
-    * @var string $remote_ip user IP address
+    * @var string user's IP address
     */
     private $remote_ip;
     
     /**
-    * @var string $api_url Google reCAPTCHA url
+    * @var string Google reCAPTCHA url
     */
     private $api_url;
 
@@ -48,7 +48,7 @@ class Captcha
     }
 
     /** 
-    * @return boolean returns true if captcha is validated, false otherwise
+    * @return boolean Returns true if captcha is validated, false otherwise
     */
     public function validCaptcha()
     {

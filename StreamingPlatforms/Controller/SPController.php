@@ -13,28 +13,28 @@ use Vigas\Application\Model\UserManager;
 use Vigas\Application\View\View;
 
 /**
-* Class SPController
+* Class SPController.
 * Streaming Platforms Controller
 */
 class SPController
 {
 	/**
-    * @var array model_params parameters used by the model to get data
+    * @var array Parameters used by the model to get data
     */
     protected $model_params;
 	
 	/**
-    * @var array model_data data got from the model
+    * @var array Data got from the model
     */
     protected $model_data;
 	
 	/**
-    * @var string navbar_method_name contains name of the SPController method used to get the navbar
+    * @var string Contains name of the SPController method used to get the navbar
     */
     protected $navbar_method_name;
 	
 	/**
-    * @var string method_name contains name of the SPController method used to get the content
+    * @var string Contains name of the SPController method used to get the content
     */
 	protected $method_name;
     
@@ -97,8 +97,8 @@ class SPController
 	
 	/**
     * Sets the method name the controller will use
-    * @param string $action the action url parameter
-    * @return string the method name
+    * @param string $action The url's action parameter
+    * @return string Returns the method name
     */
     public function setMethodName($action)
 	{
@@ -124,14 +124,17 @@ class SPController
     public function executeController()
     {
 		$ctrl_method_name = $this->method_name;
-		$navbar_method_name = $this->navbar_method_name;
         $this->$ctrl_method_name();
-		$this->$navbar_method_name();
+		
+		if($this->navbar_method_name !== null)
+		{
+			$navbar_method_name = $this->navbar_method_name;
+			$this->$navbar_method_name();
+		}		
     }
 	
 	/**
-    * Executes SPController methods to get content and navbar
-	* Creates the view and call View method and template
+    * Initiates the view and calls the appropriate view method
     */
 	public function getView()
     {
@@ -156,7 +159,7 @@ class SPController
     }
 	
 	/**
-    * Gets streams to display for the all streams view
+    * Gets streams to display from a json file for the all streams view
     */
     public function getStreams()
     { 
@@ -166,7 +169,7 @@ class SPController
     }  
 	
 	/**
-    * Gets games to display for the all games view
+    * Gets games to display from a json fil for the all games view
     */
     public function getGames()
     {
@@ -176,7 +179,7 @@ class SPController
     } 
     
 	/**
-    * Gets streams to display for the streams by game view
+    * Gets streams to display from streaming platforms for the streams by game view
     */
     public function getStreamsByGame()
     {
@@ -207,29 +210,32 @@ class SPController
     }
 	
     /**
-    * Gets streams to display for the following view
+    * Gets streams to display from streaming platforms for the following view
     */
     public function getFollowing()
     {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        if(Application::getPlatformAccounts() !== null && Application::getUser()->getFirstLinkDone()==1)
+		$user = Application::getUser();
+        if($user !== null && $user->getPlatformAccounts() !== null && $user->getFirstLinkDone()==1)
         {
-            $platform_accounts = Application::getPlatformAccounts();
-            $user = Application::getUser();
-
+            $platform_accounts = $user->getPlatformAccounts();
             $streams_manager = new MediasManager;
             foreach($this->model_params['source_array'] as $source)
             {
-                if($source=="Twitch" && isset($platform_accounts['twitch_data']))
+                if($source == "Twitch" && isset($platform_accounts['TwitchAccount']))
                 {
-                    $twitch_token = $platform_accounts['twitch_data']->getToken();
-                    $streams_manager->getTwitchStreams('https://api.twitch.tv/kraken/streams/followed', null, array('Client-ID: '.$this->getPlatformsKeys()['twitch']['client_id'], 'Authorization: OAuth '.$platform_accounts['twitch_data']->decryptToken($twitch_token)));
+					$twitch = new Twitch;
+                    $twitch_token = $platform_accounts['TwitchAccount']->getToken();
+                    $twitch->getStreamsFromPlatform('https://api.twitch.tv/kraken/streams/followed', array('Client-ID: '.$twitch->getApiKeys()['client_id'], 'Authorization: OAuth '.$platform_accounts['TwitchAccount']->decryptToken($twitch_token)));
+					$streams_manager->setMediasArray($twitch->getStreams());
                 }
-                elseif($source=="Smashcast" && isset($platform_accounts['smashcast_data']))
+                elseif($source=="Smashcast" && isset($platform_accounts['SmashcastAccount']))
                 {
-                    $streams_manager->getSmashcastFollowedStreams($platform_accounts['smashcast_data']->getUsername());
+					$smashcast = new Smashcast;
+                    $smashcast->getFollowedStreamsFromSmashcast($platform_accounts['SmashcastAccount']->getUsername());
+					$streams_manager->setMediasArray($smashcast->getStreams());
                 }
             }				
 
@@ -263,9 +269,12 @@ class SPController
         }
     }
 	
+	/**
+    * Calls the setFirstLinkDone method
+    */
 	public function getFirstLinkDone()
     {
-        if(isset($this->post_params['first-link-done']))
+        if(isset(Application::getHTTPRequest()->getPostData()['first-link-done']))
         {
             $user_manager = new UserManager;
             $this->response['first_link_error'] = $user_manager->setFirstLinkDone();
@@ -273,7 +282,7 @@ class SPController
     }
     
     /**
-    * Save streaming platforms token once identified
+    * Saves the token once authenticated on a streaming platform
     */
     public function getSaveToken()
     {
@@ -291,7 +300,6 @@ class SPController
                 $twitch_account->getUsernameFromSource();	
                 $twitch_account->saveToDB(Application::getPDOconnection(), $twitch_account->getUsername(), Application::getUser()->getId());
                 $twitch_account->getProfilePictureFromSource();
-				var_dump($twitch_account);
             }
 
             if(isset($get_params['request_token']))
@@ -305,7 +313,6 @@ class SPController
                 $smashcast_account->getUsernameFromSource();	
                 $smashcast_account->saveToDB(Application::getPDOconnection(), $smashcast_account->getUsername(), Application::getUser()->getId());
                 $smashcast_account->getProfilePictureFromSource();
-				var_dump($smashcast_account);
             }
 
             if(isset($get_params['authToken']))
@@ -317,26 +324,23 @@ class SPController
                 $smashcast_account->getUsernameFromSource();
                 $smashcast_account->saveToDB(Application::getPDOconnection(), $smashcast_account->getUsername(), Application::getUser()->getId());
                 $smashcast_account->getProfilePictureFromSource();
-				var_dump($smashcast_account);
             }
         }
 		
         $user_manager = new UserManager;
-        $_SESSION['platform_accounts'] = serialize($user_manager->getPlatformAccounts());
-		var_dump($_SESSION['platform_accounts']);
-		/*
-        if(Application::getUser() !== null && Application::getUser()->getFirstLinkDone()==0)
+        $_SESSION['platform_accounts'] = serialize($user_manager->getPlatformAccountsFromDB());
+		if(Application::getUser() !== null && Application::getUser()->getFirstLinkDone()==0)
         {
             header('Location: https://vigas.tv'.Application::getBaseUrl().'following');
         }
         else
         {
             header('Location: https://vigas.tv'.Application::getBaseUrl().'linked-account');
-        }*/   
+        }
     }
     
 	/**
-    * @return array parameters used by the model to get data
+    * @return array Parameters used by the model to get data
     */
     public function getModelParams()
     {
@@ -344,7 +348,7 @@ class SPController
     }
     
 	/**
-    * @return array data got from the model
+    * @return array Data got from the model
     */
     public function getModelData()
     {

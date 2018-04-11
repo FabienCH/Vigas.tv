@@ -1,0 +1,91 @@
+<?php
+
+/********** error reporting *************/
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+
+ini_set('xdebug.default_enable', 'on');
+ini_set('xdebug.show_local_vars', 1);
+ini_set('xdebug.var_display_max_depth', 7);
+ini_set('xdebug.var_display_max_children', 256);
+ini_set('xdebug.var_display_max_data', 1024);
+/**************************************/
+/*
+$privateKey = openssl_pkey_new(array(
+    'private_key_bits' => 2048,      // Size of Key.
+    'private_key_type' => OPENSSL_KEYTYPE_RSA,
+));
+// Save the private key to private.key file. Never share this file with anyone.
+openssl_pkey_export_to_file($privateKey, 'cert/private.key');
+ 
+// Generate the public key for the private key
+$a_key = openssl_pkey_get_details($privateKey);
+// Save the public key in public.key file. Send this file to anyone who want to send you the encrypted data.
+file_put_contents('cert/public.key', $a_key['key']);
+ 
+// Free the private Key.
+openssl_free_key($privateKey);
+*/
+
+
+function getConfigFromXML($conf_file, $tag)
+{
+	$xml_doc = new \DOMDocument;
+	$xml_doc->load($conf_file);
+	$elements = $xml_doc->getElementsByTagName($tag);
+	if($elements->length == 1)
+	{
+		return $elements->item(0)->getAttribute('value');
+	}
+	elseif($elements->length > 1)
+	{
+		$config = [];
+		for($i=0; $i<$elements->length; $i++)
+		{
+			$config[$elements->item($i)->getAttribute('name')] = $elements->item($i)->getAttribute('value');
+		}
+		return $config;
+	}	
+}
+	
+	
+ /**
+    * Crypt a token
+	* @param string $token token to crypt
+    * @return string the crypted token
+    */
+    function cryptToken($token)
+    {
+        $pub_key_path = getConfigFromXML('Application/config.xml', 'encryption');
+		var_dump($pub_key_path);
+		$file_pub_key = fopen($pub_key_path['public_key_path'],"r");
+		$public_key = fread($file_pub_key,2048);
+		fclose($file_pub_key);
+		openssl_pkey_get_public($public_key);
+		openssl_public_encrypt($token, $crypted_token, $public_key);
+		return $crypted_token;
+    }
+
+    /**
+    * Decrypt a token
+    * @param string $encrypted_token the crypted token
+    * @return string the decrypted token
+    */
+    function decryptToken($encrypted_token)
+    {
+        $priv_key_path = getConfigFromXML('Application/config.xml', 'encryption');
+		var_dump($priv_key_path);
+		$file_priv_key = fopen($priv_key_path['private_key_path'],"r");
+		$private_key = fread($file_priv_key,2048);
+		fclose($file_priv_key);
+		openssl_pkey_get_private($private_key);
+		openssl_private_decrypt($encrypted_token, $token, $private_key);
+        return $token;
+    }
+	
+	$encrypted_token = cryptToken('toto');
+	var_dump($encrypted_token);
+	
+	$token = decryptToken($encrypted_token);
+	var_dump($token);
+	

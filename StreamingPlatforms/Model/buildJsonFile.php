@@ -1,4 +1,7 @@
 <?php
+/**
+* Builds streams and games json file with data retrieved from streaming platforms
+*/
 namespace Vigas\StreamingPlatforms\Model;
 
 use Vigas\Application\Controller\Autoloader;
