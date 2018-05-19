@@ -60,7 +60,7 @@ abstract class Platform
 		{
 			if($url_key == $tagname)
 			{
-				if($vars != null)
+				if($vars !== null)
 				{
 					foreach($vars as $key => $value)
 					{

@@ -3,7 +3,7 @@ use Vigas\Application\Application;
 
 if($this->params['games_limit']==6)
 {?>
-    <h4>Top 6 games</h4>
+    <h4 class="sidebar-title">Top 6 games</h4>
 <?php
 }
 ?>

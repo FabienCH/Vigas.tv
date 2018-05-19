@@ -4,14 +4,13 @@ use Vigas\Application\Application;
 
 if($this->params['streams_limit']==3)
 {?>
-	<h4>Top 3 live streams</h4>
+	<h4 class="sidebar-title">Top 3 live streams</h4>
 	<?php
 	$separator = "<br />";
 }
 else
 {
 	$separator = " playing ";
-	
 }
 
 //if there is streams to display
@@ -25,15 +24,15 @@ if(count($this->data['streams_to_display']) > 0)
 			<div style="background-image:url(<?= $stream->getPreviewUrl()?>); background-size : contain;" >
 				<img class="preview" alt="stream overlay" src="<?= Application::getBaseURL()?>Web/img/degrade-<?= $stream->getSource()?>.png" />
 			</div>
-			<p class="stream-infos"><?= $stream->getChannelDisplayName().$separator ?><a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
+			<p class="ellipsis stream-infos"><?= $stream->getChannelDisplayName().$separator ?><a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
 
 			<div class="overlay stream-ov">
 				<?php
-				if (!isset($_GET['action']) || $_GET['action'] == 'streams-by-game')
+				if (!isset($_GET['action']) || $_GET['action'] == 'streams-by-game' || $_GET['action'] == 'following')
 				{?>
-				<h5 class="stream-status"><?= $stream->getStatus()?></h5>
+				<h5 class="ellipsis stream-status"><?= $stream->getStatus()?></h5>
 				<?php } ?>
-				<p class="viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $stream->getViewers()?></p>
+				<p class="ellipsis viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $stream->getViewers()?></p>
 				<img class="play-stream" alt="play stream icon" src="<?=Application::getBaseURL()?>Web/img/play-logo.png" />
 			</div>
 		</div>

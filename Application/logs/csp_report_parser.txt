@@ -837,7 +837,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -977,7 +977,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -991,7 +991,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1005,7 +1005,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1019,7 +1019,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1033,7 +1033,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1047,7 +1047,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1061,7 +1061,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1075,7 +1075,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1089,7 +1089,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1103,7 +1103,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1117,7 +1117,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1131,7 +1131,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1145,7 +1145,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1159,7 +1159,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1173,7 +1173,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1187,7 +1187,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1201,7 +1201,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1215,7 +1215,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1229,7 +1229,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1243,7 +1243,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1257,7 +1257,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1271,7 +1271,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1285,7 +1285,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1299,7 +1299,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1313,7 +1313,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1327,7 +1327,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1341,7 +1341,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1355,7 +1355,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1369,7 +1369,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com
@@ -1383,7 +1383,7 @@
     [csp-report] => Array
         (
             [blocked-uri] => data
-            [document-uri] => http://vigas.tv/dev/phpinfo.php
+            [document-uri] => http://vigas.tv/phpinfo.php
             [original-policy] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com; report-uri http://vigas.tv/report.php
             [referrer] => 
             [violated-directive] => default-src http://vigas.tv 'unsafe-inline' http://*.google.com http://*.gstatic.com https://stats.g.doubleclick.net http://*.facebook.com http://connect.facebook.net https://ajax.googleapis.com https://www.google-analytics.com http://maxcdn.bootstrapcdn.com http://*.twitch.tv http://ttv-api.s3.amazonaws.com http://*.hitbox.tv http://*.smashcast.tv http://gaming.youtube.com http://i.ytimg.com https://static-cdn.jtvnw.net http://seal.beyondsecurity.com

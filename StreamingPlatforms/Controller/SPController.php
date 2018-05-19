@@ -335,7 +335,7 @@ class SPController
         }
         else
         {
-            header('Location: https://vigas.tv'.Application::getBaseUrl().'linked-account');
+            header('Location: https://vigas.tv'.Application::getBaseUrl().'linked-accounts');
         }
     }
     

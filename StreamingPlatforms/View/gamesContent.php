@@ -10,7 +10,7 @@ foreach($this->data['games_to_display'] as $game)
             <img class="preview" alt="game image" src="<?= $game->getBox() ?>"/>
         </div>
         <div class="overlay game-ov">
-            <h5><?= urldecode($game->getGame()) ?></h5>
+            <h5 class="ellipsis"><?= urldecode($game->getGame()) ?></h5>
             <p class="game-infos"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /> <span><?= $game->getViewers() ?></span></p>
         </div>
         </a>
