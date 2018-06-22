@@ -60,7 +60,11 @@ abstract class Platform
 			$length = count($api_urls);
 			foreach($api_urls as $url_key => $url_value)
 			{
+<<<<<<< HEAD
 				if($url_key == $tagname)
+=======
+				if($vars !== null)
+>>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
 				{
 					if($vars !== null)
 					{

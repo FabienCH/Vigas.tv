@@ -25,7 +25,11 @@ if(count($this->data['streams_to_display']) > 0)
 			<div style="background-image:url(<?= $stream->getPreviewUrl()?>); background-size : contain;" >
 				<img class="preview" alt="stream overlay" src="<?= Application::getBaseURL()?>Web/img/degrade-<?= $stream->getSource()?>.png" />
 			</div>
+<<<<<<< HEAD
 			<p class="ellipsis stream-infos"><?= $stream->getChannelDisplayName()?><?php if($source != 'Youtube') {echo $separator;} ?><a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
+=======
+			<p class="ellipsis stream-infos"><?= $stream->getChannelDisplayName().$separator ?><a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
+>>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
 
 			<div class="overlay stream-ov">
 				<?php
@@ -33,7 +37,11 @@ if(count($this->data['streams_to_display']) > 0)
 				{?>
 				<h5 class="ellipsis stream-status"><?= $stream->getStatus()?></h5>
 				<?php } ?>
+<<<<<<< HEAD
 				<p class="viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $stream->getFormatedViewers()?></p>
+=======
+				<p class="ellipsis viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $stream->getViewers()?></p>
+>>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
 				<img class="play-stream" alt="play stream icon" src="<?=Application::getBaseURL()?>Web/img/play-logo.png" />
 			</div>
 		</div>
