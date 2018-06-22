@@ -10,6 +10,7 @@ Autoloader::register();
 
 use Vigas\StreamingPlatforms\Model\Twitch;
 use Vigas\StreamingPlatforms\Model\Smashcast;
+use Vigas\StreamingPlatforms\Model\Youtube;
 use Vigas\StreamingPlatforms\Controller\SPController;
 use Vigas\StreamingPlatforms\Model\MediasManager;
 
@@ -24,6 +25,11 @@ $streams_manager->setMediasArray($twitch->getStreams());
 $smashcast = new Smashcast;
 $smashcast->getStreamsFromPlatform($smashcast->getApiUrl('get_streams', ['limit_val' => 100, 'offset_val' => 0]));
 $streams_manager->setMediasArray($smashcast->getStreams());
+
+$youtube = new Youtube;
+$string_ids = $youtube->getStreamsIdsFromPlatform($youtube->getApiUrl('get_streams_ids'));
+$youtube->getStreamsFromPlatform($youtube->getApiUrl('get_streams', ['id_val' => $string_ids]));
+$streams_manager->setMediasArray($youtube->getStreams());
 
 $streams_manager->buildJsonFile(__DIR__.'/data/streams.json');
 

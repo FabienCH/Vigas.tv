@@ -1,58 +1,148 @@
 var stream_div;
 var parent_div_content;
+var all_streams_source_array = ["All", "Twitch", "Smashcast","Youtube"];
 var source_array = ["All", "Twitch", "Smashcast"];
+
+
+function scroll_to_stream()
+{
+	vertical_marge = $(window).innerHeight() - $('#stream').height();
+	$('html, body').animate({
+		scrollTop:$('#stream').offset().top-(vertical_marge/2)
+	}, 'slow');
+}
+
+function close_stream()
+{
+	$('#'+stream_div.attr("id")).html(parent_div_content);		//restore content of the div-prev container
+	$('#'+stream_div.attr("id")).removeClass("col-sm-12 stream-container");
+	$('#'+stream_div.attr("id")).addClass("col-lg-3 col-md-4 col-sm-6 div-prev");
+	$('#'+stream_div.attr("id")).removeAttr('style');
+	show_overlay();
+	hide_overlay();
+}
+
+function expand_stream()
+{
+	$("#stream").removeClass("col-sm-8");
+	$("#chat").removeClass("col-sm-4");
+	
+	$(".sidebar").addClass("expanded-sidebar");
+	$(".header").addClass("expanded-header");
+	$(".app").addClass("expanded-app");
+	$(".d-lg-none").attr('style','display: block !important');
+	
+	$(".footer").animate({
+		left:0
+	}, 'slow', function() {
+		$('#stream').width('calc(100% - 300px)');
+		$("#stream-border").height($("#stream").width()/16*9);
+		$('#chat').width('300px');
+		scroll_to_stream();
+	});
+	
+	$(".expand-button").replaceWith("<img alt=\"reduce stream button\" class=\"reduce-button\" src=\"/Web/img/reduce-button.png\" />");
+}
+
+function reduce_stream()
+{
+	$("#stream").removeAttr('style');
+	$("#chat").removeAttr('style');
+	$("#stream").addClass("col-sm-8");
+	$("#chat").addClass("col-sm-4");
+	
+	$(".sidebar").removeClass("expanded-sidebar");
+	$(".header").removeClass("expanded-header");
+	$(".app").removeClass("expanded-app");
+	$(".d-lg-none").removeAttr('style');
+	
+	$(".footer").animate({
+		left:"240px"
+	}, 'slow', function() {
+		$('#stream-border').height($('#stream').width()/16*9);
+		if($("#stream").length)
+		{
+			scroll_to_stream();
+		}	
+	});
+	
+	$(".reduce-button").replaceWith("<img alt=\"expand stream button\" class=\"expand-button\" src=\"/Web/img/expand-button.png\" />");
+}
 	
 function load_stream()
-{
-	function close_stream()
-	{
-		$('#'+stream_div.attr("id")).html(parent_div_content);		//restore content of the div-prev container
-		$('#'+stream_div.attr("id")).removeClass("col-xs-12 stream-container");
-		$('#'+stream_div.attr("id")).addClass("col-lg-3 col-md-4 col-xs-6 div-prev");
-		$('#'+stream_div.attr("id")).removeAttr('style');
-		show_overlay();
-		hide_overlay();
-	}
-	
+{	
 	//loading stream of the clicked div-prev and replace previously opened stream (if he exists) by the div-prev
 	$(document).on("click", ".stream-ov", function() {
-		if($(this).parent().attr("class")=="col-sm-12 col-xs-4 div-prev-navbar")
+		if($(this).parent().attr("class")=="col-sm-12 col-sm-4 div-prev-navbar")
 		{
 			window.location.href="/stream/"+$(this).parent().attr("id");
 			return;
 		}
-			
+		
+		stream_status = "reduced";
+		
 		$(this).fadeOut("fast");
 		if (typeof stream_div != "undefined") {
+			if($(".reduce-button").attr("src") == "/Web/img/reduce-button.png")
+			{
+				stream_status = "expanded";
+			}			
 			close_stream();
 		}
 		parent_div_content = $(this).parent().html();	//saving content of the div-prev container
 		stream_div = $(this).parent();
-		stream_div.removeClass("col-lg-3 col-md-4 col-xs-6 div-prev");
+		stream_div.removeClass("col-lg-3 col-md-4 col-sm-6 div-prev");
 		$(stream_div).removeAttr('style');
-		stream_div.addClass("col-xs-12 stream-container");
-		stream_div.html("<img alt=\"close stream button\" class=\"close-button\" src=\"/Web/img/close.png\" /><div id=\"border\"><iframe class=\"col-xs-8\" id=\"stream\" src=\""+$("#stream-"+stream_div.attr('id')).attr('value')+"\" allowfullscreen frameborder=\"0\" scrolling=\"no\" ></iframe><iframe class=\"col-xs-4\" id=\"chat\" src=\""+$("#chat-"+stream_div.attr('id')).attr('value')+"\"frameborder=\"0\" scrolling=\"no\"></iframe></div>");
+		stream_div.addClass("col-sm-12 stream-container");
+		if($("#source-"+stream_div.attr('id')).attr('value') == 'Youtube')
+		{
+			stream_div.html("<img alt=\"close stream button\" class=\"close-button\" src=\"/Web/img/close.png\" /><div id=\"stream-border\"><iframe class=\"col-sm-8\" id=\"stream\" src=\""+$("#stream-"+stream_div.attr('id')).attr('value')+"\" allowfullscreen frameborder=\"0\" scrolling=\"no\" ></iframe><img alt=\"expand stream button\" class=\"expand-button\" src=\"/Web/img/expand-button.png\" /><div class=\"col-sm-4\" id=\"chat\" ><p>Chat from Youtube is not available :(</p><p>You can open it in a new window <a id=\"yt_chat_link\" alt=\"Youtube Chat\" href=\""+$("#chat-"+stream_div.attr('id')).attr('value')+"\" target=\"_blank\" onclick=\"window.open('"+$("#chat-"+stream_div.attr('id')).attr('value')+"', 'newwindow', 'width=350,height=600'); return false;\">here</a></p></div></div>");
+		}
+		else
+		{
+			stream_div.html("<img alt=\"close stream button\" class=\"close-button\" src=\"/Web/img/close.png\" /><div id=\"stream-border\"><iframe class=\"col-sm-8\" id=\"stream\" src=\""+$("#stream-"+stream_div.attr('id')).attr('value')+"\" allowfullscreen frameborder=\"0\" scrolling=\"no\" ></iframe><img alt=\"expand stream button\" class=\"expand-button\" src=\"/Web/img/expand-button.png\" /><iframe class=\"col-sm-4\" id=\"chat\" src=\""+$("#chat-"+stream_div.attr('id')).attr('value')+"\"frameborder=\"0\" scrolling=\"no\"></iframe></div>");
+		}
 		
-		$("#border").height($("#stream").width()/16*9);
+		$("#stream-border").height($("#stream").width()/16*9);
 		
 		$(".close-button").mouseenter(function(){
-			$("#border").css({
+			$("#stream-border").css({
 				"box-shadow": "0px 0px 5px 3px #f4c402",			
 			});
 		});
 		$(".close-button").mouseleave(function(){
-			$("#border").css({
+			$("#stream-border").css({
 				"box-shadow": "none",			
 			});
 		});
 				
 		$(window).resize(function(){
-			$("#border").height($("#stream").width()/16*9);
+			$("#stream-border").height($("#stream").width()/16*9);
 		});
 		
 		$(document).on("click", ".close-button", function() {
+			if($(".reduce-button").length)
+			{
+				reduce_stream();
+			}
 			close_stream();
 		});
+		
+		if(stream_status == "expanded")
+		{
+			expand_stream();
+		}
+		
+		$(document).on("click", ".expand-button", function() {
+			expand_stream();
+		});
+		
+		$(document).on("click", ".reduce-button", function() {
+			reduce_stream();
+		});
+		
+		scroll_to_stream();	
+		
 	});
 }
 		
@@ -71,7 +161,7 @@ function show_overlay()
 			height: $(this).height(),
 		});
 			
-		if($(this).attr("class")=="col-sm-6 col-xs-2 div-prev-navbar" || $(this).attr("class")=="col-sm-12 col-xs-4 div-prev-navbar")
+		if($(this).attr("class")=="col-sm-6 col-sm-2 div-prev-navbar" || $(this).attr("class")=="col-sm-12 col-sm-4 div-prev-navbar")
 		{
 			overlay.css({
 				position: "absolute",
@@ -128,7 +218,7 @@ function load_more()
 		if(parseInt($("#offset").val()) < max_offset)
 		{
 			$('#load-more-div').css({ display: "none" });
-			$('#'+type+'-display').after('<div id="loading-gif" class="col-xs-12"><img style="display: block; margin: auto;" src="/Web/img/loading.gif" /></div>');
+			$('#'+type+'-display').after('<div id="loading-gif" class="col-sm-12"><img style="display: block; margin: auto;" src="/Web/img/loading.gif" /></div>');
 			var xhr = new XMLHttpRequest();
 			xhr.open('GET', url);
 			xhr.addEventListener('readystatechange', function() {
@@ -138,7 +228,7 @@ function load_more()
 					show_overlay();
 					hide_overlay();
 					$(window).scroll(function() {
-						if(Math.ceil($(window).scrollTop()) + $(window).innerHeight() >= $(document).height()) {
+						if(Math.ceil($(window).scrollTop()) + $(window).innerHeight() >= $(document).height() && $('#'+type+'-display p.alert-warning').length != 1) {
 							load_more();
 						}
 					});
@@ -153,11 +243,11 @@ function load_more()
 					}
 					else
 					{
-						document.getElementById("load-more-div").innerHTML='<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams</button>';
+						document.getElementById("load-more-div").innerHTML='<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more</button>';
 						$("#load-more-div").removeAttr('style');	
 					}
 					$('#loading-gif').remove();
-					if($('#content .preview').length < parseInt($("#offset").val()))
+					if($('#content .preview').length < parseInt($("#offset").val()) || $('#'+type+'-display p.alert-warning').length == 1)
 					{
 						$('#load-more-div').remove();
 					}
@@ -173,6 +263,7 @@ function reload(id)
 {
 	source_array = [];
 	var i=0;
+	var type=($("#type").val());
 	
 	if(id=="All")
 	{
@@ -188,10 +279,20 @@ function reload(id)
 			$("#All").prop('checked', false);
 			$('#'+id).prop('checked', false);
 		}
-		if($('#Twitch').is(':checked') && $('#Smashcast').is(':checked'))
+		if(type == 'streams')
 		{
-			$("#All").prop('checked', true);
+			if($('#Twitch').is(':checked') && $('#Smashcast').is(':checked') && $('#Youtube').is(':checked'))
+			{
+				$("#All").prop('checked', true);
+			}
 		}
+		else
+		{
+			if($('#Twitch').is(':checked') && $('#Smashcast').is(':checked'))
+			{
+				$("#All").prop('checked', true);
+			}
+		}		
 	}
 	$(".source-choice input[type=checkbox]:checked").each(
 		function() { 
@@ -201,7 +302,7 @@ function reload(id)
 	);
 
 	var source_json = JSON.stringify(source_array);
-	var type=($("#type").val());
+	
     if(type=="following")
 	{
             var url = 'https://vigas.tv/index.php?action=following&offset=0&source_json='+source_json+'&requested_by=ajax';
@@ -217,7 +318,7 @@ function reload(id)
 
 	$('#load-more-div').css({ display: "none" });
 	$('#'+type+'-display').css({ display: "none" });
-	$('#'+type+'-display').after('<div id="loading-gif" class="col-xs-12"><img style="display: block; margin: auto;" src="/Web/img/loading.gif" /></div>');
+	$('#'+type+'-display').after('<div id="loading-gif" class="col-sm-12"><img style="display: block; margin: auto;" src="/Web/img/loading.gif" /></div>');
 	$(window).off("scroll");
 	
 	var xhr = new XMLHttpRequest();
@@ -229,38 +330,44 @@ function reload(id)
 			$("#offset").val(36);
 			if($("#load-more-div").html() == undefined)
 			{
-				$('#'+type+'-display').after('<div id="load-more-div"><button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams</button></div>');
+				if($('#'+type+'-display p.alert-warning').length != 1 && $('.stream-infos').length >= 36)
+				{
+					$('#'+type+'-display').after('<div id="load-more-div"><button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more</button></div>');
+				}		
 			}
 			else
 			{
-				document.getElementById("load-more-div").innerHTML='<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams</button>';
+				if($('.stream-infos').length >= 36)
+				{
+					document.getElementById("load-more-div").innerHTML='<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more</button>';
+				}
 			}	
 			show_overlay();
 			hide_overlay();
 			$(window).scroll(function() {
-				if(Math.ceil($(window).scrollTop()) + $(window).innerHeight() >= $(document).height()) {
+				if(Math.ceil($(window).scrollTop()) + $(window).innerHeight() >= $(document).height() && $('#'+type+'-display p.alert-warning').length != 1) {
 					load_more();
 				}
 			});
 			$('#load-more').click(function() {
 				load_more();
 			});
-			document.getElementById('source-choice-loading').innerHTML = "";
+			$('#loading-gif').remove();
+			$('#'+type+'-display').css('display','');
+			//document.getElementById('source-choice-loading').innerHTML = "";
 			if(source_json == '[]')
 			{
 				document.getElementById("load-more-div").innerHTML='';
 				$("#load-more-div").css({ height: "0px" });
 				
 			}
-			if($('#content .preview').length < parseInt($("#offset").val()))
+			
+			if($('#content .preview').length < parseInt($("#offset").val()) || $('#'+type+'-display p.alert-warning').length == 1)
 			{
 				$('#load-more-div').remove();
 			}
-			else
-			{
-				
-			}
-			$('#loading-gif').remove();
+			
+			reduce_stream();
 		}
 		
 	});
@@ -282,7 +389,7 @@ function select_feedback()
 
 $(document).ready(function() {
 	load_stream();		
-	
+
 	if(typeof $('#id-stream').val() != "undefined")
 	{
 		if(typeof $('#'+$('#id-stream').val()).attr('id') != "undefined")

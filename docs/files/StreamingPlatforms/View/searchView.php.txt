@@ -7,7 +7,7 @@ if($this->params['query'] != '')
 	{
 		?>
 		<div id="allStreams-display" class="row">
-		<h3>Streams</h3>
+		<h3 class="col-lg-12">Streams</h3>
 		<?php
 		$nb_streams_array = count($this->data['streams_array']);
 		for($i=0;$i<$nb_streams_array; $i++) 
@@ -18,11 +18,11 @@ if($this->params['query'] != '')
 				<div style="background-image:url(<?= $this->data['streams_array'][$i]->getPreviewUrl()?>); background-size : contain;" >
 					<img class="preview" alt="stream overlay" src="<?=Application::getBaseURL()?>Web/img/degrade-<?= $this->data['streams_array'][$i]->getSource()?>.png" />
 				</div>
-				<p class="stream-infos"><?= $this->data['streams_array'][$i]->getChannelDisplayName()?> playing <a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
+				<p class="ellipsis stream-infos"><?= $this->data['streams_array'][$i]->getChannelDisplayName()?> playing <a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
 			
 				<div class="overlay stream-ov">
-					<h5 class="stream-status"><?= $this->data['streams_array'][$i]->getStatus()?></h5>
-					<p class="viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $this->data['streams_array'][$i]->getViewers()?></p>
+					<h5 class="ellipsis stream-status"><?= $this->data['streams_array'][$i]->getStatus()?></h5>
+					<p class="ellipsis viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $this->data['streams_array'][$i]->getViewers()?></p>
 					<img class="play-stream" alt="play stream icon" src="<?=Application::getBaseURL()?>Web/img/play-logo.png" />
 				</div>
 			</div>
@@ -39,7 +39,7 @@ if($this->params['query'] != '')
 	{
 		?>
 		<div id="allGames-display" class="row">
-		<h3>Games</h3>
+		<h3 class="col-lg-12">Games</h3>
 		<?php
 		$nb_games_array = count($this->data['games_array']);
 		for($i=0;$i<$nb_games_array; $i++) 
@@ -50,7 +50,7 @@ if($this->params['query'] != '')
 					<img class="preview" alt="game image" width="100%" src="<?= $this->data['games_array'][$i]->getBox() ?>"/>
 				</div>
 				<div class="overlay game-ov">
-					<p><?= urldecode($this->data['games_array'][$i]->getGame()) ?></p>
+					<h5 class="ellipsis"><?= urldecode($this->data['games_array'][$i]->getGame())?></h5>
 				</div>
 				</a>
 			</div>
@@ -64,7 +64,7 @@ if($this->params['query'] != '')
 	if(count($this->data['offline_streamers'])>0)
 	{?>
 		<div id="Streamers-display" class="row">
-		<h3>Offline streamer</h3>
+		<h3 class="col-lg-12">Offline streamer</h3>
 		<?php
 		foreach($this->data['offline_streamers'] as $streamer)
 		{?>

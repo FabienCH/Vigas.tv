@@ -91,17 +91,42 @@ abstract class Application
 			return $config;
 		}	
     }
+	
+	/**
+    * Redirects configuration from an XML file
+	* @param string $conf_file Path to the XML file
+	* @param string $tag XML tag name
+	* @return mixed The requested configuration informations
+    */
+    public static function templateRequired()
+    {
+		
+		if(isset(self::$http_request))
+		{
+			if(!in_array(self::$http_request->getGetData()['action'], array("login", "signup", "forgot-password", "reset-password")))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+    }
     
 	/**
     * Executes controller and gets the view according to the requested action
     */ 
     public static function getController()
     {
-		$get_spcontroller = array('games', 'streams-by-game', 'search', 'following', 'save-token', 'first-link-done');
+		$get_spcontroller = array('games', 'streams-by-game', 'search', 'following', 'linked-accounts', 'save-token', 'first-link-done');
         if(!isset(self::$http_request->getGetData()['action']) || in_array(self::$http_request->getGetData()['action'], $get_spcontroller))
         {
             $sp_controller = new SPController();
-			$sp_controller->executeController();
+			if(!isset(self::$http_request->getGetData()['action']) || self::$http_request->getGetData()['action'] != 'linked-accounts')
+			{
+				$sp_controller->executeController();
+			}
 			$sp_controller->getView();
 			
         }

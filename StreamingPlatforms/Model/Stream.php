@@ -72,6 +72,24 @@ class Stream extends Media
         $this->source = $source;
     }
 
+	/** 
+    * @return string Returns the formated number of viewers
+    */
+    public function getFormatedViewers()
+    {
+		$viewers = $this->viewers;
+		if($viewers > 9999)
+		{
+			$viewers = round($viewers/1000, 1)."k";
+		}
+		if($viewers > 99999)
+		{
+			$viewers = round($viewers/1000)."k";
+		}
+			
+		return $viewers;
+    }
+
     /** 
     * @return string Returns the channel language
     */

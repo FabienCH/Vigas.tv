@@ -31,7 +31,7 @@ class FormValidator
     */
     public function checkAlphanum($string)
     {
-        if(preg_match("#^[a-zA-Z0-9]$#", $string))
+        if(preg_match("#^[a-zA-Z0-9_]*$#", $string))
         {
             return true; 
         }

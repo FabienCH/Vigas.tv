@@ -18,7 +18,7 @@ if(isset($_SERVER["REDIRECT_URL"]))
 		<div class="col-md-12, link-account-form">
 			<div class="row">
 			<?php
-			if(!isset($user->getPlatformAccounts()['TwitchAccount']))
+			if(!isset(Application::getPlatformAccounts()['twitch_data']))
 			{?>
 				<div class="col-md-6">
 				<h5>Link your Twitch account</h5>
@@ -30,12 +30,12 @@ if(isset($_SERVER["REDIRECT_URL"]))
 			{?>
 				<div class="col-md-6">
 				<h5><img class="linked-account-icon" src="<?=Application::getBaseURL()?>Web/img/twitch-icon.png"/>Twitch account</h5>
-				<p><?= ucfirst($user->getPlatformAccounts()['TwitchAccount']->getUsername());?></p>
-				<p><img class="linked-profil-pic" src="<?= $user->getPlatformAccounts()['TwitchAccount']->getProfilPictureUrl();?>"/></p>
+				<p><?= ucfirst(Application::getPlatformAccounts()['twitch_data']->getUsername());?></p>
+				<p><img class="linked-profil-pic" src="<?= Application::getPlatformAccounts()['twitch_data']->getProfilPictureUrl();?>"/></p>
 				</div>
 				<?php
 			}
-			if(!isset($user->getPlatformAccounts()['SmashcastAccount']))
+			if(!isset(Application::getPlatformAccounts()['smashcast_data']))
 			{?>	
 				<div class="col-md-6">
 				<h5>Link your Smashcast account</h5>
@@ -47,8 +47,8 @@ if(isset($_SERVER["REDIRECT_URL"]))
 			{?>
 				<div class="col-md-6">
 				<h5><img class="linked-account-icon" src="<?=Application::getBaseURL()?>Web/img/smashcast-icon.png"/>Smashcast account</h5>
-				<p><?= ucfirst($user->getPlatformAccounts()['SmashcastAccount']->getUsername());?></p>
-				<p><img class="linked-profil-pic" src="<?= $user->getPlatformAccounts()['SmashcastAccount']->getProfilPictureUrl();?>"/></p>
+				<p><?= ucfirst(Application::getPlatformAccounts()['smashcast_data']->getUsername());?></p>
+				<p><img class="linked-profil-pic" src="<?= Application::getPlatformAccounts()['smashcast_data']->getProfilPictureUrl();?>"/></p>
 				</div>
 				<?php
 			}
@@ -64,7 +64,7 @@ if(isset($_SERVER["REDIRECT_URL"]))
                 if(isset($first_link_error))
                     {echo '<br/>'.$first_link_error;}
                 ?>
-                <form  class="first-link-done-form" action="<?=Application::getBaseURL()?>first-link-done" method="post">
+                <form  class="first-link-done-form" action="<?=Application::getBaseURL()?>following" method="post">
                     <button  name="first-link-done" type="submit" class="btn btn-default">Done</button>
                 </form>
             </div>

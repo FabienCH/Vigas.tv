@@ -1,3 +1,95 @@
+li.active
+{
+	background-color: #fe821d !important;
+	color: #ffffff !important;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 20px;
+	padding-right: 15px;
+	text-align: center;
+}
+
+h4
+{
+	font-size: 18px;
+}
+
+h5
+{
+	font-size: 14px;
+}
+
+.header, .brand
+{
+	height : 50px;
+}
+
+.nav-underline
+{
+    transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: absolute;
+    width: calc(100% - 30px);
+    height: 2px;
+    top: 35px;
+    left: 15px;
+    background-color: #fe821d;
+    transform-origin: left top;
+}
+
+.logo
+{
+	line-height: 50px;
+}
+
+.sidebar-title
+{
+	color : white;
+	padding-left: 5px;
+}
+
+.sidebar-menu
+{
+	margin-top : 20px !important;
+}
+
+.expanded-sidebar
+{
+	position : fixed;
+	left : -240px;
+}
+
+.sidebar-open .sidebar-overlay {
+    left: 0;
+    opacity: 1;
+	display: block;
+}
+
+.expanded-header
+{
+	left : 0;
+}
+
+.expanded-app
+{
+	padding-left : 0;
+}
+
+.ellipsis
+{
+	overflow : hidden;
+    text-overflow : ellipsis;
+}
+
+.alert-warning a
+{
+	color :#4f5f6f;
+}
+
+.alert-warning a:hover
+{
+	color :#2a3a4a;
+}
+
 /***********************************/
 /*******	BEGIN NAV BAR	********/
 /***********************************/
@@ -18,20 +110,25 @@
 
 .search-field
 {
-	display : inline-block;
-	height : 28px;
-	width: inherit;
+	padding-left: 10px;
+	height: 30px;
+	border-color: #bfcfdf;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 3px;
 }
 
 .search-btn
 {
-	position: relative;
-	bottom : 1px;
-	height : 26px;
-	background-image:url("/view/img/submit.png");
-	background-size : contain;
-	background-repeat: no-repeat;
-    background-position: center; 
+	border : none;
+	background : none;
+	color : #7e8e9f;
+	padding-left: 3px;
+}
+
+.search-btn:hover
+{
+	cursor: pointer;
 }
 
 .dropdown-form-account
@@ -130,7 +227,13 @@
 
 .div-prev-navbar, .div-navbar
 {
+	display : inline-block;
 	padding : 3px;
+}
+
+.game-navbar
+{
+	max-width : 114px;
 }
 
 .div-navbar
@@ -148,6 +251,16 @@
 	background : rgba(0,0,0,0.7);
 	margin : 3px;
 	padding : 0px;
+}
+
+.nav-link
+{
+	text-decoration : none;
+}
+
+.top-menu
+{
+	margin : auto;
 }
 
 #navbar-social-network
@@ -201,9 +314,9 @@
 /****		BEGIN CONTENT		****/
 /***********************************/
 
-#content
+.container-fluid
 {
-	min-height : 350px;
+	min-height : 100vh;
 }
 
 .row h3
@@ -267,7 +380,7 @@ h4
 
 .dont-show-anymore
 {
-	font-size : 0.9em;
+	font-size : 14px;
 	position: absolute;
 	top: 14px;
 	left: -150px;
@@ -315,6 +428,7 @@ h4
 
 .stream-status
 {
+	font-size : 14px;
 	width : 70%;
 	float : left;
 	margin : 7px;
@@ -322,6 +436,7 @@ h4
 
 .stream-infos
 {
+	font-size : 14px;
 	z-index : 10;
 	width: 70%;
 }
@@ -334,7 +449,7 @@ h4
 	transform: translateX(-50%) translateY(-50%);
 }
 
-iframe#stream, iframe#chat
+iframe#stream, iframe#chat, div#chat
 {
 	float : left;
 	padding-right : 0px;
@@ -342,10 +457,16 @@ iframe#stream, iframe#chat
 	height : 100%;
 }
 
- iframe#chat
+ iframe#chat, div#chat
  {
 	position : relative;
 	bottom : 24px; 
+ }
+ 
+ div#chat
+ {
+	text-align : center;
+	padding-top : 50px; 
  }
 
 .streamer
@@ -366,6 +487,17 @@ iframe#stream, iframe#chat
 	margin-bottom : 0px;
 }
 
+.expand-button, .reduce-button
+{
+	position : relative;
+	bottom : 12px;
+	right : 13px;
+	height : 24px;
+	padding : 0px;
+	margin : 0px;
+	z-index : 10;
+}
+
 .close-button
 {
 	float : right;
@@ -378,7 +510,7 @@ iframe#stream, iframe#chat
 	z-index : 10;
 }
 
-.stream-ov:hover, .close-button:hover
+.stream-ov:hover, .close-button:hover, .expand-button:hover, .reduce-button:hover
 {
   cursor:  pointer;
 }
@@ -392,6 +524,12 @@ iframe#stream, iframe#chat
 	background : linear-gradient(to bottom, rgba(0,0,0,0.8) 13%, rgba(255,255,255,0) 20%, rgba(255,255,255,0) 83%, rgba(0,0,0,0.8) 92%);
 }
 
+.game-ov
+{
+	margin : 0px !important;
+}
+
+
 .game-link, .game-link:hover
 {
 	 text-decoration: none;
@@ -399,8 +537,8 @@ iframe#stream, iframe#chat
 
 .game-ov h5
 {
-	margin-top : 5px;
-	margin-left : 5px;
+	margin-top : 7px;
+	margin-left : 7px;
 }
 
 /****	END GAME CONTENT		****/
@@ -423,7 +561,9 @@ iframe#stream, iframe#chat
 .viewers
 {
 	text-align : right;
-	margin-right : 5px;
+	margin-left : 7px;
+	margin-right : 7px;
+	font-size : 14px;
 }
 
 .viewers img
@@ -433,20 +573,18 @@ iframe#stream, iframe#chat
 
 p.viewers
 {
-	margin-top : 5px;
+	margin-top : 6px;
 }
 
 .viewers img, .game-infos img
 {
 	height : 10px;
+	margin-bottom: 2px;
 }
 
 .stream-status, .stream-infos, .viewers
  {
-	margin-left : 5px;
 	white-space : nowrap;
-    overflow : hidden;
-    text-overflow : ellipsis;
 }
 
 .stream-infos, .game-infos
@@ -454,7 +592,7 @@ p.viewers
 	width: 90%;
 	position : absolute;
 	bottom : 0px;
-	margin : 5px;
+	margin : 7px;
 	color : white;
 }
 
@@ -580,6 +718,11 @@ p.viewers
 .btn-form-about
 {
 	margin-top : 10px;
+}
+
+.link-as-btn
+{
+	color : #ffffff
 }
 
 .gif-404

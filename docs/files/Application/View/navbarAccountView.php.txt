@@ -4,52 +4,33 @@ use Vigas\Application\View\Forms;
 
 if(Application::getUser() !== null)
 {?>
-	<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?=ucfirst(Application::getUser()->getUsername())?> <b class="caret"></b></a>
-	<ul class="dropdown-menu dropdown-profile">
-		<li>
-            <a href="<?= Application::getBaseURL()?>profile"><i class="fa fa-fw fa-user"></i>Profile</a>
-		</li>
-		<li>
-			<a href="<?=Application::getBaseURL()?>linked-account"><i class="fa fa-fw fa-gear"></i>Linked Accounts</a>
-		</li>
-		<li class="divider"></li>
-		<li>
-			<a href="<?=Application::getBaseURL()?>logout"><i class="fa fa-fw fa-power-off"></i>Log Out</a>
-		</li>
-		<li class="divider"></li>
-		<li>
-			<a href="<?=Application::getBaseURL()?>about"><i class="fa fa-fw fa-info-circle"></i>About</a>
-		</li>
-	</ul>
+	<li class="profile dropdown">
+		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+			<?=ucfirst(Application::getUser()->getUsername())?> 
+		</a>
+		<div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
+			<a class="dropdown-item" href="<?= Application::getBaseURL()?>profile">
+				<i class="fa fa-user icon"></i> Profile </a>
+			<a class="dropdown-item" href="<?=Application::getBaseURL()?>linked-accounts">
+				<i class="fa fa-gear icon"></i> Linked Accounts </a>
+			<a class="dropdown-item" href="<?=Application::getBaseURL()?>logout">
+				<i class="fa fa-power-off icon"></i> Logout </a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="<?=Application::getBaseURL()?>about">
+				<i class="fa fa-info-circle icon"></i> About </a>
+		</div>
 	</li>
 <?php
 }
 else
 {
 ?>
-	<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa"></i>Sign In<b class="caret"></b></a>
-	<ul class="dropdown-menu dropdown-form-account">
-		<?php
-		if(isset($this->data['login_error']))
-            {echo $this->data['login_error'];}
-        isset($this->params['log-username']) ? $username = $this->params['log-username'] : $username = '';
-            Forms::getLoginForm(Application::getBaseURL().'login', 'post', $username);
-		?>
-	</ul>
+	<li>
+	<a href="<?=Application::getBaseURL()?>login">Login</a>
 	</li>
 	
-	<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa"></i>Join Now<b class="caret"></b></a>
-	<ul class="dropdown-menu dropdown-form-account">
-		<?php
-		if(isset($this->data['create_account_error']))
-            {echo $this->data['create_account_error'];}
-        isset($this->params) ? $params = $this->params : $params = '';
-            Forms::getCreateAccountForm(Application::getBaseURL().'login', 'post', $params);
-		?>
-	</ul>
+	<li>
+	<a href="<?=Application::getBaseURL()?>signup">Sign Up</a>
 	</li>
 <?php
 }

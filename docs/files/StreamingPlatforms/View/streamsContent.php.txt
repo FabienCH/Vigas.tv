@@ -4,14 +4,13 @@ use Vigas\Application\Application;
 
 if($this->params['streams_limit']==3)
 {?>
-	<h4>Top 3 live streams</h4>
+	<h4 class="sidebar-title">Top 3 live streams</h4>
 	<?php
 	$separator = "<br />";
 }
 else
 {
 	$separator = " playing ";
-	
 }
 
 //if there is streams to display
@@ -19,40 +18,35 @@ if(count($this->data['streams_to_display']) > 0)
 {	
 	foreach($this->data['streams_to_display'] as $stream) 
 	{	
+		$source = $stream->getSource();
 		$game = $stream->getGame();
 		?>
-		<div id="<?= $stream->getChannelName()?>" class="<?= $div_stream_class ?>">
+		<div id="<?= $stream->getId()?>" class="<?= $div_stream_class ?>">
 			<div style="background-image:url(<?= $stream->getPreviewUrl()?>); background-size : contain;" >
 				<img class="preview" alt="stream overlay" src="<?= Application::getBaseURL()?>Web/img/degrade-<?= $stream->getSource()?>.png" />
 			</div>
-			<p class="stream-infos"><?= $stream->getChannelDisplayName().$separator ?><a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
+			<p class="ellipsis stream-infos"><?= $stream->getChannelDisplayName()?><?php if($source != 'Youtube') {echo $separator;} ?><a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
 
 			<div class="overlay stream-ov">
 				<?php
-				if (!isset($_GET['action']) || $_GET['action'] == 'streams-by-game')
+				if (!isset($_GET['action']) || $_GET['action'] == 'streams-by-game' || $_GET['action'] == 'following')
 				{?>
-				<h5 class="stream-status"><?= $stream->getStatus()?></h5>
+				<h5 class="ellipsis stream-status"><?= $stream->getStatus()?></h5>
 				<?php } ?>
-				<p class="viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $stream->getViewers()?></p>
+				<p class="viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $stream->getFormatedViewers()?></p>
 				<img class="play-stream" alt="play stream icon" src="<?=Application::getBaseURL()?>Web/img/play-logo.png" />
 			</div>
 		</div>
-		<input type="hidden" id="stream-<?= $stream->getChannelName()?>" value="<?= $stream->getStreamUrl()?>">
-		<input type="hidden" id="chat-<?= $stream->getChannelName()?>" value="<?= $stream->getChatUrl()?>">
+		<input type="hidden" id="stream-<?= $stream->getId()?>" value="<?= $stream->getStreamUrl()?>">
+		<input type="hidden" id="chat-<?= $stream->getId()?>" value="<?= $stream->getChatUrl()?>">
+		<input type="hidden" id="source-<?= $stream->getId()?>" value="<?= $source?>">
 	<?php
 	}
 }
 
 //if there is no streams to display
 else
-{?>
-    <input type="hidden" id="type" value="<?= isset($_GET['action']) ? htmlspecialchars($_GET['action']) : 'streams' ?>">
-    <?php
-    if(isset($_GET['game']))
-    {?>
-        <input type="hidden" id="game" value="<?=urlencode($_GET['game'])?>">
-    <?php
-    }
+{
     if(empty($this->params['source_array']))
     {?>
         <p class="alert alert-warning">No streaming platform selected. Please select at least one.</p>

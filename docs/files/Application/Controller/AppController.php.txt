@@ -80,7 +80,7 @@ class AppController
     * Executes AppController methods to get content and navbar
     */
     public function executeController()
-    {
+    {	
 		$ctrl_method_name = $this->method_name;
         $this->$ctrl_method_name();
     }
@@ -93,40 +93,49 @@ class AppController
 		$view = new View($this->post_params, $this->response);
 		$view_method_name = $this->method_name.'View';
 		$view->$view_method_name();
-		$view->getTemplate();
+		if(Application::templateRequired())
+		{
+			$view->getTemplate();
+		}		
     }
 	
     /**
-    * Gets POST data and log the user or create an account
+    * Gets POST data and log the user
     */
     public function getLogin()
     {
         if(isset($this->post_params['login']))
         {
-			if(!isset($this->post_params['log-remember-me']))
+			if(!isset($this->post_params['remember']))
 			{
-				$this->post_params['log-remember-me'] = false;
+				$this->post_params['remember'] = false;
 			}
             $user_manager = new UserManager;
             $this->response['login_error'] = $user_manager->logUser(
-			$this->post_params['log-username'],
-			$this->post_params['log-password'],
-			$this->post_params['log-remember-me']);
+			$this->post_params['username'],
+			$this->post_params['password'],
+			$this->post_params['remember']);
         }
-		
-		if(isset($this->post_params['create-account']))
+	}
+	
+	 /**
+    * Gets POST data and create an account
+    */
+    public function getSignup()
+    {
+       	if(isset($this->post_params['signup']))
         {
-			if(!isset($this->post_params['ca-remember-me']))
+			if(!isset($this->post_params['remember']))
 			{
-				$this->post_params['ca-remember-me'] = false;
+				$this->post_params['remember'] = false;
 			}
             $user_manager = new UserManager;
-            $this->response['create_account_error'] = $user_manager->createAccount(
-			$this->post_params['ca-username'],
-			$this->post_params['ca-email'],
-			$this->post_params['ca-password'],
-			$this->post_params['ca-password-2'],
-			$this->post_params['ca-remember-me']);
+            $this->response['signup_error'] = $user_manager->createAccount(
+			$this->post_params['username'],
+			$this->post_params['email'],
+			$this->post_params['password'],
+			$this->post_params['retype_password'],
+			$this->post_params['remember']);
         }
 	}
     
@@ -180,13 +189,13 @@ class AppController
         {
             $user_manager = new UserManager;
             $this->response['token_validity'] = $user_manager->testTokenValidity($http_request->getGetData()['id'], $http_request->getGetData()['token']);
-            if(isset($this->post_params['set-password']) && $this->response['token_validity'])
+            if(isset($this->post_params['reset-password']) && $this->response['token_validity'])
             {
                 $this->response['reset_password_error'] = $user_manager->resetPassword(
 				$http_request->getGetData()['id'],
 				$http_request->getGetData()['token'],
 				$this->post_params['password'],
-				$this->post_params['password-2']);
+				$this->post_params['retype_password']);
             }   
         }
     }
@@ -209,7 +218,7 @@ class AppController
         {
             $this->response['status'] = false;
             $body = "";
-			$captcha_config = Application\Application::getConfigFromXML(__DIR__.'/../config.xml', 'captcha');
+			$captcha_config = Application::getConfigFromXML(__DIR__.'/../config.xml', 'captcha');
             $captcha = new Captcha($captcha_config['siteKey'], $captcha_config['secretKey'], $this->post_params['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);	
 
             if(isset($this->post_params["url"]))
@@ -257,7 +266,7 @@ class AppController
             {
                 if($captcha->validCaptcha())
                 {
-					$smtp_config = Application\Application::getConfigFromXML(__DIR__.'/../config.xml', 'smtp');
+					$smtp_config = Application::getConfigFromXML(__DIR__.'/../config.xml', 'smtp');
                     $mail = new Mailer($from, $from_name, 'auth.smtp.1and1.fr', $this->post_params["message-type"].' from Vigas', $body,  'admin@vigas.tv', $smtp_config); 
                     if($mail->sendMail())
                     {

@@ -50,7 +50,7 @@ class SPController
 			{
 			   $this->model_params['streams_limit'] = 3;
 			   $this->model_params['streams_offset'] = 0;
-			   $this->model_params['source_array'] = ["All","Twitch","Smashcast"];
+			   $this->model_params['source_array'] = ["All","Twitch","Smashcast","Youtube"];
 			   $this->model_params['games_limit'] = 24;
 			   $this->model_params['games_offset'] = (isset($http_request->getGetData()['offset'])) ? $http_request->getGetData()['offset'] : 0;
 			   $this->navbar_method_name = 'getStreams';     
@@ -63,7 +63,15 @@ class SPController
 				}
 				else
 				{
-					$this->model_params['source_array'] = ["All","Twitch","Smashcast"];
+					if(!isset($http_request->getGetData()['action']))
+					{
+						$this->model_params['source_array'] = ["All","Twitch","Smashcast","Youtube"];
+					}
+					else
+					{
+						$this->model_params['source_array'] = ["All","Twitch","Smashcast"];
+					}
+					
 				}
 			   $this->model_params['id-stream'] = (isset($http_request->getGetData()['id-stream'])) ? $http_request->getGetData()['id-stream'] : null;
 			   $this->model_params['streams_limit'] = 36;
@@ -80,7 +88,7 @@ class SPController
 			{
 				$this->model_params['games_limit'] = 6;
 				$this->model_params['games_offset'] = 0;
-				$this->model_params['query'] = $http_request->getPostData()['query'];
+				$this->model_params['query'] = (isset($http_request->getPostData()['query'])) ? $http_request->getPostData()['query'] : "";
 				$this->navbar_method_name = 'getGames';
 			}
 			
@@ -186,15 +194,15 @@ class SPController
         if(isset($this->model_params['games']))
         {
             $streams_manager = new MediasManager;
-            $twitch_game = str_replace(" ", "%20", $this->model_params['games']);
-
+            $this->model_params['games'] = str_replace(" ", "%20", $this->model_params['games']);
+            $this->model_params['games'] = str_replace("&amp;", "%26", $this->model_params['games']);
             foreach($this->model_params['source_array'] as $source)
             {
                 if($source == "Twitch")
                 {
 					$twitch = new Twitch;
-                    $twitch->getStreamsFromPlatform($twitch->getApiUrl('get_streams_by_game', ['limit_val' => 100, 'offset_val' => 0, 'game_val' => $twitch_game]), array('Client-ID: '. $twitch->getApiKeys()['client_id']));
-                    $twitch->getStreamsFromPlatform($twitch->getApiUrl('get_streams_by_game', ['limit_val' => 100, 'offset_val' => 100, 'game_val' => $twitch_game]), array('Client-ID: '. $twitch->getApiKeys()['client_id']));
+                    $twitch->getStreamsFromPlatform($twitch->getApiUrl('get_streams_by_game', ['limit_val' => 100, 'offset_val' => 0, 'game_val' => $this->model_params['games']]), array('Client-ID: '. $twitch->getApiKeys()['client_id']));
+                    $twitch->getStreamsFromPlatform($twitch->getApiUrl('get_streams_by_game', ['limit_val' => 100, 'offset_val' => 100, 'game_val' => $this->model_params['games']]), array('Client-ID: '. $twitch->getApiKeys()['client_id']));
 					$streams_manager->setMediasArray($twitch->getStreams());
                 }
                 elseif($source=="Smashcast")
@@ -204,7 +212,6 @@ class SPController
 					$streams_manager->setMediasArray($smashcast->getStreams());
                 }
             }
-
             $this->model_data['streams_to_display'] = $streams_manager->getMediasToDisplay($this->model_params['streams_limit'], $this->model_params['streams_offset'], $this->model_params['source_array']);
         }
     }
@@ -335,7 +342,7 @@ class SPController
         }
         else
         {
-            header('Location: https://vigas.tv'.Application::getBaseUrl().'linked-account');
+            header('Location: https://vigas.tv'.Application::getBaseUrl().'linked-accounts');
         }
     }
     

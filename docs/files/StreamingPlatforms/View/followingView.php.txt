@@ -14,19 +14,19 @@ if(Application::getUser() !== null)
     {
         if($user->getFirstLinkDone()==1)
         {?>
-<p>You did not link any account, please link at least one account under the <a href="<?= Application::getBaseURL()?>linked-account"/>Linked Accounts</a> section in your profile.</p>
+<p>You did not link any account, please link at least one account under the <a href="<?= Application::getBaseURL()?>linked-accounts"/>Linked Accounts</a> section in your profile.</p>
         <?php
         }
 		else
 		{
-			require_once __DIR__.'/../View/platformAccountView.php';
+			require_once __DIR__.'/../View/linkedAccountsView.php';
 		}
     }
 }
 
 else
 {
-	require_once __DIR__.'/../../Application/View/loginView.php';
+	header('Location: https://vigas.tv'.Application::getBaseURL().'login');
 }
 
 if (isset($_GET['source_json']))

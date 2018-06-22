@@ -54,7 +54,7 @@ class UserManager
         {
             return '<div class="alert alert-warning">Username must be alphanumeric and between 3 and 40 characters</div>';
         }
-         if(!$validator->checkEmail($email))
+        if(!$validator->checkEmail($email))
         {
             return '<div class="alert alert-warning">Invalid email address format</div>';
         }
@@ -95,7 +95,6 @@ class UserManager
     */
     public function logUser($username, $password, $remember_me = null)
     {
-		var_dump($remember_me);
         $this->user = new User;
         $test_user = $this->user->getUser($this->db, ['username' => $username], $password);
 
@@ -115,7 +114,7 @@ class UserManager
         }
         else
         {
-            return '<div class="alert alert-warning">Wrong username or password. <a href="'.Application::getBaseURL().'forgot-password">Forgot password ?</a></div>';
+            return '<div class="alert alert-warning">Wrong username or password</div>';
             $GLOBALS["login_form_data"] = $_POST['username'];
         }      
     }
@@ -250,7 +249,7 @@ class UserManager
                 }
                 else
                 {
-                    return '<div class="alert alert-success">An email has been send to '.$email.'<br/>The link will expire after 30 minutes</div>';
+                    return 'success';
                 }
             }
             else
@@ -277,17 +276,13 @@ class UserManager
         {
             $exploded_email = explode('@',$this->user->getEmail());
             $nb_char_email = strlen($exploded_email[0]);
-            if($nb_char_email<=6)
+            if($nb_char_email<=8)
             {
-                $exploded_email[0] = substr_replace($exploded_email[0], '***', 2, $nb_char_email-2);
-            }
-            elseif($nb_char_email<=10)
-            {
-                $exploded_email[0] = substr_replace($exploded_email[0], '***', 2, $nb_char_email-4);
+                $exploded_email[0] = substr_replace($exploded_email[0], '****', 2, $nb_char_email-2);
             }
             else
             {
-                $exploded_email[0] = substr_replace($exploded_email[0], '***', 3, $nb_char_email-6);
+                $exploded_email[0] = substr_replace($exploded_email[0], '***', 2, $nb_char_email-4);
             }
             $response['email_found'] = '<div class="alert alert-info">Your email address : '.$exploded_email[0].'@'.$exploded_email[1].'</div>';
         }

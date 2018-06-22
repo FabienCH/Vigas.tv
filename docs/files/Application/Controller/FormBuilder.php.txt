@@ -39,7 +39,7 @@ class FormBuilder
     {
         $this->target_url = $target_url;
         $this->method = $method;
-        if($class != null)
+        if($class !== null)
         {
             $this->class = 'class="'.$class.'"';
         }

@@ -22,7 +22,7 @@ abstract class Forms
         $form->addInputHTML('log-username', 'Username', 'text', 'log-username', $username);
         $form->addInputHTML('log-password', 'Password', 'password', 'log-password');
         $form->addOneCheckboxHTML('log-remember-me', 'Remember me', 'checkbox', 'log-remember-me', 'checkbox-inline', 'checked');
-        $form->addSubmitButton('Sign In', 'login', 'btn btn-default');
+        $form->addSubmitButton('Sign In', 'login', 'btn btn-primary');
         echo $form;
     }
     
@@ -42,7 +42,7 @@ abstract class Forms
         $form->addInputHTML('ca-password', 'Password', 'password', 'ca-password');
         $form->addInputHTML('ca-password-2', 'Confirm Password', 'password', 'ca-password-2');
         $form->addOneCheckboxHTML('ca-remember-me', 'Remember me', 'checkbox', 'ca-remember-me', 'checkbox-inline', 'checked');
-        $form->addSubmitButton('Create Account', 'create-account', 'btn btn-default');
+        $form->addSubmitButton('Create Account', 'create-account', 'btn btn-primary');
         echo $form;
     }
     
@@ -56,7 +56,7 @@ abstract class Forms
     {
         $form = new FormBuilder($target_url, $method);
         $form->addInputHTML('email', 'Email address', 'email', 'email', $email);
-        $form->addSubmitButton('Reset Password', 'reset-password', 'btn btn-default');
+        $form->addSubmitButton('Reset Password', 'reset-password', 'btn btn-primary');
         echo $form;
     }
     
@@ -70,7 +70,7 @@ abstract class Forms
         $form = new FormBuilder($target_url, $method);
         $form->addInputHTML('password', 'Password', 'password', 'password');
         $form->addInputHTML('password-2', 'Confirm Password', 'password', 'password-2');
-        $form->addSubmitButton('Set Password', 'set-password', 'btn btn-default');
+        $form->addSubmitButton('Set Password', 'set-password', 'btn btn-primary');
         echo $form;
     }
     
@@ -84,7 +84,7 @@ abstract class Forms
     {
         $form = new FormBuilder($target_url, $method);
         $form->addInputHTML('username', 'Username', 'text', 'username', $username);
-        $form->addSubmitButton('Find Email', 'find-email', 'btn btn-default');
+        $form->addSubmitButton('Find Email', 'find-email', 'btn btn-primary');
         echo $form;
     }
     
@@ -102,7 +102,7 @@ abstract class Forms
         $form->addInputHTML('current-password', 'Current password', 'password', 'current-password');
         $form->addInputHTML('new-password', 'New Password', 'password', 'new-password');
         $form->addInputHTML('new-password-2', 'Confirm New Password', 'password', 'new-password-2');
-        $form->addSubmitButton('Change Password', 'change-password', 'btn btn-default');
+        $form->addSubmitButton('Change Password', 'change-password', 'btn btn-primary');
         echo $form;
     }
     
@@ -131,7 +131,7 @@ abstract class Forms
         
         $form->addTextareaHTML('message', 'Message', 'textarea', 'message', 10, $message);
         $form->addCaptcha();
-        $form->addSubmitButton('Submit', 'about-form', 'btn btn-default btn-form-about');
+        $form->addSubmitButton('Submit', 'about-form', 'btn btn-primary btn-form-about');
         echo $form;
     }
 }

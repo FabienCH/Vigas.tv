@@ -47,10 +47,17 @@
 		</api_keys>
 	</smashcast>
 
-	<!--
-	<platform_key platform="ytgaming" name="api_key" value="your youtube gaming api key" ></platform_key>
-	<platform_key platform="ytgaming" name="client_id" value="your youtube gaming client id" ></platform_key>
-	<platform_key platform="ytgaming" name="app_secret" value="your youtube gaming app secret" ></platform_key>
-	-->
+	<youtube>
+		<api_urls>
+		<!--	Youtube api url, you should not change those		-->
+			<youtube_url name="get_streams_ids" value="https://www.googleapis.com/youtube/v3/search?part=snippet&amp;eventType=live&amp;type=video&amp;videoCategoryId=20&amp;fields=items(id(videoId))&amp;maxResults=50&amp;key={YOUR API KEY}" ></youtube_url>
+			<youtube_url name="get_streams" value="https://www.googleapis.com/youtube/v3/videos?part=snippet%2CliveStreamingDetails&amp;id=id_val&amp;key={YOUR API KEY}" ></youtube_url>
+		</api_urls>
+		<api_keys>
+			<youtube_key name="api_key" value="your youtube api key" ></youtube_key>
+			<youtube_key name="client_id" value="your youtube client id" ></youtube_key>
+			<youtube_key name="app_secret" value="your youtube app secret" ></youtube_key>
+		</api_keys>
+	</youtube>
 
 </streaming_platforms>

@@ -55,22 +55,31 @@ abstract class Platform
 		$classname = explode('\\',get_class($this));
 		$classname = end($classname);
 		$api_urls = Application::getConfigFromXML(__DIR__.'/../config.xml', lcfirst($classname).'_url');
-		$length = count($api_urls);
-		foreach($api_urls as $url_key => $url_value)
+		if(is_array($api_urls))
 		{
-			if($url_key == $tagname)
+			$length = count($api_urls);
+			foreach($api_urls as $url_key => $url_value)
 			{
-				if($vars != null)
+				if($url_key == $tagname)
 				{
-					foreach($vars as $key => $value)
+					if($vars !== null)
 					{
-						$url_value = str_replace($key, $value, $url_value);
-					}
-				}			
-				$api_url = $url_value;
+						foreach($vars as $key => $value)
+						{
+							$url_value = str_replace($key, $value, $url_value);
+						}
+					}			
+					$api_url = $url_value;
+				}
 			}
+			return $api_url;
 		}
-		return $api_url;
+		else
+		{
+			return $api_urls;
+		}
+		
+		
     }
 	
 	/**
