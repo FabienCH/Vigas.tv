@@ -63,18 +63,14 @@ class View
     public function getStreamsContentView($streams_view)
     {
         $div_streams_display_class = "row";
-        $div_stream_class = "col-lg-3 col-md-4 col-sm-6 div-prev";
+        $div_stream_class = "col-xl-3 col-lg-4 col-sm-6 div-prev";
 		ob_start();
         require_once __DIR__.'/../../StreamingPlatforms/View/'.$streams_view.'View.php';
 		$this->content = ob_get_clean();
         
         if($this->params['streams_offset'] == 0)
         {
-            $div_games_display_class = "col-sm-12 div-navbar";
-            $div_game_class = "col-sm-6 col-sm-2 div-prev-navbar game-navbar";
-			ob_start();
-            require_once __DIR__.'/../../StreamingPlatforms/View/allGamesView.php';
-            $this->navbar = ob_get_clean(); 
+			$this->getGamesNavbarView();
         }    
     }
     
@@ -94,7 +90,7 @@ class View
 	public function getStreamsContent()
     {
 		$div_streams_display_class = "row";
-        $div_stream_class = "col-lg-3 col-md-4 col-sm-6 div-prev";
+        $div_stream_class = "col-xl-3 col-lg-4 col-sm-6 div-prev";
         require_once __DIR__.'/../../StreamingPlatforms/View/streamsContent.php';
     }
    
@@ -106,18 +102,13 @@ class View
         $this->main_title = "Vigas - All games from Twitch and Smashcast";
 		$this->content_title = "All games";
         $div_games_display_class = "row";
-        $div_game_class="col-lg-2 col-md-3 col-sm-4 div-prev";
+        $div_game_class="col-lg-2 col-md-3 col-sm-4 col-6 div-prev";
 		ob_start();
         require_once __DIR__.'/../../StreamingPlatforms/View/allGamesView.php';
         $this->content = ob_get_clean();  
-
         if($this->params['games_offset'] == 0)
         {
-            $div_streams_display_class = "col-sm-12 div-navbar";
-            $div_stream_class = "col-sm-12 col-sm-4 div-prev-navbar";
-			ob_start();
-            require_once __DIR__.'/../../StreamingPlatforms/View/allStreamsView.php';
-            $this->navbar = ob_get_clean();
+            $this->getStreamsNavbarView();
         }
     }
 	
@@ -127,7 +118,7 @@ class View
 	public function getGamesContent()
     {
 		$div_games_display_class = "row";
-        $div_game_class = "col-lg-2 col-md-3 col-sm-4 div-prev";
+        $div_game_class = "col-lg-2 col-md-3 col-sm-4 col-6 div-prev";
         require_once __DIR__.'/../../StreamingPlatforms/View/gamesContent.php';
     }
     
@@ -149,18 +140,14 @@ class View
         $this->main_title = "Vigas - Following live streams from Twitch and Smashcast";
         $this->content_title = "Following live streams";
         $div_streams_display_class="row";
-        $div_stream_class="col-lg-3 col-md-4 col-sm-6 div-prev";
+        $div_stream_class="col-xl-3 col-lg-4 col-sm-6 div-prev";
 		ob_start();
         require_once __DIR__.'/../../StreamingPlatforms/View/followingView.php';
         $this->content = ob_get_clean();
         
         if($this->params['streams_offset'] == 0)
         {
-            $div_games_display_class = "col-sm-12 div-navbar";
-            $div_game_class = "col-sm-6 col-sm-2 div-prev-navbar game-navbar";
-			ob_start();
-            require_once __DIR__.'/../../StreamingPlatforms/View/allGamesView.php'; 
-            $this->navbar = ob_get_clean();
+			$this->getGamesNavbarView();
         }
     }
     
@@ -182,12 +169,7 @@ class View
         ob_start();
         require_once __DIR__.'/../../StreamingPlatforms/View/searchView.php';
         $this->content = ob_get_clean();
-        
-        $div_games_display_class = "col-sm-12 div-navbar";
-        $div_game_class = "col-sm-6 col-sm-2 div-prev-navbar game-navbar";
-		ob_start();
-        require_once __DIR__.'/../../StreamingPlatforms/View/allGamesView.php'; 
-        $this->navbar = ob_get_clean();
+		$this->getGamesNavbarView();
     }
     
 	/**
@@ -217,7 +199,7 @@ class View
     {
         $this->main_title = "Vigas - Login or Create Account";
         $this->content_title = "Login or create account";
-        $this->getDefaultNavbarView();
+        $this->getGamesNavbarView();
     }
     
 	/**
@@ -230,7 +212,7 @@ class View
 		ob_start();
         require_once __DIR__.'/profileView.php';
         $this->content = ob_get_clean();
-        $this->getDefaultNavbarView();
+        $this->getGamesNavbarView();
     }
 	
 	/**
@@ -243,7 +225,7 @@ class View
 		ob_start();
         require_once __DIR__.'/../../StreamingPlatforms/View/linkedAccountsView.php';
         $this->content = ob_get_clean();
-        $this->getDefaultNavbarView();
+        $this->getGamesNavbarView();
     }
     
 	/**
@@ -274,7 +256,7 @@ class View
 		ob_start();
         require_once __DIR__.'/aboutView.php';
         $this->content = ob_get_clean();
-        $this->getDefaultNavbarView();
+        $this->getGamesNavbarView();
     }
     
 	/**
@@ -287,16 +269,32 @@ class View
 		ob_start();
         require_once __DIR__.'/404View.php';
         $this->content = ob_get_clean();
-        $this->getDefaultNavbarView();
+        $this->getGamesNavbarView();
     }
     
 	/**
-    * Gets the default navbar view
+    * Gets the game navbar view
     */
-    public function getDefaultNavbarView()
+    public function getGamesNavbarView()
     {
+		$div_games_display_class = "col-sm-12 div-navbar";
+        $div_game_class = "col-sm-6 div-prev-navbar game-navbar";
 		ob_start();
-        require_once __DIR__.'/defaultNavbarView.php';
+		require_once __DIR__.'/mobileNavbarView.php';
+		require_once __DIR__.'/../../StreamingPlatforms/View/allGamesView.php'; 
+        $this->navbar = ob_get_clean();
+    }
+	
+	/**
+    * Gets the game navbar view
+    */
+    public function getStreamsNavbarView()
+    {
+		$div_streams_display_class = "col-sm-12 div-navbar";
+        $div_stream_class = "col-sm-12 div-prev-navbar stream-navbar";
+		ob_start();
+		require_once __DIR__.'/mobileNavbarView.php';
+		require_once __DIR__.'/../../StreamingPlatforms/View/allStreamsView.php'; 
         $this->navbar = ob_get_clean();
     }
     

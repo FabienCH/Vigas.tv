@@ -18,7 +18,7 @@ if($this->params['streams_limit']==36)
 	if(count($this->data['streams_to_display']) == $this->params['streams_limit'] && $this->params['streams_offset'] + $this->params['streams_limit'] < 144)
 	{?>
 		<div id="load-more-div">
-			<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams HTML</button>
+			<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams</button>
 		</div>	
 	<?php
 	}

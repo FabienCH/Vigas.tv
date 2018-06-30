@@ -6,6 +6,7 @@ use Vigas\Application\Application;
 use Vigas\Application\Controller\Mailer;
 use Vigas\Application\Controller\Captcha;
 use Vigas\Application\Model\UserManager;
+use Vigas\StreamingPlatforms\Controller\SPController;
 
 /**
 * Class AppController.
@@ -47,7 +48,7 @@ class AppController
 				{
 					$this->post_params = $http_request->getPostData();
 				}
-			    $this->navbar_method_name = 'getDefaultNavbar';
+			    $this->navbar_method_name = 'getGames';
 				$this->method_name = $this->setMethodName($http_request->getGetData()['action']);
 			}
 		}
@@ -77,12 +78,16 @@ class AppController
     }
 	
 	/**
-    * Executes AppController methods to get content and navbar
+    * Executes AppController methods to get content
     */
     public function executeController()
     {	
 		$ctrl_method_name = $this->method_name;
         $this->$ctrl_method_name();
+		$sp_controller = new SPController;
+		$sp_controller->getGames();
+		$this->response["games_to_display"] = $sp_controller->getModelData()["games_to_display"];
+		$this->post_params['games_limit'] = 6;
     }
 	
 	/**
@@ -309,7 +314,7 @@ class AppController
     */
     public function get404()
     {
-         $this->response['file_path'] = Application::BASE_URL."view/img/gif-404/".mt_rand(1,27).".gif";
+         $this->response['file_path'] = Application::getBaseUrl()."Web/img/gif-404/".mt_rand(1,28).".gif";
     }
     
     /**

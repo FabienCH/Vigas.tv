@@ -8,6 +8,12 @@ use Vigas\Application\View\Forms;
 
 	<h3>Patch Notes :</h3>
 	
+	<p><em>v2.0 - 06/29/2018</em><br/>
+	- New Design<br/>
+	- Added Youtube Gaming (only on the all streams view because we can't do much more with the Youtube API right now)<br/>
+	- Added a theater mode<br/>
+	- Improved mobile render<br/>
+	</p>
 	<p><em>v1.5.1 - 04/14/2017</em><br/>
 	- Removed Azubu and Hitbox since they merged to become Smashcast</p>
 	<p><em>v1.5 - 11/17/2016</em><br/>

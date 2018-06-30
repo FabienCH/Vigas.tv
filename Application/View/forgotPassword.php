@@ -12,15 +12,9 @@ use Vigas\Application\Application;
         <link href="https://plus.google.com/b/117076079832095712778" rel="publisher" />
 		<link rel="icon" type="image/x-icon" href="<?=Application::getBaseURL()?>favicon.ico" />
         <!-- Place favicon.ico in the root directory -->
-<<<<<<< HEAD
         <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/css/vendor.css">
         <link rel="stylesheet" id="theme-style" href="<?=Application::getBaseURL()?>/../Web/css/app.css">
 		<link href="<?=Application::getBaseURL()?>/../Web/css/style.css" rel="stylesheet">
-=======
-        <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/modular/css/vendor.css">
-        <link rel="stylesheet" id="theme-style" href="<?=Application::getBaseURL()?>/../Web/modular/css/app.css">
-		<link href="<?=Application::getBaseURL()?>/../Web/modular/css/style.css" rel="stylesheet">
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
     </head>
     <body>
         <div class="auth">
@@ -38,7 +32,6 @@ use Vigas\Application\Application;
                     </header>
                     <div class="auth-content">
                         <p class="text-center">PASSWORD RECOVER</p>
-<<<<<<< HEAD
 						<?php
 						if(isset($this->data['forgot_password_error']) && $this->data['forgot_password_error'] == 'success')
 						{ ?>
@@ -70,23 +63,6 @@ use Vigas\Application\Application;
                             </div>
                         </form>
 						<?php }	?>
-=======
-                        <p class="text-muted text-center">
-                            <small>Enter your email address to recover your password.</small>
-                        </p>
-                        <form id="reset-form" action="/index.html" method="POST" novalidate="">
-                            <div class="form-group">
-                                <label for="email1">Email</label>
-                                <input type="email" class="form-control underlined" name="email1" id="email1" placeholder="Your email address" required> </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-block btn-primary">Reset</button>
-                            </div>
-                            <div class="form-group clearfix">
-                                <a class="pull-left" href="<?=Application::getBaseURL()?>login">return to Login</a>
-                                <a class="pull-right" href="<?=Application::getBaseURL()?>signup">Sign Up!</a>
-                            </div>
-                        </form>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
                     </div>
                 </div>
                 <div class="text-center">
@@ -121,14 +97,8 @@ use Vigas\Application\Application;
             ga('send', 'pageview');
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<<<<<<< HEAD
         <script src="../Web/js/vendor.js"></script>
         <script src="../Web/js/app.js"></script>
         <script src="../Web/js/script.js"></script>
-=======
-        <script src="../Web/modular/js/vendor.js"></script>
-        <script src="../Web/modular/js/app.js"></script>
-        <script src="../Web/modular/js/script.js"></script>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
     </body>
 </html>

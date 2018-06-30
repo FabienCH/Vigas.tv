@@ -2,18 +2,31 @@
 
 use Vigas\Application\Application;
 
+if($this->params['games_limit']==6)
+{?>
+<ul class="col-xs-12 mobile-navbar">
+<?php
+foreach($this->data['games_to_display'] as $game) 
+{ ?>
+	<a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game->getGame()) ?>"><li class="mobile-navbar-item"><i class="fa fa-fw fa-gamepad"></i> <?= urldecode($game->getGame()) ?></li></a>
+<?php } ?>
+</ul>
+
+<?php
+}
 foreach($this->data['games_to_display'] as $game) 
 {?>
-    <div id="<?= $game->getId() ?>" class="<?= $div_game_class ?>">
-        <a class="game-link" href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game->getGame()) ?>">
-        <div>
-            <img class="preview" alt="game image" src="<?= $game->getBox() ?>"/>
-        </div>
-        <div class="overlay game-ov">
-            <h5 class="ellipsis"><?= urldecode($game->getGame()) ?></h5>
-            <p class="game-infos"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /> <span><?= $game->getViewers() ?></span></p>
-        </div>
-        </a>
-    </div>
-    <?php
+	<div id="<?= $game->getId() ?>" class="<?= $div_game_class ?>">
+		<a class="game-link" href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game->getGame()) ?>">
+		<div>
+			<img class="preview" alt="game image" src="<?= $game->getBox() ?>"/>
+		</div>
+		<div class="overlay game-ov">
+			<h5 class="ellipsis"><?= urldecode($game->getGame()) ?></h5>
+			<p class="game-infos"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /> <span><?= $game->getViewers() ?></span></p>
+		</div>
+		</a>
+	</div>
+	<?php
 }
+

@@ -139,7 +139,6 @@ Class MediasManager
         {
             array_push($this->medias_to_display, $this->medias_array[$i]);
         }
-		
         return $this->medias_to_display;
     }	
 

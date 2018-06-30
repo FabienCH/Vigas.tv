@@ -18,15 +18,9 @@ use Vigas\Application\Application;
 		<link href="https://plus.google.com/b/117076079832095712778" rel="publisher" />
 		<link rel="icon" type="image/x-icon" href="<?=Application::getBaseURL()?>favicon.ico" />
         <!-- Place favicon.ico in the root directory -->
-<<<<<<< HEAD
         <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/css/vendor.css">
         <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/css/app.css">
 		<link href="<?=Application::getBaseURL()?>/../Web/css/style.css" rel="stylesheet">
-=======
-        <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/modular/css/vendor.css">
-        <link rel="stylesheet" id="theme-style" href="<?=Application::getBaseURL()?>/../Web/modular/css/app.css">
-		<link href="<?=Application::getBaseURL()?>/../Web/modular/css/style.css" rel="stylesheet">
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
     </head>
     <body>
         <div class="main-wrapper">
@@ -37,18 +31,11 @@ use Vigas\Application\Application;
                             <i class="fa fa-bars"></i>
                         </button>
                     </div>
-                    <div class="header-block header-block-search">
-<<<<<<< HEAD
+                    <div class="col-lg-3 header-block header-block-search">
                         <form role="search" action="<?=Application::getBaseURL()?>search/" method="post">
                             <div class="input-container">
                                 <input type="search" name="query" class="search-field" placeholder="Search">
 								<button type="submit" class="fa fa-search search-btn"></button>
-=======
-                        <form role="search">
-                            <div class="input-container">
-                                <i class="fa fa-search"></i>
-                                <input type="search" placeholder="Search">
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
                                 <div class="underline"></div>
                             </div>
                         </form>
@@ -78,26 +65,17 @@ use Vigas\Application\Application;
 						}
 						
 					?>
-					<div class="header-block header-block-nav top-menu">
+					<div class="col-lg-6 header-block header-block-nav top-menu">
 						<ul class="nav-link">
-<<<<<<< HEAD
 							<li><a <?=$home_active;?> href="<?=Application::getBaseURL()?>">All Live Streams</a>
 							<?=$home_underline;?></li>
 							<li><a class="<?=$following_active; ?>" href="<?=Application::getBaseURL()?>following">Following Streams</a>
 							<?= $following_underline;?></li>
 							<li><a class="<?=$games_active; ?>" href="<?=Application::getBaseURL()?>games">Games</a>
 							<?= $games_underline;?></li>
-=======
-							<li><a <?php echo $home_active;?> href="<?=Application::getBaseURL()?>">All Live Streams</a>
-							<?php echo $home_underline;?></li>
-							<li><a class="<?php echo $following_active; ?>" href="<?=Application::getBaseURL()?>following">Following Streams</a>
-							<?php echo $following_underline;?></li>
-							<li><a class="<?php echo $games_active; ?>" href="<?=Application::getBaseURL()?>games">Games</a>
-							<?php echo $games_underline;?></li>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
 						</ul>
 					</div>
-                    <div class="header-block header-block-nav">
+                    <div class="col-lg-3 header-block header-block-nav">
                         <ul class="nav-profile">
 							<?=$this->navbar_account?>
                         </ul>
@@ -149,13 +127,8 @@ use Vigas\Application\Application;
 						if(isset($_GET['action']) && ($_GET['action'] == 'profile' || $_GET['action'] == 'linked-accounts'))
 						{?>
 							<ul class="nav nav-tabs">
-<<<<<<< HEAD
 								<li class="nav-item"><a class="nav-link <?php if($_GET['action']=='profile') {echo "active";}?>" href="<?=Application::getBaseURL()?>profile">Profile</a></li>
 								<li class="nav-item"><a class="nav-link <?php if($_GET['action']=='linked-accounts') {echo "active";}?>" href="<?=Application::getBaseURL()?>linked-accounts">Linked accounts</a></li>
-=======
-								<li <?php if($_GET['action']=='profile') {echo "class=\"active\"";} ?>><a href="<?=Application::getBaseURL()?>profile">Profile</a></li>
-								<li <?php if($_GET['action']=='linked-accounts') {echo "class=\"active\"";} ?>><a href="<?=Application::getBaseURL()?>linked-accounts">Linked accounts</a></li>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
 							</ul>
 						<?php
 						}
@@ -177,7 +150,6 @@ use Vigas\Application\Application;
 											<input class="checkbox" type="checkbox" checked id="Smashcast" onclick="reload(this.id);" value="Smashcast">
 											<span>Smashcast</span>
 										</label>
-<<<<<<< HEAD
 										<?php if(!isset($_GET['action']))
 										{ ?>
 										<label>
@@ -185,8 +157,6 @@ use Vigas\Application\Application;
 											<span>Youtube</span>
 										</label>
 										<?php } ?>
-=======
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
 									</div>
 								</form>
 						<?php } ?>
@@ -196,11 +166,7 @@ use Vigas\Application\Application;
 					</section>  
                 </article>
                 <footer class="footer">
-<<<<<<< HEAD
 					<p class="footer-block"><a href="<?=Application::getBaseURL()?>">Vigas.tv</a> v1.6 | 2016 - 2018 | <a href="<?=Application::getBaseURL()?>about">About</a> | Template based on  <a target="_blank" href="https:/code.io-admin-html/">Modular Admin</a> | <a target="_blank" href="https://www.facebook.com/Vigas.TV/"><img alt="facebook logo" src="<?=Application::getBaseURL()?>/../Web/img/facebook.png"/></a> <a target="_blank" href="https://plus.google.com/+VigasTv/about"><img alt="google plus logo" src="<?=Application::getBaseURL()?>/../Web/img/googleplus.png"/></a></p>
-=======
-					<p class="footer-block"><a href="<?=Application::getBaseURL()?>">Vigas.tv</a> v1.6 | 2016 - 2018 | <a href="<?=Application::getBaseURL()?>about">About</a> | Template based on  <a target="_blank" href="https://modularcode.io/modular-admin-html/">Modular Admin</a> | <a target="_blank" href="https://www.facebook.com/Vigas.TV/"><img alt="facebook logo" src="<?=Application::getBaseURL()?>/../Web/img/facebook.png"/></a> <a target="_blank" href="https://plus.google.com/+VigasTv/about"><img alt="google plus logo" src="<?=Application::getBaseURL()?>/../Web/img/googleplus.png"/></a></p>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
                 </footer>
                 <!--
 				<div class="modal fade" id="modal-media">
@@ -307,14 +273,8 @@ use Vigas\Application\Application;
             ga('send', 'pageview');
         </script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<<<<<<< HEAD
         <script src="<?=Application::getBaseURL()?>/../Web/js/vendor.js"></script>
         <script src="<?=Application::getBaseURL()?>/../Web/js/app.js"></script>
         <script src="<?=Application::getBaseURL()?>/../Web/js/script.js"></script>
-=======
-        <script src="<?=Application::getBaseURL()?>/../Web/modular/js/vendor.js"></script>
-        <script src="<?=Application::getBaseURL()?>/../Web/modular/js/app.js"></script>
-        <script src="<?=Application::getBaseURL()?>/../Web/modular/js/script.js"></script>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
     </body>
 </html>

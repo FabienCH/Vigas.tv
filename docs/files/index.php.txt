@@ -19,6 +19,7 @@ if(isset($_COOKIE['user']) && !isset($_SESSION['user']))
 	$_SESSION['user'] = $_COOKIE['user'];
 	
 }
+var_dump($_SESSION);
 if(isset($_SESSION['user']))
 {
     Application::initializeSession(unserialize($_SESSION['user']));

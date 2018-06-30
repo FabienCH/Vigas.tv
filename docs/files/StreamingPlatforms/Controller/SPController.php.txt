@@ -79,7 +79,12 @@ class SPController
 			   $this->model_params['games_limit'] = 6;
 			   $this->model_params['games_offset'] = 0;
 			   $this->navbar_method_name = 'getGames';
-			} 
+			}
+			else
+			{
+				$this->model_params['games_limit'] = 6;
+				$this->model_params['games_offset'] = 0;
+			}
 			if(isset($http_request->getGetData()['game']))
 			{
 				$this->model_params['games'] = $http_request->getGetData()['game'];
@@ -274,6 +279,17 @@ class SPController
 			$this->model_data['games_array'] = $games_manager->getMediasArray();
 			$this->model_data['offline_streamers'] = array_merge($twitch->getOfflineStreamers(), $smashcast->getOfflineStreamers());
         }
+    }
+	
+	/**
+    * Gets all data to display for the Linked Accounts view
+    */
+    public function getLinkedAccounts()
+    {
+		$sp_controller = new SPController;
+		$sp_controller->getGames();
+        $this->model_data["games_to_display"] = $sp_controller->getModelData()["games_to_display"];
+		$this->model_params['games_limit'] = 6;
     }
 	
 	/**

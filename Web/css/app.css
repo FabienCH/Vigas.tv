@@ -2558,9 +2558,9 @@ span a {
 
 .header .header-block-collapse {
   padding-right: 5px; }
-  @media (max-width: 767.98px) {
+  /*@media (max-width: 767.98px) {
     .header .header-block-collapse {
-      width: 155px; } }
+      width: 155px; } }*/
   .header .header-block-collapse .collapse-btn {
     background: none;
     border: none;
@@ -2655,9 +2655,6 @@ span a {
       padding-left: 25px;
       height: 40px;*/
       max-width: 250px; }
-      @media (max-width: 767.98px) {
-        .header .header-block-search .input-container input {
-          max-width: 150px; } }
     .header .header-block-search .input-container input:focus + .underline {
       -webkit-transform: scaleX(1);
               transform: scaleX(1); }

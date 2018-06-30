@@ -100,7 +100,7 @@ h5
 {
 	height : 100%;
 }
-
+			  
 .search-form
 {
     display : inline-block;
@@ -108,8 +108,24 @@ h5
 	margin-top : 12px;
 }
 
+.header-block-nav
+{
+	padding : 0;
+}
+
+.header .header-block-search > form
+{
+	float : none;
+}
+
+.header .header-block-nav ul
+{
+	margin : auto;
+}
+
 .search-field
 {
+	width : 75%;
 	padding-left: 10px;
 	height: 30px;
 	border-color: #bfcfdf;
@@ -142,17 +158,14 @@ h5
 	width : 170px;
 }
 
+.nav-profile
+{
+	margin : 0;
+	float : right;
+}
   
 @media (max-width: 767px)
 {
-	.search-form 
-	{
-		right: 70px;
-	}
-	.search-field
-	{
-		width : 100px;  
-	}
 	.dropdown-form-account
 	{
 		width : 160px;
@@ -182,12 +195,7 @@ h5
 
 /*****	BEGIN SIDE NAV BAR		****/
 
-.div-default-navbar
-{
-	padding: 0px;
-}
-
-.default-navbar
+.mobile-navbar
 {
 	font-size: 16px;
 	padding-top : 20px;
@@ -196,30 +204,40 @@ h5
 	list-style : none;
 }
 
-.default-navbar a
-{
-	color : #FFF;
-}
-
-.default-navbar a:hover, .default-navbar a:active
+.mobile-navbar a:hover, .mobile-navbar a:active
 {
 	background-color : transparent;
 	text-decoration : none;
 }
 
-.default-navbar-item
+.mobile-navbar-item
 {
+	color : #FFF;
 	padding: 10px;
 	padding-left : 20px;
 	list-style:none;
 }
 
-.default-navbar-item:hover, .default-navbar-item:active
+ .sidebar .sidebar-menu li a
+ {
+	 color : #FFF;
+	 padding-left : 30px;
+	 padding-top : 5px;
+ }
+ 
+ .mobile-stream-camera
+ {
+	 position : relative;
+	 top : 12px;
+	 margin-right : 5px;
+ }
+
+.mobile-navbar-item:hover, .mobile-navbar-item:active, .sidebar .sidebar-menu li a:hover, .sidebar .sidebar-menu li a:active
 {
 	background-color : #111;
 }
 
-.default-navbar-icon
+.mobile-navbar-icon
 {
 	width : 22px;
 	margin-right : 3px;
@@ -236,6 +254,32 @@ h5
 	max-width : 114px;
 }
 
+.mobile-navbar, .game-menu-mobile
+{
+	display : none;
+}
+@media (max-width: 991.98px)
+{
+    .mobile-navbar, .game-menu-mobile
+	{
+		display : block;
+	}
+	
+	.game-navbar, .stream-navbar, .header-block-nav, .expand-button, .reduce-button, .youtube-link
+	{
+		display : none;
+	}
+}
+
+@media (max-width: 767.98px)
+{
+    .header .header-block-search
+	{
+		padding-left: 20px;
+		display: block;
+	}
+}
+
 .div-navbar
 {
 	padding-bottom : 30px;
@@ -243,13 +287,12 @@ h5
 
 .div-navbar .viewers
 {
-	text-align : left;
+	text-align : right;
 }
 
 .div-navbar .overlay
 {
 	background : rgba(0,0,0,0.7);
-	margin : 3px;
 	padding : 0px;
 }
 
@@ -429,7 +472,7 @@ h4
 .stream-status
 {
 	font-size : 14px;
-	width : 70%;
+	width : 65%;
 	float : left;
 	margin : 7px;
 }
@@ -463,10 +506,25 @@ iframe#stream, iframe#chat, div#chat
 	bottom : 24px; 
  }
  
+ @media (max-width: 991.98px)
+{
+	iframe#chat, div#chat
+	 {
+		bottom : 0; 
+	 }
+}
+	
  div#chat
  {
 	text-align : center;
-	padding-top : 50px; 
+	padding : 10px;
+	padding-top : 30px;
+ }
+
+ .youtube-not-found
+ {
+	max-width: 50%;
+	padding-bottom: 20px;
  }
 
 .streamer
@@ -474,17 +532,72 @@ iframe#stream, iframe#chat, div#chat
 	padding-left : 10px;
 }
 
-.stream-container, .div-prev
+.stream-container, .expanded-stream-container, .div-prev
 {
 	margin-bottom : 20px;
 	padding-right : 10px;
 	padding-left : 10px;
 }
 
-.stream-container
+.stream-container, .expanded-stream-container
 {
 	margin-top : 10px;
-	margin-bottom : 0px;
+	margin-bottom : 30px;
+	width: 100%;
+	display: inline-block;
+	position: relative;
+}
+
+.stream-container:after
+{
+	padding-top: 37.5%;
+    display: block;
+    content: '';
+}
+
+.expanded-stream-container:after
+{
+	padding-top: 42.19%;
+    display: block;
+    content: '';
+}
+
+@media (max-width: 767px)
+{
+	.stream-container:after, .expanded-stream-container:after
+	{
+		padding-top: 56.25%;
+		display: block;
+		content: '';
+	}
+	
+	.stream-container, .expanded-stream-container
+	{
+		margin-bottom: 65vh;
+	}
+	
+	.youtube-stream
+	{
+		margin-bottom: 45vh;
+	}
+	
+	iframe#chat
+	{
+		height : 60vh;
+	}
+	div#chat
+	{
+		height : 40vh;
+	}
+}
+
+#stream-border
+{
+	position: absolute;
+    top:0;
+	left:10px;
+	bottom:0;
+	right:10px;
 }
 
 .expand-button, .reduce-button
@@ -510,7 +623,23 @@ iframe#stream, iframe#chat, div#chat
 	z-index : 10;
 }
 
-.stream-ov:hover, .close-button:hover, .expand-button:hover, .reduce-button:hover
+@media all and (orientation:portrait)
+{
+	iframe#chat, div#chat
+	{
+		position : initial;
+	}
+	iframe#chat
+	{
+		height : 60vh;
+	}
+	div#chat
+	{
+		height : 40vh;
+	}
+}
+
+.stream-ov:hover, .stream-reload:hover, .close-button:hover, .expand-button:hover, .reduce-button:hover
 {
   cursor:  pointer;
 }
@@ -697,6 +826,14 @@ p.viewers
 .reduced-container
 {
 	width : 80%;
+}
+
+@media (max-width: 767px)
+{
+	.reduced-container
+	{
+		width : 100%;
+	}
 }
 
 .reduced-container h3

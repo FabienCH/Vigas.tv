@@ -31,7 +31,7 @@ use Vigas\Application\Application;
                             <i class="fa fa-bars"></i>
                         </button>
                     </div>
-                    <div class="header-block header-block-search">
+                    <div class="col-lg-3 header-block header-block-search">
                         <form role="search" action="<?=Application::getBaseURL()?>search/" method="post">
                             <div class="input-container">
                                 <input type="search" name="query" class="search-field" placeholder="Search">
@@ -65,7 +65,7 @@ use Vigas\Application\Application;
 						}
 						
 					?>
-					<div class="header-block header-block-nav top-menu">
+					<div class="col-lg-6 header-block header-block-nav top-menu">
 						<ul class="nav-link">
 							<li><a <?=$home_active;?> href="<?=Application::getBaseURL()?>">All Live Streams</a>
 							<?=$home_underline;?></li>
@@ -75,7 +75,7 @@ use Vigas\Application\Application;
 							<?= $games_underline;?></li>
 						</ul>
 					</div>
-                    <div class="header-block header-block-nav">
+                    <div class="col-lg-3 header-block header-block-nav">
                         <ul class="nav-profile">
 							<?=$this->navbar_account?>
                         </ul>

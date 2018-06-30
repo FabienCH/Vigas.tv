@@ -12,15 +12,9 @@ use Vigas\Application\Application;
        <link href="https://plus.google.com/b/117076079832095712778" rel="publisher" />
 		<link rel="icon" type="image/x-icon" href="<?=Application::getBaseURL()?>favicon.ico" />
         <!-- Place favicon.ico in the root directory -->
-<<<<<<< HEAD
         <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/css/vendor.css">
         <link rel="stylesheet" id="theme-style" href="<?=Application::getBaseURL()?>/../Web/css/app.css">
 		<link href="<?=Application::getBaseURL()?>/../Web/css/style.css" rel="stylesheet">
-=======
-        <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/modular/css/vendor.css">
-        <link rel="stylesheet" id="theme-style" href="<?=Application::getBaseURL()?>/../Web/modular/css/app.css">
-		<link href="<?=Application::getBaseURL()?>/../Web/modular/css/style.css" rel="stylesheet">
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
     </head>
     <body>
         <div class="auth">
@@ -54,23 +48,14 @@ use Vigas\Application\Application;
                                     <input class="checkbox" id="remember" type="checkbox" checked>
                                     <span>Remember me</span>
                                 </label>
-<<<<<<< HEAD
                                 <a href="<?=Application::getBaseURL()?>forgot-password" class="forgot-btn pull-right">Forgot password ?</a>
-=======
-                                <a href="<?=Application::getBaseURL()?>forgot-password" class="forgot-btn pull-right">Forgot password?</a>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
                             </div>
                             <div class="form-group">
                                 <button type="submit" name="login" class="btn btn-block btn-primary">Login</button>
                             </div>
                             <div class="form-group">
-<<<<<<< HEAD
                                 <p class="text-muted text-center">Do not have an account ?
                                     <a href="<?=Application::getBaseURL()?>signup">Sign Up !</a>
-=======
-                                <p class="text-muted text-center">Do not have an account?
-                                    <a href="<?=Application::getBaseURL()?>signup">Sign Up!</a>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
                                 </p>
                             </div>
                         </form>
@@ -108,14 +93,8 @@ use Vigas\Application\Application;
             ga('send', 'pageview');
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<<<<<<< HEAD
         <script src="../Web/js/vendor.js"></script>
         <script src="../Web/js/app.js"></script>
         <script src="../Web/js/script.js"></script>
-=======
-        <script src="../Web/modular/js/vendor.js"></script>
-        <script src="../Web/modular/js/app.js"></script>
-        <script src="../Web/modular/js/script.js"></script>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
     </body>
 </html>

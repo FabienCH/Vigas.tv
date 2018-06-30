@@ -1,6 +1,6 @@
 <?php
 use Vigas\Application\Application;
-
+echo 'toto';
 if($this->params['games_limit']==6)
 {?>
     <h4 class="sidebar-title">Top 6 games</h4>
@@ -21,7 +21,7 @@ if($this->params['games_limit']==24)
     if(count($this->data['games_to_display']) == $this->params['games_limit']  && $this->params['games_offset'] + $this->params['games_limit']<72)
     {?>
         <div id="load-more-div">
-                <button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams</button>
+                <button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more games</button>
         </div>
     <?php
     }

@@ -16,7 +16,7 @@ function close_stream()
 {
 	$('#'+stream_div.attr("id")).html(parent_div_content);		//restore content of the div-prev container
 	$('#'+stream_div.attr("id")).removeClass("col-sm-12 stream-container");
-	$('#'+stream_div.attr("id")).addClass("col-lg-3 col-md-4 col-sm-6 div-prev");
+	$('#'+stream_div.attr("id")).addClass("col-xl-3 col-lg-4 col-sm-6 div-prev");
 	$('#'+stream_div.attr("id")).removeAttr('style');
 	show_overlay();
 	hide_overlay();
@@ -24,60 +24,54 @@ function close_stream()
 
 function expand_stream()
 {
-	$("#stream").removeClass("col-sm-8");
-	$("#chat").removeClass("col-sm-4");
-	
 	$(".sidebar").addClass("expanded-sidebar");
 	$(".header").addClass("expanded-header");
 	$(".app").addClass("expanded-app");
 	$(".d-lg-none").attr('style','display: block !important');
 	
-	$(".footer").animate({
-		left:0
-	}, 'slow', function() {
-		$('#stream').width('calc(100% - 300px)');
-		$("#stream-border").height($("#stream").width()/16*9);
-		$('#chat').width('300px');
-		scroll_to_stream();
-	});
-	
+	$("#stream").removeClass("col-md-8");
+	$("#chat").removeClass("col-md-4");
+	$("#stream").addClass("col-md-9");
+	$("#chat").addClass("col-md-3");
+	stream_id = $("#stream").closest(".stream-container");
+	stream_id.addClass("expanded-stream-container");
+	stream_id.removeClass("stream-container");
+		
 	$(".expand-button").replaceWith("<img alt=\"reduce stream button\" class=\"reduce-button\" src=\"/Web/img/reduce-button.png\" />");
+	
+	scroll_to_stream();
 }
 
 function reduce_stream()
 {
-	$("#stream").removeAttr('style');
-	$("#chat").removeAttr('style');
-	$("#stream").addClass("col-sm-8");
-	$("#chat").addClass("col-sm-4");
 	
 	$(".sidebar").removeClass("expanded-sidebar");
 	$(".header").removeClass("expanded-header");
 	$(".app").removeClass("expanded-app");
 	$(".d-lg-none").removeAttr('style');
 	
-	$(".footer").animate({
-		left:"240px"
-	}, 'slow', function() {
-		$('#stream-border').height($('#stream').width()/16*9);
-		if($("#stream").length)
-		{
-			scroll_to_stream();
-		}	
-	});
-	
+	$("#stream").removeClass("col-md-9");
+	$("#chat").removeClass("col-md-3");
+	$("#stream").addClass("col-md-8");
+	$("#chat").addClass("col-md-4");
+	stream_id = $("#stream").closest(".expanded-stream-container");
+	stream_id.addClass("stream-container");
+	stream_id.removeClass("expanded-stream-container");
+		
 	$(".reduce-button").replaceWith("<img alt=\"expand stream button\" class=\"expand-button\" src=\"/Web/img/expand-button.png\" />");
+	
+	scroll_to_stream();
 }
 	
 function load_stream()
 {	
+	$(document).on("click", ".stream-reload", function() {
+		window.location.href="/stream/"+$(this).parent().attr("id");
+		return;
+	});		
+		
 	//loading stream of the clicked div-prev and replace previously opened stream (if he exists) by the div-prev
 	$(document).on("click", ".stream-ov", function() {
-		if($(this).parent().attr("class")=="col-sm-12 col-sm-4 div-prev-navbar")
-		{
-			window.location.href="/stream/"+$(this).parent().attr("id");
-			return;
-		}
 		
 		stream_status = "reduced";
 		
@@ -91,20 +85,19 @@ function load_stream()
 		}
 		parent_div_content = $(this).parent().html();	//saving content of the div-prev container
 		stream_div = $(this).parent();
-		stream_div.removeClass("col-lg-3 col-md-4 col-sm-6 div-prev");
+		stream_div.removeClass("col-xl-3 col-lg-4 col-sm-6 div-prev");
 		$(stream_div).removeAttr('style');
 		stream_div.addClass("col-sm-12 stream-container");
 		if($("#source-"+stream_div.attr('id')).attr('value') == 'Youtube')
 		{
-			stream_div.html("<img alt=\"close stream button\" class=\"close-button\" src=\"/Web/img/close.png\" /><div id=\"stream-border\"><iframe class=\"col-sm-8\" id=\"stream\" src=\""+$("#stream-"+stream_div.attr('id')).attr('value')+"\" allowfullscreen frameborder=\"0\" scrolling=\"no\" ></iframe><img alt=\"expand stream button\" class=\"expand-button\" src=\"/Web/img/expand-button.png\" /><div class=\"col-sm-4\" id=\"chat\" ><p>Chat from Youtube is not available :(</p><p>You can open it in a new window <a id=\"yt_chat_link\" alt=\"Youtube Chat\" href=\""+$("#chat-"+stream_div.attr('id')).attr('value')+"\" target=\"_blank\" onclick=\"window.open('"+$("#chat-"+stream_div.attr('id')).attr('value')+"', 'newwindow', 'width=350,height=600'); return false;\">here</a></p></div></div>");
+			stream_div.addClass("col-sm-12 youtube-stream");
+			stream_div.html("<img alt=\"close stream button\" class=\"close-button\" src=\"/Web/img/close.png\" /><div id=\"stream-border\"><iframe class=\"col-md-8 col-sm-12\" id=\"stream\" src=\""+$("#stream-"+stream_div.attr('id')).attr('value')+"\" allowfullscreen frameborder=\"0\" scrolling=\"no\" ></iframe><img alt=\"expand stream button\" class=\"expand-button\" src=\"/Web/img/expand-button.png\" /><div class=\"col-md-4 col-sm-12\" id=\"chat\" ><img alt=\"youtube not found\" class=\"youtube-not-found\" src=\"/Web/img/youtube-not-found.png\" /><p>Unfortunately, chat from Youtube is not available</p><p class=\"youtube-link\">You can open it in a new window <a id=\"yt_chat_link\" alt=\"Youtube Chat\" href=\""+$("#chat-"+stream_div.attr('id')).attr('value')+"\" target=\"_blank\" onclick=\"window.open('"+$("#chat-"+stream_div.attr('id')).attr('value')+"', 'newwindow', 'width=350,height=600'); return false;\">here</a></p></div></div>");
 		}
 		else
 		{
-			stream_div.html("<img alt=\"close stream button\" class=\"close-button\" src=\"/Web/img/close.png\" /><div id=\"stream-border\"><iframe class=\"col-sm-8\" id=\"stream\" src=\""+$("#stream-"+stream_div.attr('id')).attr('value')+"\" allowfullscreen frameborder=\"0\" scrolling=\"no\" ></iframe><img alt=\"expand stream button\" class=\"expand-button\" src=\"/Web/img/expand-button.png\" /><iframe class=\"col-sm-4\" id=\"chat\" src=\""+$("#chat-"+stream_div.attr('id')).attr('value')+"\"frameborder=\"0\" scrolling=\"no\"></iframe></div>");
+			stream_div.html("<img alt=\"close stream button\" class=\"close-button\" src=\"/Web/img/close.png\" /><div id=\"stream-border\"><iframe class=\"col-md-8 col-sm-12\" id=\"stream\" src=\""+$("#stream-"+stream_div.attr('id')).attr('value')+"\" allowfullscreen frameborder=\"0\" scrolling=\"no\" ></iframe><img alt=\"expand stream button\" class=\"expand-button\" src=\"/Web/img/expand-button.png\" /><iframe class=\"col-md-4 col-sm-12\" id=\"chat\" src=\""+$("#chat-"+stream_div.attr('id')).attr('value')+"\"frameborder=\"0\" scrolling=\"no\"></iframe></div>");
 		}
-		
-		$("#stream-border").height($("#stream").width()/16*9);
-		
+				
 		$(".close-button").mouseenter(function(){
 			$("#stream-border").css({
 				"box-shadow": "0px 0px 5px 3px #f4c402",			
@@ -114,10 +107,6 @@ function load_stream()
 			$("#stream-border").css({
 				"box-shadow": "none",			
 			});
-		});
-				
-		$(window).resize(function(){
-			$("#stream-border").height($("#stream").width()/16*9);
 		});
 		
 		$(document).on("click", ".close-button", function() {
@@ -190,12 +179,14 @@ function load_more()
 	load_more_div = $("#load-more-div").html();
 	if(load_more_div != undefined)
 	{
+		var load_more_txt = "streams";
 		var offset=$("#offset").val();
 		var type=($("#type").val());
 			var source_json = JSON.stringify(source_array);
 			
 		if(type=="games")
 		{
+			load_more_txt = "games"; 
 			var add_to_offset = 24;
 			var max_offset = 72;
 			var url = 'https://vigas.tv/index.php?action=games&offset='+offset+'&requested_by=ajax';
@@ -243,12 +234,18 @@ function load_more()
 					}
 					else
 					{
-						document.getElementById("load-more-div").innerHTML='<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more</button>';
+						document.getElementById("load-more-div").innerHTML='<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more '+load_more_txt+'</button>';
 						$("#load-more-div").removeAttr('style');	
 					}
 					$('#loading-gif').remove();
-					if($('#content .preview').length < parseInt($("#offset").val()) || $('#'+type+'-display p.alert-warning').length == 1)
+					alert('tot');
+					console.log($('#content .preview').length + $('#stream').length);
+					console.log($('#content .preview').length);
+					console.log(parseInt($("#offset").val()));
+					console.log(('#'+type+'-display p.alert-warning').length);
+					if($('#content .preview').length + $('#stream').length < parseInt($("#offset").val()) || $('#'+type+'-display p.alert-warning').length == 1)
 					{
+						
 						$('#load-more-div').remove();
 					}
 				}
@@ -332,14 +329,14 @@ function reload(id)
 			{
 				if($('#'+type+'-display p.alert-warning').length != 1 && $('.stream-infos').length >= 36)
 				{
-					$('#'+type+'-display').after('<div id="load-more-div"><button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more</button></div>');
+					$('#'+type+'-display').after('<div id="load-more-div"><button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams</button></div>');
 				}		
 			}
 			else
 			{
 				if($('.stream-infos').length >= 36)
 				{
-					document.getElementById("load-more-div").innerHTML='<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more</button>';
+					document.getElementById("load-more-div").innerHTML='<button id="load-more" class="btn btn-sm btn-primary load-more-btn">Load more streams</button>';
 				}
 			}	
 			show_overlay();

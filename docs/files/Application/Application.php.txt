@@ -123,10 +123,7 @@ abstract class Application
         if(!isset(self::$http_request->getGetData()['action']) || in_array(self::$http_request->getGetData()['action'], $get_spcontroller))
         {
             $sp_controller = new SPController();
-			if(!isset(self::$http_request->getGetData()['action']) || self::$http_request->getGetData()['action'] != 'linked-accounts')
-			{
-				$sp_controller->executeController();
-			}
+			$sp_controller->executeController();
 			$sp_controller->getView();
 			
         }

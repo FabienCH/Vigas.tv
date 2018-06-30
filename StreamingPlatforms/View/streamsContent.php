@@ -6,7 +6,7 @@ if($this->params['streams_limit']==3)
 {?>
 	<h4 class="sidebar-title">Top 3 live streams</h4>
 	<?php
-	$separator = "<br />";
+	$separator = " - ";
 }
 else
 {
@@ -16,6 +16,22 @@ else
 //if there is streams to display
 if(count($this->data['streams_to_display']) > 0)
 {	
+	if($this->params['streams_limit']==3)
+	{?>
+	<ul class="col-xs-12 mobile-navbar">
+	<?php
+	foreach($this->data['streams_to_display'] as $stream) 
+	{ 
+		$source = $stream->getSource();
+		$game = $stream->getGame();
+		?>
+		<li id="<?= $stream->getId()?>" class="ellipsis mobile-navbar-item"><i class="fa fa-fw fa-video-camera mobile-stream-camera"></i> <span class="stream-reload" ><?= $stream->getChannelDisplayName()?></span><br/><a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></li>
+	<?php } ?>
+	</ul>
+
+	<?php
+	}
+
 	foreach($this->data['streams_to_display'] as $stream) 
 	{	
 		$source = $stream->getSource();
@@ -25,23 +41,11 @@ if(count($this->data['streams_to_display']) > 0)
 			<div style="background-image:url(<?= $stream->getPreviewUrl()?>); background-size : contain;" >
 				<img class="preview" alt="stream overlay" src="<?= Application::getBaseURL()?>Web/img/degrade-<?= $stream->getSource()?>.png" />
 			</div>
-<<<<<<< HEAD
 			<p class="ellipsis stream-infos"><?= $stream->getChannelDisplayName()?><?php if($source != 'Youtube') {echo $separator;} ?><a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
-=======
-			<p class="ellipsis stream-infos"><?= $stream->getChannelDisplayName().$separator ?><a href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($game) ?>"><?= urldecode($game) ?></a></p>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
 
-			<div class="overlay stream-ov">
-				<?php
-				if (!isset($_GET['action']) || $_GET['action'] == 'streams-by-game' || $_GET['action'] == 'following')
-				{?>
-				<h5 class="ellipsis stream-status"><?= $stream->getStatus()?></h5>
-				<?php } ?>
-<<<<<<< HEAD
+			<div class="overlay stream-ov <?php if($this->params['streams_limit']==3) {echo "stream-reload";} ?>">
+				<h5 class="ellipsis stream-status"><?= $stream->getStatus()?></h5>				
 				<p class="viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $stream->getFormatedViewers()?></p>
-=======
-				<p class="ellipsis viewers"><img alt="viewer icon" src="<?=Application::getBaseURL()?>Web/img/viewer-icon.png" /><?= $stream->getViewers()?></p>
->>>>>>> 632e949003b651121bf1b9d0df086fa3294a0307
 				<img class="play-stream" alt="play stream icon" src="<?=Application::getBaseURL()?>Web/img/play-logo.png" />
 			</div>
 		</div>
