@@ -15,11 +15,11 @@ Application::initializeApplication();
 if(isset($_COOKIE['user']) && !isset($_SESSION['user']))
 {
     Application::initializeSession(unserialize($_COOKIE['user']));
-	Application::getUser()->logUserLogin(Application::getPDOconnection(), 'cookie');
+	Application::getUser()->logUserLogin(Application::getPDOconnection());
 	$_SESSION['user'] = $_COOKIE['user'];
 	
 }
-var_dump($_SESSION);
+
 if(isset($_SESSION['user']))
 {
     Application::initializeSession(unserialize($_SESSION['user']));

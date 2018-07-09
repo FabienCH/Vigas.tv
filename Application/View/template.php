@@ -18,9 +18,18 @@ use Vigas\Application\Application;
 		<link href="https://plus.google.com/b/117076079832095712778" rel="publisher" />
 		<link rel="icon" type="image/x-icon" href="<?=Application::getBaseURL()?>favicon.ico" />
         <!-- Place favicon.ico in the root directory -->
-        <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/css/vendor.css">
-        <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/css/app.css">
-		<link href="<?=Application::getBaseURL()?>/../Web/css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?=Application::getBaseURL()?>../Web/css/vendor.css">
+        <link rel="stylesheet" href="<?=Application::getBaseURL()?>../Web/css/app.css">
+		<link href="<?=Application::getBaseURL()?>../Web/css/style.css" rel="stylesheet">
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-76196030-2"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'UA-76196030-2');
+		</script>
     </head>
     <body>
         <div class="main-wrapper">
@@ -86,7 +95,7 @@ use Vigas\Application\Application;
                         <div class="sidebar-header">
                             <div class="brand">
                                 <div class="logo">
-                                    <a href="<?=Application::getBaseURL()?>"><img alt="vigas logo" src="<?=Application::getBaseURL()?>/../Web/img/logo.png" /></a>
+                                    <a href="<?=Application::getBaseURL()?>"><img alt="vigas logo" src="<?=Application::getBaseURL()?>../Web/img/logo.png" /></a>
 								</div>
 							</div>
                         <nav class="menu">
@@ -146,10 +155,6 @@ use Vigas\Application\Application;
 											<input class="checkbox" type="checkbox" checked id="Twitch" onclick="reload(this.id);" value="Twitch">
 											<span>Twitch</span>
 										</label>
-										<label>
-											<input class="checkbox" type="checkbox" checked id="Smashcast" onclick="reload(this.id);" value="Smashcast">
-											<span>Smashcast</span>
-										</label>
 										<?php if(!isset($_GET['action']))
 										{ ?>
 										<label>
@@ -157,6 +162,10 @@ use Vigas\Application\Application;
 											<span>Youtube</span>
 										</label>
 										<?php } ?>
+										<label>
+											<input class="checkbox" type="checkbox" checked id="Smashcast" onclick="reload(this.id);" value="Smashcast">
+											<span>Smashcast</span>
+										</label>									
 									</div>
 								</form>
 						<?php } ?>
@@ -166,84 +175,9 @@ use Vigas\Application\Application;
 					</section>  
                 </article>
                 <footer class="footer">
-					<p class="footer-block"><a href="<?=Application::getBaseURL()?>">Vigas.tv</a> v1.6 | 2016 - 2018 | <a href="<?=Application::getBaseURL()?>about">About</a> | Template based on  <a target="_blank" href="https:/code.io-admin-html/">Modular Admin</a> | <a target="_blank" href="https://www.facebook.com/Vigas.TV/"><img alt="facebook logo" src="<?=Application::getBaseURL()?>/../Web/img/facebook.png"/></a> <a target="_blank" href="https://plus.google.com/+VigasTv/about"><img alt="google plus logo" src="<?=Application::getBaseURL()?>/../Web/img/googleplus.png"/></a></p>
+					<p class="footer-block"><a href="<?=Application::getBaseURL()?>">Vigas.tv</a> v2.0 | 2016 - 2018 | <a href="<?=Application::getBaseURL()?>about">About</a> | Template based on  <a target="_blank" href="https:/code.io-admin-html/">Modular Admin</a> | <a target="_blank" href="https://www.facebook.com/Vigas.TV/"><img alt="facebook logo" src="<?=Application::getBaseURL()?>../Web/img/facebook.png"/></a> <a target="_blank" href="https://plus.google.com/+VigasTv/about"><img alt="google plus logo" src="<?=Application::getBaseURL()?>../Web/img/googleplus.png"/></a></p>
                 </footer>
-                <!--
-				<div class="modal fade" id="modal-media">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Media Library</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    <span class="sr-only">Close</span>
-                                </button>
-                            </div>
-                            <div class="modal-body modal-tab-container">
-                                <ul class="nav nav-tabs modal-tabs" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#gallery" data-toggle="tab" role="tab">Gallery</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#upload" data-toggle="tab" role="tab">Upload</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content modal-tab-content">
-                                    <div class="tab-pane fade" id="gallery" role="tabpanel">
-                                        <div class="images-container">
-                                            <div class="row"> </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade active in" id="upload" role="tabpanel">
-                                        <div class="upload-container">
-                                            <div id="dropzone">
-                                                <form action="/" method="POST" enctype="multipart/form-data" class="dropzone needsclick dz-clickable" id="demo-upload">
-                                                    <div class="dz-message-block">
-                                                        <div class="dz-message needsclick"> Drop files here or click to upload. </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Insert Selected</button>
-                            </div>
-                        </div>
-                        <!-- /.modal-content -->
-						<!-- 
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
-                <!-- /.modal -->
-				<!-- 
-                <div class="modal fade" id="confirm-modal">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">
-                                    <i class="fa fa-warning"></i> Alert</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure want to do this?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                            </div>
-                        </div>
-                        <!-- /.modal-content -->
-						<!-- 
-                    </div>
-                    <!-- /.modal-dialog -->
-					<!-- 
-                </div>
-                <!-- /.modal -->
+               </div>
 				
             </div>
         </div>
@@ -273,8 +207,8 @@ use Vigas\Application\Application;
             ga('send', 'pageview');
         </script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="<?=Application::getBaseURL()?>/../Web/js/vendor.js"></script>
-        <script src="<?=Application::getBaseURL()?>/../Web/js/app.js"></script>
-        <script src="<?=Application::getBaseURL()?>/../Web/js/script.js"></script>
+        <script src="<?=Application::getBaseURL()?>../Web/js/vendor.js"></script>
+        <script src="<?=Application::getBaseURL()?>../Web/js/app.js"></script>
+        <script src="<?=Application::getBaseURL()?>../Web/js/script.js"></script>
     </body>
 </html>

@@ -14,7 +14,7 @@ if($this->params['query'] != '')
 		{	
 			$game = ucwords($this->data['streams_array'][$i]->getGame());
 			?>
-			<div id="<?= $this->data['streams_array'][$i]->getChannelName()?>" class="col-lg-3 col-md-4 col-xs-6 div-prev">
+			<div id="<?= $this->data['streams_array'][$i]->getChannelName()?>" class="col-xl-3 col-lg-4 col-sm-6 div-prev">
 				<div style="background-image:url(<?= $this->data['streams_array'][$i]->getPreviewUrl()?>); background-size : contain;" >
 					<img class="preview" alt="stream overlay" src="<?=Application::getBaseURL()?>Web/img/degrade-<?= $this->data['streams_array'][$i]->getSource()?>.png" />
 				</div>
@@ -44,7 +44,7 @@ if($this->params['query'] != '')
 		$nb_games_array = count($this->data['games_array']);
 		for($i=0;$i<$nb_games_array; $i++) 
 		{ ?>
-			<div id="<?= $this->data['games_array'][$i]->getId() ?>" class="col-lg-2 col-md-3 col-xs-4 div-prev">
+			<div id="<?= $this->data['games_array'][$i]->getId() ?>" class="col-lg-2 col-md-3 col-sm-4 col-6 div-prev">
 				<a class="game-link" href="<?=Application::getBaseURL()?>streams-by-game/<?= urlencode($this->data['games_array'][$i]->getGame()) ?>">
 				<div>
 					<img class="preview" alt="game image" width="100%" src="<?= $this->data['games_array'][$i]->getBox() ?>"/>

@@ -79,7 +79,7 @@ class View
     */
     public function getStreamsView()
     {         
-        $this->main_title = "Vigas - Live streams from Twitch and Smashcast";
+        $this->main_title = "Vigas - Live streams from Twitch, Youtube and Smashcast";
         $this->content_title = "Live streams";
         $this->getStreamsContentView('allStreams');
     }
@@ -99,7 +99,7 @@ class View
     */
     public function getGamesView()
     {
-        $this->main_title = "Vigas - All games from Twitch and Smashcast";
+        $this->main_title = "Vigas - All games from Twitch, Youtube and Smashcast";
 		$this->content_title = "All games";
         $div_games_display_class = "row";
         $div_game_class="col-lg-2 col-md-3 col-sm-4 col-6 div-prev";
@@ -127,7 +127,7 @@ class View
     */
     public function getStreamsByGameView()
     {         
-        $this->main_title = "Vigas - ".urldecode($this->params['games'])." live streams from Twitch and Smashcast";
+        $this->main_title = "Vigas - ".urldecode($this->params['games'])." live streams from Twitch, Youtube and Smashcast";
         $this->content_title = urldecode($this->params['games'])." live streams";
         $this->getStreamsContentView('streamsByGame');
     }
@@ -137,7 +137,7 @@ class View
     */
     public function getFollowingView()
 	{         
-        $this->main_title = "Vigas - Following live streams from Twitch and Smashcast";
+        $this->main_title = "Vigas - Following live streams from Twitch, Youtube and Smashcast";
         $this->content_title = "Following live streams";
         $div_streams_display_class="row";
         $div_stream_class="col-xl-3 col-lg-4 col-sm-6 div-prev";

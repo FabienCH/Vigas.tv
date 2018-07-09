@@ -238,11 +238,7 @@ function load_more()
 						$("#load-more-div").removeAttr('style');	
 					}
 					$('#loading-gif').remove();
-					alert('tot');
-					console.log($('#content .preview').length + $('#stream').length);
-					console.log($('#content .preview').length);
-					console.log(parseInt($("#offset").val()));
-					console.log(('#'+type+'-display p.alert-warning').length);
+
 					if($('#content .preview').length + $('#stream').length < parseInt($("#offset").val()) || $('#'+type+'-display p.alert-warning').length == 1)
 					{
 						

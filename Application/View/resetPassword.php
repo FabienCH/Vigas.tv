@@ -12,9 +12,18 @@ use Vigas\Application\Application;
         <link href="https://plus.google.com/b/117076079832095712778" rel="publisher" />
 		<link rel="icon" type="image/x-icon" href="<?=Application::getBaseURL()?>favicon.ico" />
         <!-- Place favicon.ico in the root directory -->
-        <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/css/vendor.css">
-        <link rel="stylesheet" id="theme-style" href="<?=Application::getBaseURL()?>/../Web/css/app.css">
-		<link href="<?=Application::getBaseURL()?>/../Web/css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?=Application::getBaseURL()?>../Web/css/vendor.css">
+        <link rel="stylesheet" id="theme-style" href="<?=Application::getBaseURL()?>../Web/css/app.css">
+		<link href="<?=Application::getBaseURL()?>../Web/css/style.css" rel="stylesheet">
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-76196030-2"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'UA-76196030-2');
+		</script>
     </head>
     <body>
         <div class="auth">

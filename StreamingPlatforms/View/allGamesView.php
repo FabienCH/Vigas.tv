@@ -1,6 +1,6 @@
 <?php
 use Vigas\Application\Application;
-echo 'toto';
+
 if($this->params['games_limit']==6)
 {?>
     <h4 class="sidebar-title">Top 6 games</h4>

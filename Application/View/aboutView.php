@@ -8,6 +8,8 @@ use Vigas\Application\View\Forms;
 
 	<h3>Patch Notes :</h3>
 	
+	<p><em>v2.0.1 - 10/07/2018</em><br/>
+	- Fixed remember session</p>
 	<p><em>v2.0 - 06/29/2018</em><br/>
 	- New Design<br/>
 	- Added Youtube Gaming (only on the all streams view because we can't do much more with the Youtube API right now)<br/>

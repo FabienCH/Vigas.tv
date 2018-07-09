@@ -12,9 +12,18 @@ use Vigas\Application\Application;
         <link href="https://plus.google.com/b/117076079832095712778" rel="publisher" />
 		<link rel="icon" type="image/x-icon" href="<?=Application::getBaseURL()?>favicon.ico" />
         <!-- Place favicon.ico in the root directory -->
-        <link rel="stylesheet" href="<?=Application::getBaseURL()?>/../Web/css/vendor.css">
-        <link rel="stylesheet" id="theme-style" href="<?=Application::getBaseURL()?>/../Web/css/app.css">
-		<link href="<?=Application::getBaseURL()?>/../Web/css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="<?=Application::getBaseURL()?>../Web/css/vendor.css">
+        <link rel="stylesheet" id="theme-style" href="<?=Application::getBaseURL()?>../Web/css/app.css">
+		<link href="<?=Application::getBaseURL()?>../Web/css/style.css" rel="stylesheet">
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-76196030-2"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'UA-76196030-2');
+		</script>
     </head>
     <body>
         <div class="auth">
@@ -51,7 +60,13 @@ use Vigas\Application\Application;
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control underlined" name="retype_password" id="retype_password" placeholder="Re-type password" required=""> </div>
                                 </div>
-                            </div>                     
+                            </div> 
+							<div class="form-group">
+								<label for="remember">
+                                    <input class="checkbox" id="remember" name="remember" type="checkbox" checked>
+                                    <span>Remember me</span>
+                                </label>
+							</div>								
                             <div class="form-group">
                                 <button type="submit" name="signup" class="btn btn-block btn-primary">Sign Up</button>
                             </div>

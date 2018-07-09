@@ -97,7 +97,6 @@ class UserManager
     {
         $this->user = new User;
         $test_user = $this->user->getUser($this->db, ['username' => $username], $password);
-
         if($test_user !== false)
         {
             if($remember_me)
@@ -109,7 +108,7 @@ class UserManager
                 $_SESSION['user'] = serialize($this->user);
             }
             $_SESSION['platform_accounts'] = serialize($this->getPlatformAccountsFromDB($this->db, $this->user));
-			$this->user->logUserLogin(Application::getPDOconnection(), 'form');
+			$this->user->logUserLogin(Application::getPDOconnection());	
             header('Location: https://vigas.tv'.Application::getBaseURL().'following');
         }
         else

@@ -231,7 +231,6 @@ $(function() {
 				.addClass('has-error');
 			}
 			else {
-				console.log('toto else');
 				error.insertAfter(element);
 			}
 		},
